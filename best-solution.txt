@@ -1,0 +1,6 @@
+login xy1234 13851
+name John Zoidberg
+algorithm Genetic Algorithm with specialized crossover and mutation
+cost 3108.323
+1->5->10->1
+1->15->23->45->7->1
