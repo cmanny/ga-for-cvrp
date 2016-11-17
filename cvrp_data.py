@@ -1,10 +1,11 @@
 import os
+import math
 
 class CVRPInfo(object):
 
     def __init__(self, data_file):
         self.read_data(data_file)
-        #compute_dists()
+        self.compute_dists()
 
     #the vrp file is such an awful format
     def read_data(self, data_file):
@@ -23,8 +24,26 @@ class CVRPInfo(object):
             nid, dem = [int(x) for x in content[i].split()]
             self.demand[nid] = dem
 
+    def compute_dist(self, n1, n2):
+        n1 = self.coords[n1]
+        n2 = self.coords[n2]
+        return math.sqrt((n1[0] - n2[0])**2 + (n1[1] - n2[1])**2)
+
+    def compute_dists(self):
+        self.dist = [list([-1 for _ in range(self.dimension)]) \
+                        for _ in range(self.dimension)]
+        for xi in range(self.dimension):
+            for yi in range(self.dimension):
+                self.dist[xi][yi] = self.compute_dist(xi, yi)
+
+
     def __repr__(self):
-        return "coords:" + str(self.coords) + "\ndemands: " + str(self.demand)
+        strin = {
+            "coords" : self.coords,
+            "demand" : self.demand,
+            #"dists"  : self.dist
+        }
+        return str(strin)
 
 if __name__ == "__main__":
     print(CVRPInfo("fruitybun250.vrp"))
