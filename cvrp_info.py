@@ -1,11 +1,27 @@
 import os
 import math
+import random
+
+class Path(object):
+    def __init__(self, path=[], cost=0, is_valid=False, demand=0):
+        self.is_valid = is_valid
+        self.path = path
+        self.cost = cost
+        self.demand = demand
+
+class Solution(object):
+    def __init__(self, paths=[], cost=0, is_valid=False, demand=0):
+        self.is_valid = is_valid
+        self.paths = paths
+        self.cost = cost
+        self.demand = demand
 
 class CVRPInfo(object):
 
     def __init__(self, data_file):
         self.read_data(data_file)
         self.compute_dists()
+        self.start_node = 1
 
     #the vrp file is such an awful format
     def read_data(self, data_file):
@@ -35,6 +51,36 @@ class CVRPInfo(object):
         for xi in range(self.dimension):
             for yi in range(self.dimension):
                 self.dist[xi][yi] = self.compute_dist(xi, yi)
+
+    def make_solution(self, paths):
+        cost = 0
+        demand = 0
+        is_valid = True
+        for path in paths:
+            if not path.is_valid:
+                is_valid = False
+            cost += path.cost
+            demand += path.demand
+        sol = Solution(cost=cost, demand=demand, is_valid=is_valid, paths=paths)
+        return sol
+
+
+    def make_path(self, node_list):
+        if node_list[0] != self.start_node:
+            return None
+        cost = 0
+        demand = 0
+        for i in range(1, len(node_list)):
+            n1, n2 = node_list[i - 1], node_list[i]
+            cost += self.dist[n1][n2]
+            demand += self.demand[n2]
+        if demand > self.capacity:
+            is_valid = False
+
+        path = Path(cost=cost, demand=demand, is_valid=is_valid, path=node_list)
+        return path
+
+
 
 
     def __repr__(self):

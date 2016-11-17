@@ -5,12 +5,13 @@ class CVRPRunner(object):
 
     def __init__(self, algorithm, data_file, iterations):
         self.algorithm = algorithm
-        self.algorithm.info(CVRPInfo(data_file))
+        self.algorithm.info = CVRPInfo(data_file)
         self.algorithm.init()
         self.print_cycle = 1
+        self.num_iter = iterations
 
     def run(self):
-        for i in range(iterations):
+        for i in range(self.num_iter):
             cost = self.algorithm.step()
             if i % self.print_cycle == 0:
                 print cost
