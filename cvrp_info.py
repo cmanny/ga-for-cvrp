@@ -9,6 +9,9 @@ class Path(object):
         self.cost = cost
         self.demand = demand
 
+    def __repr__(self):
+        return "->".join(str(n) for n in self.path)
+
 class Solution(object):
     def __init__(self, paths=[], cost=0, is_valid=False, demand=0):
         self.is_valid = is_valid
@@ -16,12 +19,16 @@ class Solution(object):
         self.cost = cost
         self.demand = demand
 
+    def __repr__(self):
+        return "\n".join([str(path) for path in self.paths])
+
 class CVRPInfo(object):
 
     def __init__(self, data_file):
         self.read_data(data_file)
         self.compute_dists()
         self.start_node = 1
+        random.seed()
 
     #the vrp file is such an awful format
     def read_data(self, data_file):
@@ -46,8 +53,8 @@ class CVRPInfo(object):
         return math.sqrt((n1[0] - n2[0])**2 + (n1[1] - n2[1])**2)
 
     def compute_dists(self):
-        self.dist = [list([-1 for _ in range(self.dimension)]) \
-                        for _ in range(self.dimension)]
+        self.dist = [list([-1 for _ in range(self.dimension + 1)]) \
+                        for _ in range(self.dimension + 1)]
         for xi in range(self.dimension):
             for yi in range(self.dimension):
                 self.dist[xi][yi] = self.compute_dist(xi, yi)
@@ -56,6 +63,7 @@ class CVRPInfo(object):
         cost = 0
         demand = 0
         is_valid = True
+        visited = set()
         for path in paths:
             if not path.is_valid:
                 is_valid = False
@@ -70,6 +78,7 @@ class CVRPInfo(object):
             return None
         cost = 0
         demand = 0
+        is_valid = True
         for i in range(1, len(node_list)):
             n1, n2 = node_list[i - 1], node_list[i]
             cost += self.dist[n1][n2]
@@ -79,6 +88,27 @@ class CVRPInfo(object):
 
         path = Path(cost=cost, demand=demand, is_valid=is_valid, path=node_list)
         return path
+
+    def make_random_solution(self):
+        unserviced = [i for i in range(2, self.dimension + 1)]
+        paths = []
+        cur_path = [1]
+        path_demand = 0
+        while unserviced:
+            rint = random.randrange(len(unserviced))
+            node = unserviced[rint]
+            if path_demand + self.demand[node] <= self.capacity:
+                cur_path += [node]
+                path_demand += self.demand[node]
+                del unserviced[rint]
+                continue
+            cur_path += [1]
+            paths += [self.make_path(cur_path)]
+            cur_path = [1]
+            path_demand = 0
+        return self.make_solution(paths)
+
+
 
 
 
@@ -92,4 +122,7 @@ class CVRPInfo(object):
         return str(strin)
 
 if __name__ == "__main__":
-    print(CVRPInfo("fruitybun250.vrp"))
+    ci = CVRPInfo("fruitybun250.vrp")
+    sol = ci.make_random_solution()
+    print(sol)
+    print("cost: " + str(sol.cost))
