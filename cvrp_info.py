@@ -1,6 +1,7 @@
 import os
 import math
 import random
+import threading
 
 class Path(object):
     def __init__(self, path=[], cost=0, is_valid=False, demand=0):
@@ -89,18 +90,22 @@ class CVRPInfo(object):
         path = Path(cost=cost, demand=demand, is_valid=is_valid, path=node_list)
         return path
 
-    def make_random_solution(self):
+    def make_random_solution(self, greedy=False):
         unserviced = [i for i in range(2, self.dimension + 1)]
+        random.shuffle(unserviced)
         paths = []
         cur_path = [1]
         path_demand = 0
         while unserviced:
-            rint = random.randrange(len(unserviced))
-            node = unserviced[rint]
+            i = 0
+            if greedy:
+                i = min([i for i in range(len(unserviced))], \
+                        key=lambda x: self.dist[cur_path[-1]][unserviced[i]])
+            node = unserviced[i]
             if path_demand + self.demand[node] <= self.capacity:
                 cur_path += [node]
                 path_demand += self.demand[node]
-                del unserviced[rint]
+                del unserviced[i]
                 continue
             cur_path += [1]
             paths += [self.make_path(cur_path)]
@@ -121,8 +126,26 @@ class CVRPInfo(object):
         }
         return str(strin)
 
+
+def worker(ci, idd, iters, res):
+    best = 1000000000
+    best_sol = None
+    for i in range(iters):
+        sol = ci.make_random_solution()
+        if sol.cost < best:
+            best = sol.cost
+            best_sol = sol
+    res[idd] = (best, sol)
+
 if __name__ == "__main__":
     ci = CVRPInfo("fruitybun250.vrp")
-    sol = ci.make_random_solution()
-    print(sol)
-    print("cost: " + str(sol.cost))
+    best = 10000000
+    threads = []
+    res = [0 for _ in range(4)]
+    for i in range(0, 4):
+        t = threading.Thread(target=worker, args=(ci, i, 10000, res))
+        threads.append(t)
+        t.start()
+    for i in range(4):
+        threads[i].join()
+    print(min(res, key = lambda x: x[0]))
