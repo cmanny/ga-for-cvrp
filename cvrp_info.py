@@ -11,7 +11,8 @@ class Path(object):
         self.demand = demand
 
     def __repr__(self):
-        return "->".join(str(n) for n in self.path)
+        return "->".join(str(n) for n in self.path) + ", cost = " + str(self.cost) \
+            + ", demand = " + str(self.demand)
 
 class Solution(object):
     def __init__(self, paths=[], cost=0, is_valid=False, demand=0):
@@ -36,7 +37,7 @@ class CVRPInfo(object):
         with open(data_file) as f:
             content = [line.rstrip("\n") for line in f.readlines()]
         self.dimension = int(content[0].split()[-1])
-        self.capacity = int(content[0].split()[-1])
+        self.capacity = int(content[1].split()[-1])
 
         self.demand = [-1 for _ in range(self.dimension + 1)]
         self.coords = [(-1, -1) for _ in range(self.dimension + 1)]
@@ -131,7 +132,7 @@ def worker(ci, idd, iters, res):
     best = 1000000000
     best_sol = None
     for i in range(iters):
-        sol = ci.make_random_solution()
+        sol = ci.make_random_solution(greedy=True)
         if sol.cost < best:
             best = sol.cost
             best_sol = sol
@@ -143,7 +144,7 @@ if __name__ == "__main__":
     threads = []
     res = [0 for _ in range(4)]
     for i in range(0, 4):
-        t = threading.Thread(target=worker, args=(ci, i, 10000, res))
+        t = threading.Thread(target=worker, args=(ci, i, 100, res))
         threads.append(t)
         t.start()
     for i in range(4):
