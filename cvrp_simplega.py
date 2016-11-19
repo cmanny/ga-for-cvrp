@@ -17,11 +17,11 @@ class CVRPSimpleGA(CVRPAlgorithm):
 
     def step(self):
         new_rand = self.info.make_random_solution()
-        heappush(self.chromo_q, (new_rand.cost, new_rand))
+        heappush(self.chromo_q, (new_rand.cost, self.info.make_from_chromosome(new_rand.chromosome)))
         best = heappop(self.chromo_q)[1]
         if best.cost < self.best_solution.cost:
             self.best_solution = best
-        return best.cost
+        return self.best_solution.cost
 
     def pmx():
         pass

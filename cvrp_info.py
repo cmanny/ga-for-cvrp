@@ -3,6 +3,21 @@ import math
 import random
 import threading
 
+class Chromosome(object):
+    def __init__(self, string):
+        self.index_map = dict()
+        for i, x in enumerate(string):
+            self.index_map[x] = i
+        self.string = string
+
+    def swap(self, a, b):
+        a_index, b_index = self.index_map[a], self.index_map[b]
+        self.string[a_index] = b
+        self.string[b_index] = a
+        self.index_map[a] = b_index
+        self.index_map[b] = a_index
+
+
 class Path(object):
     def __init__(self, path=[], cost=0, is_valid=False, demand=0):
         self.is_valid = is_valid
@@ -27,6 +42,7 @@ class Solution(object):
         self.chromosome = []
         for p in self.paths:
             self.chromosome += p.path[1:-1]
+            #print(p.path)
 
     def __repr__(self):
         return "\n".join([str(path) for path in self.paths])
@@ -127,20 +143,15 @@ class CVRPInfo(object):
         path_demand = 0
         paths = []
         for x in chromosome:
-            if path_demand + self.demand[node] <= self.capacity:
+            if path_demand + self.demand[x] <= self.capacity:
                 path += [x]
-                path_demand += self.demand[node]
+                path_demand += self.demand[x]
                 continue
             path += [1]
             paths += [self.make_path(path)]
-            path = [1]
+            path = [1, x]
+            path_demand = self.demand[x]
         return self.make_solution(paths)
-
-
-
-
-
-
 
     def __repr__(self):
         strin = {
