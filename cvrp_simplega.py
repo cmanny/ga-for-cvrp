@@ -7,11 +7,12 @@ class CVRPSimpleGA(CVRPAlgorithm):
         super(CVRPSimpleGA, self).__init__(info)
 
         #chromosomes are solutions
-        self.chromosomes = [self.info.make_random_solution() for _ in range(20)]
+        self.chromosomes = [self.info.make_random_solution() for _ in range(2000)]
         self.best_solution = self.chromosomes[0]
         self.chromo_q = []
         for x in self.chromosomes:
             heappush(self.chromo_q, (x.cost, x))
+
 
 
     def step(self):

@@ -21,6 +21,12 @@ class Solution(object):
         self.paths = paths
         self.cost = cost
         self.demand = demand
+        self.strip()
+
+    def strip(self):
+        self.strip = []
+        for p in self.paths:
+            self.strip += p.path[1:-1]
 
     def __repr__(self):
         return "\n".join([str(path) for path in self.paths])
