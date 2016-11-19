@@ -4,11 +4,9 @@ import os
 
 class CVRPRunner(object):
 
-    def __init__(self, algorithm, data_file, iterations):
+    def __init__(self, algorithm,  iterations):
         self.algorithm = algorithm
-        self.algorithm.info = CVRPInfo(data_file, debug=True)
-        self.algorithm.init()
-        self.print_cycle = 1
+        self.print_cycle = iterations / 100
         self.num_iter = iterations
 
     def run(self):
@@ -16,7 +14,8 @@ class CVRPRunner(object):
             cost = self.algorithm.step()
             if i % self.print_cycle == 0:
                 print cost
-        self.algorithm.best_solution = self.algorithm.info.make_random_solution()
+        print("Best solution: " + str(self.algorithm.best_solution))
+        print("Cost: " + str(self.algorithm.best_solution.cost))
 
     def write_to_file(self, file_name):
         text = os.linesep.join(["login cm13558 65195",
@@ -30,6 +29,6 @@ class CVRPRunner(object):
 
 
 if __name__ == "__main__":
-    cvrp = CVRPRunner(CVRPSimpleGA(), "fruitybun250.vrp", 5000)
+    cvrp = CVRPRunner(CVRPSimpleGA(CVRPInfo("fruitybun250.vrp", debug=True)), 5000)
     cvrp.run()
     cvrp.write_to_file("best-solution.txt")

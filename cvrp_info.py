@@ -134,7 +134,7 @@ def worker(ci, idd, iters, res):
     best = 1000000000
     best_sol = None
     for i in range(iters):
-        sol = ci.make_random_solution(greedy=True)
+        sol = ci.make_random_solution(greedy=False)
         if sol.cost < best:
             best = sol.cost
             best_sol = sol
@@ -146,7 +146,7 @@ if __name__ == "__main__":
     threads = []
     res = [0 for _ in range(4)]
     for i in range(0, 4):
-        t = threading.Thread(target=worker, args=(ci, i, 100, res))
+        t = threading.Thread(target=worker, args=(ci, i, 2000, res))
         threads.append(t)
         t.start()
     for i in range(4):

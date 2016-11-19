@@ -1,15 +1,26 @@
 from cvrp_algorithm import CVRPAlgorithm
 
-class CVRPSimpleGA(CVRPAlgorithm):
-    def __init__(self):
-        self.info = None
+from heapq import *
 
-    def init(self):
-        pass
+class CVRPSimpleGA(CVRPAlgorithm):
+    def __init__(self, info):
+        super(CVRPSimpleGA, self).__init__(info)
+
+        #chromosomes are solutions
+        self.chromosomes = [self.info.make_random_solution() for _ in range(20)]
+        self.best_solution = self.chromosomes[0]
+        self.chromo_q = []
+        for x in self.chromosomes:
+            heappush(self.chromo_q, (x.cost, x))
+
 
     def step(self):
-        cost = 0
-        return cost
+        new_rand = self.info.make_random_solution()
+        heappush(self.chromo_q, (new_rand.cost, new_rand))
+        best = heappop(self.chromo_q)[1]
+        if best.cost < self.best_solution.cost:
+            self.best_solution = best
+        return best.cost
 
 if __name__ == "__main__":
     print("Run cvrp_runner instead")
