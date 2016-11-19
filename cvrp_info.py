@@ -35,7 +35,7 @@ class Path(object):
     def __repr__(self):
         debug_str = ", cost = " + str(self.cost) + ", demand = " + str(self.demand)
         ret_str = "->".join(str(n) for n in self.path)
-        return ret_str + (debug_str if True else "")
+        return ret_str + (debug_str if False else "")
 
 class Solution(object):
     bad_count = 0

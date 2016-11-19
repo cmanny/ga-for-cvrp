@@ -13,6 +13,8 @@ class CVRPSimpleGA(CVRPAlgorithm):
         self.chromosomes = [self.info.make_random_solution() for _ in range(2000)]
         self.best_solution = self.chromosomes[0]
         self.chromo_q = []
+        self.zeroDelta = 0
+        self.last_best = None
         random.seed()
 
 
@@ -23,25 +25,30 @@ class CVRPSimpleGA(CVRPAlgorithm):
         best = self.chromo_q[0][1]
         self.pmx()
         if best.cost < self.best_solution.cost:
+            self.last_best = self.best_solution
             self.best_solution = best
-        #raw_input()
+        else:
+            self.zeroDelta += 1
         return self.best_solution.cost
 
     def pmx(self):
         best = [heappop(self.chromo_q)[1] for _ in range(10)]
+        if self.zeroDelta == 20:
+            for i in range(5):
+                best += [self.info.make_random_solution()]
+            self.zeroDelta = 0
         self.chromosomes = []
         random.seed()
         for i in range(len(best)):
-            for j in range(len(best)):
+            for j in range(i, len(best)):
                 start = random.randrange(0, 248)
                 end = random.randrange(0, 248)
+                while start == end:
+                    end = random.randrange(0, 248)
                 if start > end:
                     tmp = end
                     end = start
                     start = tmp
-                if start == end:
-                    start = 0
-                    end = 248
                 mum, dad = best[i], best[j]
                 baby1_chrom = copy.deepcopy(mum.chromosome)
                 baby2_chrom = copy.deepcopy(dad.chromosome)
