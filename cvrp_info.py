@@ -8,7 +8,7 @@ class Chromosome(object):
         self.index_map = dict()
         for i, x in enumerate(string):
             self.index_map[x] = i
-        for i in range(2, 250):
+        for i in range(2, 251):
 
             try:
                 d = self.index_map[i]
@@ -19,10 +19,10 @@ class Chromosome(object):
 
     def swap(self, a, b):
         a_index, b_index = self.index_map[a], self.index_map[b]
-        strcpy = list(self.string)
-        strcpy[a_index] = b
-        strcpy[b_index] = a
-        return strcpy
+        self.string[a_index] = b
+        self.string[b_index] = a
+        self.index_map[a] = b_index
+        self.index_map[b] = a_index
 
 
 class Path(object):
@@ -108,9 +108,15 @@ class CVRPInfo(object):
         for path in paths:
             if not path.is_valid:
                 is_valid = False
+            for x in path.path:
+                visited.add(x)
             cost += path.cost
             demand += path.demand
+        if len(visited) != 250:
+            print("NOT ALL VISITED")
+            print(visited)
         sol = Solution(cost=cost, demand=demand, is_valid=is_valid, paths=paths)
+        #raw_input(junk)
         return sol
 
 
@@ -132,12 +138,13 @@ class CVRPInfo(object):
 
     def make_random_solution(self, greedy=False):
         unserviced = [i for i in range(2, self.dimension + 1)]
-        print(unserviced)
+        #print(unserviced)
         random.shuffle(unserviced)
         paths = []
         cur_path = [1]
         path_demand = 0
         while unserviced:
+            #print(unserviced)
             i = 0
             if greedy:
                 i = min([i for i in range(len(unserviced))], \
@@ -146,12 +153,15 @@ class CVRPInfo(object):
             if path_demand + self.demand[node] <= self.capacity:
                 cur_path += [node]
                 path_demand += self.demand[node]
+                #print(cur_path)
                 del unserviced[i]
                 continue
             cur_path += [1]
             paths += [self.make_path(cur_path)]
             cur_path = [1]
             path_demand = 0
+        paths += [self.make_path(cur_path + [1])]
+        junk = ""
         return self.make_solution(paths)
 
     def make_from_string(self, chromosome):
@@ -167,6 +177,7 @@ class CVRPInfo(object):
             paths += [self.make_path(path)]
             path = [1, x]
             path_demand = self.demand[x]
+        paths += [self.make_path(path + [1])]
         return self.make_solution(paths)
 
     def __repr__(self):
