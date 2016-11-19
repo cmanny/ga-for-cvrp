@@ -21,12 +21,12 @@ class Solution(object):
         self.paths = paths
         self.cost = cost
         self.demand = demand
-        self.strip()
+        self.chromise()
 
-    def strip(self):
-        self.strip = []
+    def chromise(self):
+        self.chromosome = []
         for p in self.paths:
-            self.strip += p.path[1:-1]
+            self.chromosome += p.path[1:-1]
 
     def __repr__(self):
         return "\n".join([str(path) for path in self.paths])
@@ -121,6 +121,21 @@ class CVRPInfo(object):
             cur_path = [1]
             path_demand = 0
         return self.make_solution(paths)
+
+    def make_from_chromosome(self, chromosome):
+        path = [1]
+        path_demand = 0
+        paths = []
+        for x in chromosome:
+            if path_demand + self.demand[node] <= self.capacity:
+                path += [x]
+                path_demand += self.demand[node]
+                continue
+            path += [1]
+            paths += [self.make_path(path)]
+            path = [1]
+        return self.make_solution(paths)
+
 
 
 

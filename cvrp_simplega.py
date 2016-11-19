@@ -7,7 +7,7 @@ class CVRPSimpleGA(CVRPAlgorithm):
         super(CVRPSimpleGA, self).__init__(info)
 
         #chromosomes are solutions
-        self.chromosomes = [self.info.make_random_solution() for _ in range(2000)]
+        self.chromosomes = [self.info.make_random_solution() for _ in range(5)]
         self.best_solution = self.chromosomes[0]
         self.chromo_q = []
         for x in self.chromosomes:
@@ -22,6 +22,9 @@ class CVRPSimpleGA(CVRPAlgorithm):
         if best.cost < self.best_solution.cost:
             self.best_solution = best
         return best.cost
+
+    def pmx():
+        pass
 
 if __name__ == "__main__":
     print("Run cvrp_runner instead")
