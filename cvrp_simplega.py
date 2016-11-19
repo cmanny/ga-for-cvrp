@@ -1,7 +1,6 @@
 from cvrp_algorithm import CVRPAlgorithm
 import random
 import copy
-import threading
 
 from heapq import *
 
@@ -11,31 +10,39 @@ class CVRPSimpleGA(CVRPAlgorithm):
 
         #chromosomes are solutions
         self.mutate_prob = 0.001
-        self.chromosomes = [self.info.make_random_solution() for _ in range(2000)]
+        self.randomize(1000)
         self.best_solution = self.chromosomes[0]
         self.chromo_q = []
         self.zeroDelta = 0
         self.last_best = None
         random.seed()
 
+    def get_best(self):
+        return self.best_solution
 
-    def step(self):
-        self.chromo_q = []
-        for x in self.chromosomes:
-            heappush(self.chromo_q, (x.cost, x))
-        best = self.chromo_q[0][1]
-        self.pmx()
-        if best.cost < self.best_solution.cost:
-            self.last_best = self.best_solution
-            self.best_solution = best
-        else:
-            self.zeroDelta += 1
-        return self.best_solution.cost
+    def randomize(self, num):
+        self.chromosomes = [self.info.make_random_solution() for _ in range(num)]
+
+    def step(self, num_iters):
+        i = 0
+        while i < num_iters:
+            self.chromo_q = []
+            for x in self.chromosomes:
+                heappush(self.chromo_q, (x.cost, x))
+            best = self.chromo_q[0][1]
+            self.pmx()
+            if best.cost < self.best_solution.cost:
+                self.last_best = self.best_solution
+                self.best_solution = best
+            else:
+                self.zeroDelta += 1
+            i += 1
+        return self.best_solution
 
     def pmx(self):
         best = [heappop(self.chromo_q)[1] for _ in range(10)]
-        if self.zeroDelta == 4:
-            for i in range(2):
+        if self.zeroDelta == 10:
+            for i in range(5):
                 best += [self.info.make_random_solution()]
             self.zeroDelta = 0
         self.chromosomes = []
