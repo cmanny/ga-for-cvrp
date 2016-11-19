@@ -11,8 +11,9 @@ class Path(object):
         self.demand = demand
 
     def __repr__(self):
-        return "->".join(str(n) for n in self.path) + ", cost = " + str(self.cost) \
-            + ", demand = " + str(self.demand)
+        debug_str = ", cost = " + str(self.cost) + ", demand = " + str(self.demand)
+        ret_str = "->".join(str(n) for n in self.path)
+        return ret_str + (debug_str if True else "")
 
 class Solution(object):
     def __init__(self, paths=[], cost=0, is_valid=False, demand=0):
@@ -26,10 +27,11 @@ class Solution(object):
 
 class CVRPInfo(object):
 
-    def __init__(self, data_file):
+    def __init__(self, data_file, debug=False):
         self.read_data(data_file)
         self.compute_dists()
         self.start_node = 1
+        self.debug = debug
         random.seed()
 
     #the vrp file is such an awful format
@@ -101,7 +103,7 @@ class CVRPInfo(object):
             i = 0
             if greedy:
                 i = min([i for i in range(len(unserviced))], \
-                        key=lambda x: self.dist[cur_path[-1]][unserviced[i]])
+                        key=lambda x: self.dist[1][unserviced[i]])
             node = unserviced[i]
             if path_demand + self.demand[node] <= self.capacity:
                 cur_path += [node]

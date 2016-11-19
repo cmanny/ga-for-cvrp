@@ -5,6 +5,7 @@ class CVRPAlgorithm(object):
         self.info = info
         self.best_paths = []
         self.best_cost = 1000000
+        self.best_solution = None
 
     def random_path():
         pass
