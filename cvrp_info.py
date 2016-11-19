@@ -8,14 +8,21 @@ class Chromosome(object):
         self.index_map = dict()
         for i, x in enumerate(string):
             self.index_map[x] = i
+        for i in range(2, 250):
+
+            try:
+                d = self.index_map[i]
+            except KeyError:
+                print(i)
+                raise KeyError
         self.string = string
 
     def swap(self, a, b):
         a_index, b_index = self.index_map[a], self.index_map[b]
-        self.string[a_index] = b
-        self.string[b_index] = a
-        self.index_map[a] = b_index
-        self.index_map[b] = a_index
+        strcpy = list(self.string)
+        strcpy[a_index] = b
+        strcpy[b_index] = a
+        return strcpy
 
 
 class Path(object):
@@ -31,6 +38,8 @@ class Path(object):
         return ret_str + (debug_str if True else "")
 
 class Solution(object):
+    bad_count = 0
+
     def __init__(self, paths=[], cost=0, is_valid=False, demand=0):
         self.is_valid = is_valid
         self.paths = paths
@@ -39,9 +48,15 @@ class Solution(object):
         self.chromise()
 
     def chromise(self):
-        self.chromosome = []
+        string = []
         for p in self.paths:
-            self.chromosome += p.path[1:-1]
+            string += p.path[1:-1]
+        try:
+            self.chromosome = Chromosome(string)
+        except KeyError:
+            print("bad" + str(self))
+            Solution.bad_count += 1
+            print(Solution.bad_count)
             #print(p.path)
 
     def __repr__(self):
@@ -117,6 +132,7 @@ class CVRPInfo(object):
 
     def make_random_solution(self, greedy=False):
         unserviced = [i for i in range(2, self.dimension + 1)]
+        print(unserviced)
         random.shuffle(unserviced)
         paths = []
         cur_path = [1]
@@ -138,7 +154,7 @@ class CVRPInfo(object):
             path_demand = 0
         return self.make_solution(paths)
 
-    def make_from_chromosome(self, chromosome):
+    def make_from_string(self, chromosome):
         path = [1]
         path_demand = 0
         paths = []
