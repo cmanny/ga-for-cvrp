@@ -1,6 +1,7 @@
 from cvrp_algorithm import CVRPAlgorithm
 import random
 import copy
+import threading
 
 from heapq import *
 
@@ -33,8 +34,8 @@ class CVRPSimpleGA(CVRPAlgorithm):
 
     def pmx(self):
         best = [heappop(self.chromo_q)[1] for _ in range(10)]
-        if self.zeroDelta == 20:
-            for i in range(5):
+        if self.zeroDelta == 4:
+            for i in range(2):
                 best += [self.info.make_random_solution()]
             self.zeroDelta = 0
         self.chromosomes = []
@@ -46,9 +47,7 @@ class CVRPSimpleGA(CVRPAlgorithm):
                 while start == end:
                     end = random.randrange(0, 248)
                 if start > end:
-                    tmp = end
-                    end = start
-                    start = tmp
+                    start, end = end, start
                 mum, dad = best[i], best[j]
                 baby1_chrom = copy.deepcopy(mum.chromosome)
                 baby2_chrom = copy.deepcopy(dad.chromosome)
