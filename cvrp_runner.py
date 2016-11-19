@@ -6,7 +6,7 @@ class CVRPRunner(object):
 
     def __init__(self, algorithm,  iterations):
         self.algorithm = algorithm
-        self.print_cycle = iterations / 100
+        self.print_cycle = 1
         self.num_iter = iterations
 
     def run(self):
