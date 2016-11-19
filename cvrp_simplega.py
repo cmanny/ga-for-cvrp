@@ -37,6 +37,7 @@ class CVRPSimpleGA(CVRPAlgorithm):
         if self.zeroDelta == 4:
             for i in range(2):
                 best += [self.info.make_random_solution()]
+            best = [self.info.optimise_path_order(x) for x in best]
             self.zeroDelta = 0
         self.chromosomes = []
         random.seed()

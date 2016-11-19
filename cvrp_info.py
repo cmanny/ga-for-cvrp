@@ -180,6 +180,13 @@ class CVRPInfo(object):
         paths += [self.make_path(path + [1])]
         return self.make_solution(paths)
 
+    def optimise_path_order(self, solution):
+        paths = []
+        for path in solution.paths:
+            ordered = sorted([x for x in path.path[1:-1]], key = lambda x: self.dist[1][x])
+            paths += [self.make_path([1] + ordered  + [1])]
+        return self.make_solution(paths)
+
     def __repr__(self):
         strin = {
             "coords" : self.coords,
@@ -187,6 +194,8 @@ class CVRPInfo(object):
             #"dists"  : self.dist
         }
         return str(strin)
+
+
 
 
 def worker(ci, idd, iters, res):
