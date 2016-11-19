@@ -15,7 +15,7 @@ def Manager():
 
 MyManager.register('CVRPSimpleGA', CVRPSimpleGA)
 
-def run_thread(which, i_step):
+def run_thread((which, i_step)):
     which.step(i_step)
 
 class CVRPRunner(object):
@@ -31,16 +31,13 @@ class CVRPRunner(object):
         self.best_solutions = [0,0,0,0]
         self.print_cycle = 1
         self.num_iter = iterations
-        self.iter_step = 2
+        self.iter_step = iterations / 10
 
     def run(self):
+        pool = multiprocessing.Pool(4)
         for i in range(0, self.num_iter, self.iter_step):
             print("Iteration: " + str(i))
-            pool = multiprocessing.Pool(multiprocessing.cpu_count())
-            for i in range(4):
-                pool.apply(func=run_thread, args=(self.algorithms[i],self.iter_step))
-            pool.close()
-            pool.join()
+            pool.map(run_thread, [(self.algorithms[i], self.iter_step) for i in range(4)])
             for j in range(4):
                 self.best_solutions[j] = self.algorithms[j].get_best()
                 print("Thread " + str(j) + " : " + str(self.best_solutions[j].cost))
@@ -62,6 +59,6 @@ class CVRPRunner(object):
 
 
 if __name__ == "__main__":
-    cvrp = CVRPRunner(CVRPSimpleGA(CVRPInfo("fruitybun250.vrp", debug=True)), 100)
+    cvrp = CVRPRunner(CVRPSimpleGA(CVRPInfo("fruitybun250.vrp", debug=True)), 1000)
     cvrp.run()
     cvrp.write_to_file("best-solution.txt")
