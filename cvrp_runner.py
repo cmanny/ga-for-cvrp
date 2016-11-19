@@ -11,9 +11,9 @@ class CVRPRunner(object):
 
     def run(self):
         for i in range(self.num_iter):
-            cost = self.algorithm.step()
+            best = self.algorithm.step()
             if i % self.print_cycle == 0:
-                print cost
+                print best.cost
         print("Best solution: " + str(self.algorithm.best_solution))
         print("Cost: " + str(self.algorithm.best_solution.cost))
 
@@ -29,6 +29,6 @@ class CVRPRunner(object):
 
 
 if __name__ == "__main__":
-    cvrp = CVRPRunner(CVRPSimpleGA(CVRPInfo("fruitybun250.vrp", debug=True), 4), 10000)
+    cvrp = CVRPRunner(CVRPSimpleGA(CVRPInfo("fruitybun250.vrp", debug=True), 1), 10000)
     cvrp.run()
     cvrp.write_to_file("best-solution.txt")

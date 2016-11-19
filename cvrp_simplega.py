@@ -8,7 +8,7 @@ from heapq import *
 class CVRPPopulation(object):
     def __init__(self, info):
         self.info = info
-        self.mutate_prob = 0.005
+        self.mutate_prob = 0.003
         self.chromosomes = [self.info.make_random_solution() for _ in range(2000)]
         self.best_solution = self.chromosomes[0]
         self.chromo_q = []
@@ -16,13 +16,11 @@ class CVRPPopulation(object):
         self.last_best = None
         self.iters = 0
         self.change_diffs = []
+        self.injected_chroms = []
         random.seed()
 
     def step(self):
         self.iters += 1
-        if self.iters % 100 == 0:
-            for c in self.chromosomes:
-                print(",".join([str(x) for x in c.chromosome.string]))
         self.chromo_q = []
         for x in self.chromosomes:
             heappush(self.chromo_q, (x.cost, x))
@@ -34,16 +32,16 @@ class CVRPPopulation(object):
             self.change_diffs.append(self.best_solution.cost - self.last_best.cost)
         else:
             self.zeroDelta += 1
-        return (self.best_solution.cost, self.change_diffs[-1] / sum(self.change_diffs))
+        return (self.best_solution, self.change_diffs[-1] / sum(self.change_diffs))
 
     def pmx(self):
-        best = [heappop(self.chromo_q)[1] for _ in range(10)]
+        best = [heappop(self.chromo_q)[1] for _ in range(4)] + self.injected_chroms
         if self.zeroDelta == 4:
-            for i in range(2):
-                best += [self.info.make_random_solution()]
+             for i in range(4):
+                 best += [self.info.make_random_solution()]
             #best = [self.info.optimise_path_order(x) for x in best]
-            self.zeroDelta = 0
-        self.chromosomes = []
+             self.zeroDelta = 0
+        self.chromosomes = [best[0]]
         random.seed()
         for i in range(len(best)):
             for j in range(i, len(best)):
@@ -81,10 +79,16 @@ class CVRPSimpleGA(CVRPAlgorithm):
         self.populations = [CVRPPopulation(self.info) for _ in range(num_populations)]
         self.pop_bests = [0 for _ in range(num_populations)]
     def step(self):
+        if self.populations[0].iters % 10 == 0:
+            for p in self.populations:
+                c = p.chromosomes[0]
+                #print(",".join([str(x) for x in c.chromosome.string]))
         for i, pop in enumerate(self.populations):
             self.pop_bests[i], ratio = pop.step()
-            print(ratio)
-        return min(self.pop_bests)
+        return min(self.pop_bests, key = lambda x: x.cost)
+
+    def inject_population(self, pop_to_inject, chroms):
+        pop_to_inject.injected_chroms = chroms
 
 
 if __name__ == "__main__":
