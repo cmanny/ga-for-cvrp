@@ -5,21 +5,24 @@ import threading
 
 from heapq import *
 
-class CVRPSimpleGA(CVRPAlgorithm):
+class CVRPPopulation(object):
     def __init__(self, info):
-        super(CVRPSimpleGA, self).__init__(info)
-
-        #chromosomes are solutions
-        self.mutate_prob = 0.001
+        self.info = info
+        self.mutate_prob = 0.005
         self.chromosomes = [self.info.make_random_solution() for _ in range(2000)]
         self.best_solution = self.chromosomes[0]
         self.chromo_q = []
         self.zeroDelta = 0
         self.last_best = None
+        self.iters = 0
+        self.change_diffs = []
         random.seed()
 
-
     def step(self):
+        self.iters += 1
+        if self.iters % 100 == 0:
+            for c in self.chromosomes:
+                print(",".join([str(x) for x in c.chromosome.string]))
         self.chromo_q = []
         for x in self.chromosomes:
             heappush(self.chromo_q, (x.cost, x))
@@ -28,16 +31,17 @@ class CVRPSimpleGA(CVRPAlgorithm):
         if best.cost < self.best_solution.cost:
             self.last_best = self.best_solution
             self.best_solution = best
+            self.change_diffs.append(self.best_solution.cost - self.last_best.cost)
         else:
             self.zeroDelta += 1
-        return self.best_solution.cost
+        return (self.best_solution.cost, self.change_diffs[-1] / sum(self.change_diffs))
 
     def pmx(self):
         best = [heappop(self.chromo_q)[1] for _ in range(10)]
         if self.zeroDelta == 4:
             for i in range(2):
                 best += [self.info.make_random_solution()]
-            best = [self.info.optimise_path_order(x) for x in best]
+            #best = [self.info.optimise_path_order(x) for x in best]
             self.zeroDelta = 0
         self.chromosomes = []
         random.seed()
@@ -68,6 +72,19 @@ class CVRPSimpleGA(CVRPAlgorithm):
             if random.uniform(0, 1) <= self.mutate_prob:
                 rint = random.randrange(0, 248)
                 chromosome.swap(chromosome.string[i], chromosome.string[rint])
+
+
+class CVRPSimpleGA(CVRPAlgorithm):
+    def __init__(self, info, num_populations):
+        super(CVRPSimpleGA, self).__init__(info)
+
+        self.populations = [CVRPPopulation(self.info) for _ in range(num_populations)]
+        self.pop_bests = [0 for _ in range(num_populations)]
+    def step(self):
+        for i, pop in enumerate(self.populations):
+            self.pop_bests[i], ratio = pop.step()
+            print(ratio)
+        return min(self.pop_bests)
 
 
 if __name__ == "__main__":
