@@ -8,7 +8,7 @@ class Chromosome(object):
         self.index_map = dict()
         for i, x in enumerate(string):
             self.index_map[x] = i
-        for i in range(2, 251):
+        for i in range(2, 76):
 
             try:
                 d = self.index_map[i]
@@ -112,7 +112,7 @@ class CVRPInfo(object):
                 visited.add(x)
             cost += path.cost
             demand += path.demand
-        if len(visited) != 250:
+        if len(visited) != self.dimension:
             print("NOT ALL VISITED")
             print(visited)
         sol = Solution(cost=cost, demand=demand, is_valid=is_valid, paths=paths)

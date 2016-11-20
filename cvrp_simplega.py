@@ -53,10 +53,10 @@ class CVRPPopulation(object):
         random.seed()
         for i in range(len(best)):
             for j in range(i, len(best)):
-                start = random.randrange(0, 248)
-                end = random.randrange(0, 248)
+                start = random.randrange(0, self.info.dimension - 2)
+                end = random.randrange(0, self.info.dimension - 2)
                 while start == end:
-                    end = random.randrange(0, 248)
+                    end = random.randrange(0, self.info.dimension - 2)
                 if start > end:
                     start, end = end, start
                 mum, dad = best[i], best[j]
@@ -76,7 +76,7 @@ class CVRPPopulation(object):
     def mutate(self, chromosome):
         for i in range(len(chromosome.string)):
             if random.uniform(0, 1) <= self.mutate_prob:
-                rint = random.randrange(0, 248)
+                rint = random.randrange(0, self.info.dimension - 2)
                 chromosome.swap(chromosome.string[i], chromosome.string[rint])
 
 
