@@ -5,7 +5,7 @@ import threading
 
 from heapq import *
 
-class CVRPPopulation(object):
+class CVRPSimplePopulation(object):
     def __init__(self, info):
         self.info = info
         self.mutate_prob = 0.009
@@ -84,7 +84,7 @@ class CVRPSimpleGA(CVRPAlgorithm):
     def __init__(self, info, num_populations):
         super(CVRPSimpleGA, self).__init__(info)
 
-        self.populations = [CVRPPopulation(self.info) for _ in range(num_populations)]
+        self.populations = [CVRPSimplePopulation(self.info) for _ in range(num_populations)]
         self.pop_bests = [0 for _ in range(num_populations)]
     def step(self):
         if self.populations[0].iters % 10 == 0:
