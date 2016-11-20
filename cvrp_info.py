@@ -218,7 +218,8 @@ class CVRPInfo(object):
             nodes = path.path
             norm = lambda x, y: (2*x + 250, 2*y + 250)
             draw.line([norm(*self.coords[n]) for n in nodes], fill=(r_c*i, g_c*i, b_c*i), width=2)
-        im.show()
+        return im
+
 
 
 

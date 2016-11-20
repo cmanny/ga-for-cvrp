@@ -10,10 +10,14 @@ class CVRPRunner(object):
         self.num_iter = iterations
 
     def run(self):
+        self.im = None
         for i in range(self.num_iter):
             best = self.algorithm.step()
             if i % self.print_cycle == 0:
                 print best.cost
+            if i % 100:
+                self.im = self.algorithm.info.visualise(self.algorithm.best_solution)
+                self.im.save("images/"+str(self.algorithm.best_solution.cost) + ".png")
         print("Best solution: " + str(self.algorithm.best_solution))
         print("Cost: " + str(self.algorithm.best_solution.cost))
 
