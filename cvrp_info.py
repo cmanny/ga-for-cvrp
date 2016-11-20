@@ -8,13 +8,6 @@ class Chromosome(object):
         self.index_map = dict()
         for i, x in enumerate(string):
             self.index_map[x] = i
-        for i in range(2, 76):
-
-            try:
-                d = self.index_map[i]
-            except KeyError:
-                print(i)
-                raise KeyError
         self.string = string
 
     def swap(self, a, b):
@@ -211,6 +204,9 @@ class CVRPInfo(object):
             f.write(distance_str)
         with open("capacities.py", "w") as f:
             f.write(capacity_str)
+
+    def visualise(self, solution):
+        for path in solution.paths:
 
 
 
