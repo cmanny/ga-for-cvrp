@@ -2,6 +2,7 @@ import os
 import math
 import random
 import threading
+from PIL import Image, ImageDraw
 
 class Chromosome(object):
     def __init__(self, string):
@@ -206,7 +207,21 @@ class CVRPInfo(object):
             f.write(capacity_str)
 
     def visualise(self, solution):
-        for path in solution.paths:
+
+        im = Image.new( 'RGB', (500,500), "black") # create a new black image
+        draw = ImageDraw.Draw(im)
+        color = (0, 0, 0)
+        for i, path in enumerate(solution.paths):
+            r_c = 255 % (i + 1)
+            g_c = 255 % (r_c + 1)
+            b_c = 255 % (g_c + 1)
+            nodes = path.path
+            norm = lambda x, y: (2*x + 250, 2*y + 250)
+            draw.line([norm(*self.coords[n]) for n in nodes], fill=(r_c*i, g_c*i, b_c*i), width=2)
+        im.show()
+
+
+
 
 
 
@@ -226,14 +241,15 @@ def worker(ci, idd, iters, res):
 
 if __name__ == "__main__":
     ci = CVRPInfo("fruitybun250.vrp")
-    ci.write_infos()
-    best = 10000000
-    threads = []
-    res = [0 for _ in range(4)]
-    for i in range(0, 4):
-        t = threading.Thread(target=worker, args=(ci, i, 2000, res))
-        threads.append(t)
-        t.start()
-    for i in range(4):
-        threads[i].join()
-    print(min(res, key = lambda x: x[0]))
+    ci.visualise(ci.make_random_solution())
+    # ci.write_infos()
+    # best = 10000000
+    # threads = []
+    # res = [0 for _ in range(4)]
+    # for i in range(0, 4):
+    #     t = threading.Thread(target=worker, args=(ci, i, 2000, res))
+    #     threads.append(t)
+    #     t.start()
+    # for i in range(4):
+    #     threads[i].join()
+    # print(min(res, key = lambda x: x[0]))
