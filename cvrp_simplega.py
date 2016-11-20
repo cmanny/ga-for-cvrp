@@ -8,7 +8,7 @@ from heapq import *
 class CVRPPopulation(object):
     def __init__(self, info):
         self.info = info
-        self.mutate_prob = 0.003
+        self.mutate_prob = 0.009
         self.chromosomes = [self.info.make_random_solution() for _ in range(2000)]
         self.best_solution = self.chromosomes[0]
         self.chromo_q = []
@@ -30,17 +30,25 @@ class CVRPPopulation(object):
             self.last_best = self.best_solution
             self.best_solution = best
             self.change_diffs.append(self.best_solution.cost - self.last_best.cost)
+            self.zeroDelta = 0
         else:
             self.zeroDelta += 1
         return (self.best_solution, self.change_diffs[-1] / sum(self.change_diffs))
 
     def pmx(self):
         best = [heappop(self.chromo_q)[1] for _ in range(4)] + self.injected_chroms
-        if self.zeroDelta == 4:
-             for i in range(4):
-                 best += [self.info.make_random_solution()]
+        if self.zeroDelta and self.zeroDelta % 10 == 0:
+            self.mutate_prob = 0.003
+            add = 0
+            if self.zeroDelta % 50 == 0:
+                add = 8
+                self.zeroDelta = 0
+            if self.zeroDelta % 100 == 0:
+                add = 14
+            for i in range(2 + add):
+                best += [self.info.make_random_solution()]
+
             #best = [self.info.optimise_path_order(x) for x in best]
-             self.zeroDelta = 0
         self.chromosomes = [best[0]]
         random.seed()
         for i in range(len(best)):
@@ -85,7 +93,8 @@ class CVRPSimpleGA(CVRPAlgorithm):
                 #print(",".join([str(x) for x in c.chromosome.string]))
         for i, pop in enumerate(self.populations):
             self.pop_bests[i], ratio = pop.step()
-        return min(self.pop_bests, key = lambda x: x.cost)
+        self.best_solution = min(self.pop_bests, key = lambda x: x.cost)
+        return self.best_solution
 
     def inject_population(self, pop_to_inject, chroms):
         pop_to_inject.injected_chroms = chroms

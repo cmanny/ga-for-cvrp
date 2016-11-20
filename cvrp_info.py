@@ -195,6 +195,26 @@ class CVRPInfo(object):
         }
         return str(strin)
 
+    def write_infos(self):
+        distance_str = "distances = {"
+        for i in range(len(self.dist)):
+            distance_str += str(i) + ": {"
+            for j in range(len(self.dist[i])):
+                distance_str += str(j) + ":" + str(self.dist[i][j]) + ","
+            distance_str += "},"
+        distance_str += "}"
+        capacity_str = "capacities = {"
+        for i, v in enumerate(self.demand):
+            capacity_str += str(i) + ":" + str(v) + ","
+        capacity_str += "}"
+        with open("distances.py", "w") as f:
+            f.write(distance_str)
+        with open("capacities.py", "w") as f:
+            f.write(capacity_str)
+
+
+
+
 
 
 
@@ -210,6 +230,7 @@ def worker(ci, idd, iters, res):
 
 if __name__ == "__main__":
     ci = CVRPInfo("fruitybun250.vrp")
+    ci.write_infos()
     best = 10000000
     threads = []
     res = [0 for _ in range(4)]
