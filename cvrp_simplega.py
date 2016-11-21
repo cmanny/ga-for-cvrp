@@ -17,6 +17,7 @@ class SGAPopulation(object):
         self.iters = 0
         self.change_diffs = []
         self.injected_chroms = []
+        self.pop = 4
         random.seed()
 
     def step(self):
@@ -36,11 +37,12 @@ class SGAPopulation(object):
         return (self.best_solution, self.change_diffs[-1] / sum(self.change_diffs))
 
     def pmx(self):
-        best = [heappop(self.chromo_q)[1] for _ in range(4)] + self.injected_chroms
+        best = [heappop(self.chromo_q)[1] for _ in range(self.pop)] + self.injected_chroms
         if self.zeroDelta and self.zeroDelta % 10 == 0:
             add = 0
             if self.zeroDelta % 50 == 0:
                 add = 8
+                self.pop = min(self.pop + 1, 40)
                 self.zeroDelta = 0
             if self.zeroDelta % 100 == 0:
                 add = 14

@@ -36,7 +36,7 @@ class AGAPopulation(object):
         return (self.best_solution, self.change_diffs[-1] / sum(self.change_diffs))
 
     def pmx(self):
-        best = [heappop(self.chromo_q)[1] for _ in range(4)] + self.injected_chroms
+        best = [heappop(self.chromo_q)[1] for _ in range(10)] + self.injected_chroms
         if self.zeroDelta and self.zeroDelta % 10 == 0:
             add = 0
             if self.zeroDelta % 50 == 0:
@@ -48,36 +48,83 @@ class AGAPopulation(object):
                 best += [self.info.make_random_solution()]
 
             #best = [self.info.optimise_path_order(x) for x in best]
-        self.chromosomes = [best[0]]
+        self.chromosomes = []
         random.seed()
         for i in range(len(best)):
             for j in range(i, len(best)):
-                start = random.randrange(0, self.info.dimension - 2)
-                end = random.randrange(0, self.info.dimension - 2)
-                while start == end:
-                    end = random.randrange(0, self.info.dimension - 2)
-                if start > end:
-                    start, end = end, start
                 mum, dad = best[i], best[j]
                 baby1_chrom = copy.deepcopy(mum.chromosome)
                 baby2_chrom = copy.deepcopy(dad.chromosome)
-                for k in range(start, end):
-                    mum_g, dad_g = mum.chromosome.string[k], dad.chromosome.string[k]
-                    baby1_chrom.swap(mum_g, dad_g)
-                    baby2_chrom.swap(mum_g, dad_g)
+                if random.uniform(0,1) < 0.75:
+                    start, end = self.rand_points(0, self.info.dimension - 2)
+                    for k in range(start, end):
+                        mum_g, dad_g = mum.chromosome.string[k], dad.chromosome.string[k]
+                        baby1_chrom.swap(mum_g, dad_g)
+                        baby2_chrom.swap(mum_g, dad_g)
+                else:
+                    self.swap_node(baby1_chrom)
+                    self.swap_node(baby2_chrom)
                 self.mutate(baby1_chrom)
                 self.mutate(baby2_chrom)
                 baby1 = self.info.make_from_string(baby1_chrom.string)
                 baby2 = self.info.make_from_string(baby2_chrom.string)
                 self.chromosomes += [baby1, baby2]
-        #print("-".join([str(x.cost) for x in self.chromosomes]))
 
-    def mutate(self, chromosome):
+    def rand_points(self, low, high):
+        start = random.randrange(low, high)
+        end = random.randrange(low, high)
+        while start == end:
+            end = random.randrange(low, high)
+        if start > end:
+            start, end = end, start
+        return start, end
+
+    def swap_many_nodes(self, chromosome):
         for i in range(len(chromosome.string)):
             if random.uniform(0, 1) <= self.mutate_prob:
-                rint = random.randrange(0, self.info.dimension - 2)
-                chromosome.swap(chromosome.string[i], chromosome.string[rint])
+                self.swap_node(chromosome)
 
+    def swap_node(self, chromosome):
+        rint = random.randrange(0, self.info.dimension - 2)
+        rint2 = random.randrange(0, self.info.dimension - 2)
+        chromosome.swap(chromosome.string[rint2], chromosome.string[rint])
+
+    #mutations
+    def inversion(self, chromosome):
+        start, end = self.rand_points(0, self.info.dimension - 2)
+        cs = chromosome.string
+        new_string = cs[0:start] + cs[start:end][::-1] + cs[end:self.info.dimension - 1]
+        if len(new_string) != len(cs):
+            print(start)
+            print(end)
+            print(len(new_string))
+            print(len(cs))
+            print(cs)
+            print(new_string)
+            print([x - y for x, y in zip(cs, new_string)])
+            #raw_input()
+        chromosome.string = new_string
+
+    def swap_sequence(self, chromosome):
+        fs, fe = self.rand_points(0, self.info.dimension - 2)
+        if fe == 247:
+            fe -= 7
+        ss, se = self.rand_points(fe, self.info.dimension - 2)
+        cs = chromosome.string
+        new_str = cs[0:fs] + cs[ss:se] + cs[fe:ss] + cs[fs:fe] + cs[se:self.info.dimension - 2]
+        if len(cs) != len(new_string):
+            print(cs)
+            print(new_string)
+            print([x - y for x in cs for y in new_string])
+            raw_input()
+        chromosome.string = new_str
+
+
+    def mutate(self, chromosome):
+        if random.uniform(0, 1) < 0.5:
+            self.inversion(chromosome)
+        else:
+            pass
 
 class CVRPAdvancedGA(CVRPAlgorithm):
     def __init__(self, info, num_populations):

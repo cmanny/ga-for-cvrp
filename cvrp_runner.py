@@ -1,5 +1,6 @@
 from cvrp_info import CVRPInfo
 from cvrp_simplega import CVRPSimpleGA
+from cvrp_advancedga import CVRPAdvancedGA
 import os
 import time
 
@@ -7,7 +8,7 @@ class CVRPRunner(object):
 
     def __init__(self, algorithm,  iterations):
         self.algorithm = algorithm
-        self.print_cycle = 100
+        self.print_cycle = 10
         self.num_iter = iterations
         self.timings_file = open("timings/timings_{}.txt".format(time.time()), "w")
 
@@ -41,6 +42,6 @@ class CVRPRunner(object):
 
 
 if __name__ == "__main__":
-    cvrp = CVRPRunner(CVRPSimpleGA(CVRPInfo("fruitybun250.vrp", debug=True), 1), 500000)
+    cvrp = CVRPRunner(CVRPAdvancedGA(CVRPInfo("validate/fruitybun250.vrp", debug=True), 1), 500000)
     cvrp.run()
-    cvrp.write_to_file("best-solution.txt")
+    cvrp.write_to_file("validate/best-solution.txt")
