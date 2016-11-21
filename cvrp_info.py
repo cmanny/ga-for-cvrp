@@ -12,6 +12,7 @@ class Chromosome(object):
         self.string = string
         self.hash = hash(",".join(str(x) for x in self.string))
 
+
     def swap(self, a, b):
         a_index, b_index = self.index_map[a], self.index_map[b]
         self.string[a_index] = b
@@ -20,42 +21,46 @@ class Chromosome(object):
         self.index_map[b] = a_index
 
 
-class Path(object):
-    def __init__(self, path=[], cost=0, is_valid=False, demand=0):
+class Route(object):
+    def __init__(self, route=[], cost=0, is_valid=False, demand=0):
         self.is_valid = is_valid
-        self.path = path
+        self.route = route
         self.cost = cost
         self.demand = demand
 
     def __repr__(self):
         debug_str = ", cost = " + str(self.cost) + ", demand = " + str(self.demand)
-        ret_str = "->".join(str(n) for n in self.path)
+        ret_str = "->".join(str(n) for n in self.route)
         return ret_str + (debug_str if False else "")
 
 class Solution(object):
     bad_count = 0
 
-    def __init__(self, paths=[], cost=0, is_valid=False, demand=0):
+    def __init__(self, routes=[], cost=0, is_valid=False, demand=0):
         self.is_valid = is_valid
-        self.paths = paths
+        self.routes = routes
         self.cost = cost
         self.demand = demand
         self.chromise()
 
+    def shuffle(self):
+        random.shuffle(self.routes)
+        self.chromise()
+
     def chromise(self):
         string = []
-        for p in self.paths:
-            string += p.path[1:-1]
+        for p in self.routes:
+            string += p.route[1:-1]
         try:
             self.chromosome = Chromosome(string)
         except KeyError:
             print("bad" + str(self))
             Solution.bad_count += 1
             print(Solution.bad_count)
-            #print(p.path)
+            #print(p.route)
 
     def __repr__(self):
-        return "\n".join([str(path) for path in self.paths])
+        return "\n".join([str(route) for route in self.routes])
 
 class CVRPInfo(object):
 
@@ -95,27 +100,27 @@ class CVRPInfo(object):
             for yi in range(self.dimension):
                 self.dist[xi][yi] = self.compute_dist(xi, yi)
 
-    def make_solution(self, paths):
+    def make_solution(self, routes):
         cost = 0
         demand = 0
         is_valid = True
         visited = set()
-        for path in paths:
-            if not path.is_valid:
+        for route in routes:
+            if not route.is_valid:
                 is_valid = False
-            for x in path.path:
+            for x in route.route:
                 visited.add(x)
-            cost += path.cost
-            demand += path.demand
+            cost += route.cost
+            demand += route.demand
         if len(visited) != self.dimension:
             print("NOT ALL VISITED")
             print(visited)
-        sol = Solution(cost=cost, demand=demand, is_valid=is_valid, paths=paths)
+        sol = Solution(cost=cost, demand=demand, is_valid=is_valid, routes=routes)
         #raw_input(junk)
         return sol
 
 
-    def make_path(self, node_list):
+    def make_route(self, node_list):
         if node_list[0] != self.start_node:
             return None
         cost = 0
@@ -128,16 +133,16 @@ class CVRPInfo(object):
         if demand > self.capacity:
             is_valid = False
 
-        path = Path(cost=cost, demand=demand, is_valid=is_valid, path=node_list)
-        return path
+        route = Route(cost=cost, demand=demand, is_valid=is_valid, route=node_list)
+        return route
 
     def make_random_solution(self, greedy=False):
         unserviced = [i for i in range(2, self.dimension + 1)]
         #print(unserviced)
         random.shuffle(unserviced)
-        paths = []
-        cur_path = [1]
-        path_demand = 0
+        routes = []
+        cur_route = [1]
+        route_demand = 0
         while unserviced:
             #print(unserviced)
             i = 0
@@ -145,42 +150,70 @@ class CVRPInfo(object):
                 i = min([i for i in range(len(unserviced))], \
                         key=lambda x: self.dist[1][unserviced[i]])
             node = unserviced[i]
-            if path_demand + self.demand[node] <= self.capacity:
-                cur_path += [node]
-                path_demand += self.demand[node]
-                #print(cur_path)
+            if route_demand + self.demand[node] <= self.capacity:
+                cur_route += [node]
+                route_demand += self.demand[node]
+                #print(cur_route)
                 del unserviced[i]
                 continue
-            cur_path += [1]
-            paths += [self.make_path(cur_path)]
-            cur_path = [1]
-            path_demand = 0
-        paths += [self.make_path(cur_path + [1])]
+            cur_route += [1]
+            routes += [self.make_route(cur_route)]
+            cur_route = [1]
+            route_demand = 0
+        routes += [self.make_route(cur_route + [1])]
         junk = ""
-        return self.make_solution(paths)
+        return self.make_solution(routes)
 
     def make_from_string(self, chromosome):
-        path = [1]
-        path_demand = 0
-        paths = []
+        route = [1]
+        route_demand = 0
+        routes = []
         for x in chromosome:
-            if path_demand + self.demand[x] <= self.capacity:
-                path += [x]
-                path_demand += self.demand[x]
+            if route_demand + self.demand[x] <= self.capacity:
+                route += [x]
+                route_demand += self.demand[x]
                 continue
-            path += [1]
-            paths += [self.make_path(path)]
-            path = [1, x]
-            path_demand = self.demand[x]
-        paths += [self.make_path(path + [1])]
-        return self.make_solution(paths)
+            route += [1]
+            routes += [self.make_route(route)]
+            route = [1, x]
+            route_demand = self.demand[x]
+        routes += [self.make_route(route + [1])]
+        return self.make_solution(routes)
 
-    def optimise_path_order(self, solution):
-        paths = []
-        for path in solution.paths:
-            ordered = sorted([x for x in path.path[1:-1]], key = lambda x: self.dist[1][x])
-            paths += [self.make_path([1] + ordered  + [1])]
-        return self.make_solution(paths)
+    def optimise_route_order(self, solution):
+        routes = []
+        for route in solution.routes:
+            ordered = sorted([x for x in route.route[1:-1]], key = lambda x: self.dist[1][x])
+            routes += [self.make_route([1] + ordered  + [1])]
+        return self.make_solution(routes)
+
+    def steep_improve_route(self, route):
+        savings = 1
+        while savings > 0:
+            savings = 0
+            for t1_i in range(len(route) - 2):
+                for t4_i in range(len(route) - 2):
+                    if t4_i != t1_i and t4_i != t1_i + 1 and t4_i + 1 != t1_i:
+                        t1 = route[t1_i]
+                        t2 = route[t1_i + 1]
+                        t3 = route[t4_i + 1]
+                        t4 = route[t4_i]
+                        diff = self.dist[t1][t2] + self.dist[t4][t3] - self.dist[t2][t3] - self.dist[t1][t4]
+                        if diff > savings:
+                            savings = diff
+                            t1best = t1_i
+                            t4best = t4_i
+            if savings > 0:
+                route[t1best+1], route[t4best] = route[t4best], route[t1best+1]
+        return route
+
+    def steep_improve_solution(self, solution):
+        new_routes = []
+        for route in solution.routes:
+            route = self.steep_improve_route(route.route)
+            new_routes += [self.make_route(route)]
+        return self.make_solution(new_routes)
+
 
     def __repr__(self):
         strin = {
@@ -212,11 +245,11 @@ class CVRPInfo(object):
         im = Image.new( 'RGB', (500,500), "black") # create a new black image
         draw = ImageDraw.Draw(im)
         color = (0, 0, 0)
-        for i, path in enumerate(solution.paths):
+        for i, route in enumerate(solution.routes):
             r_c = 255 % (i + 1)
             g_c = 255 % (r_c + 1)
             b_c = 255 % (g_c + 1)
-            nodes = path.path
+            nodes = route.route
             norm = lambda x, y: (2*x + 250, 2*y + 250)
             draw.line([norm(*self.coords[n]) for n in nodes], fill=(r_c*i, g_c*i, b_c*i), width=2)
         return im

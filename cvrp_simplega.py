@@ -8,7 +8,7 @@ from heapq import *
 class SGAPopulation(object):
     def __init__(self, info):
         self.info = info
-        self.mutate_prob = 0.003
+        self.mutate_prob = 0.009
         self.chromosomes = [self.info.make_random_solution() for _ in range(2000)]
         self.best_solution = self.chromosomes[0]
         self.chromo_q = []
@@ -17,7 +17,7 @@ class SGAPopulation(object):
         self.iters = 0
         self.change_diffs = []
         self.injected_chroms = []
-        self.pop = 5
+        self.pop = 10
         random.seed()
 
     def step(self):
@@ -43,7 +43,7 @@ class SGAPopulation(object):
         return (self.best_solution, self.change_diffs[-1] / sum(self.change_diffs))
 
     def pmx(self):
-        best = [heappop(self.chromo_q)[1] for _ in range(self.pop)] + self.injected_chroms
+        best = [self.info.steep_improve_solution(heappop(self.chromo_q)[1]) for _ in range(self.pop)] + self.injected_chroms
             #best = [self.info.optimise_path_order(x) for x in best]
         self.chromosomes = [best[0]]
         random.seed()
