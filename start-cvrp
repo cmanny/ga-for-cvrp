@@ -1,1 +1,2 @@
 #!/bin/tcsh
+python cvrp_runner.py
