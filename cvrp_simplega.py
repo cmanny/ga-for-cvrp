@@ -8,8 +8,8 @@ from heapq import *
 class SGAPopulation(object):
     def __init__(self, info):
         self.info = info
-        self.mutate_prob = 0.009
-        self.chromosomes = [self.info.make_random_solution() for _ in range(2000)]
+        self.mutate_prob = 0.003
+        self.chromosomes = [self.info.steep_improve_solution(self.info.make_random_solution()) for _ in range(100)]
         self.best_solution = self.chromosomes[0]
         self.chromo_q = []
         self.zeroDelta = 0
@@ -17,7 +17,7 @@ class SGAPopulation(object):
         self.iters = 0
         self.change_diffs = []
         self.injected_chroms = []
-        self.pop = 10
+        self.pop = 4
         random.seed()
 
     def step(self):

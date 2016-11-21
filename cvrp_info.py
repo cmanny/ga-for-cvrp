@@ -143,6 +143,7 @@ class CVRPInfo(object):
         routes = []
         cur_route = [1]
         route_demand = 0
+        route_length = 0
         while unserviced:
             #print(unserviced)
             i = 0
@@ -150,8 +151,9 @@ class CVRPInfo(object):
                 i = min([i for i in range(len(unserviced))], \
                         key=lambda x: self.dist[1][unserviced[i]])
             node = unserviced[i]
-            if route_demand + self.demand[node] <= self.capacity:
+            if route_length <= 10 and route_demand + self.demand[node] <= self.capacity:
                 cur_route += [node]
+                route_length += 1
                 route_demand += self.demand[node]
                 #print(cur_route)
                 del unserviced[i]
@@ -160,6 +162,7 @@ class CVRPInfo(object):
             routes += [self.make_route(cur_route)]
             cur_route = [1]
             route_demand = 0
+            route_length = 0
         routes += [self.make_route(cur_route + [1])]
         junk = ""
         return self.make_solution(routes)
@@ -167,15 +170,18 @@ class CVRPInfo(object):
     def make_from_string(self, chromosome):
         route = [1]
         route_demand = 0
+        route_length = 0
         routes = []
         for x in chromosome:
-            if route_demand + self.demand[x] <= self.capacity:
+            if route_length <= 10 and route_demand + self.demand[x] <= self.capacity:
                 route += [x]
+                route_length += 1
                 route_demand += self.demand[x]
                 continue
             route += [1]
             routes += [self.make_route(route)]
             route = [1, x]
+            route_length = 1
             route_demand = self.demand[x]
         routes += [self.make_route(route + [1])]
         return self.make_solution(routes)
