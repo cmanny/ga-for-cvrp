@@ -9,8 +9,8 @@ from heapq import *
 class AGAPopulation(object):
     def __init__(self, info):
         self.info = info
-        self.mutate_prob = 0.003
-        self.chromosomes = [self.info.make_random_solution() for _ in range(2000)]
+        self.mutate_prob = 0.0001
+        self.chromosomes = [self.info.make_random_solution() for _ in range(100)]
         self.best_solution = self.chromosomes[0]
         self.chromo_q = []
         self.zeroDelta = 0
@@ -23,8 +23,14 @@ class AGAPopulation(object):
     def step(self):
         self.iters += 1
         self.chromo_q = []
+        hashes = set()
         for x in self.chromosomes:
-            heappush(self.chromo_q, (x.cost, x))
+            chromo = x
+            if chromo.chromosome.hash in hashes:
+                chromo = self.info.make_random_solution()
+            else:
+                hashes.add(chromo.chromosome.hash)
+            heappush(self.chromo_q, (chromo.cost, chromo))
         best = self.chromo_q[0][1]
         self.pmx()
         if best.cost < self.best_solution.cost:
@@ -37,20 +43,10 @@ class AGAPopulation(object):
         return (self.best_solution, self.change_diffs[-1] / sum(self.change_diffs))
 
     def pmx(self):
-        best = [heappop(self.chromo_q)[1] for _ in range(5)] + self.injected_chroms
-        # if self.zeroDelta and self.zeroDelta % 10 == 0:
-        #     add = 0
-        #     if self.zeroDelta % 50 == 0:
-        #         add = 8
-        #         self.zeroDelta = 0
-        #     if self.zeroDelta % 100 == 0:
-        #         add = 14
-        #     for i in range(2 + add):
-        #         best += [self.info.make_random_solution()]
-
-            #best = [self.info.optimise_path_order(x) for x in best]
-        self.chromosomes = [best[0]]
+        best = [heappop(self.chromo_q)[1] for _ in range(2)] + self.injected_chroms
+        self.chromosomes = [heappop(self.chromo_q)[1] for _ in range(64)]
         random.seed()
+        to_add = []
         for i in range(len(best)):
             for j in range(i, len(best)):
                 mum, dad = best[i], best[j]
@@ -70,7 +66,8 @@ class AGAPopulation(object):
                     self.mutate(baby2_chrom)
                 baby1 = self.info.make_from_string(baby1_chrom.string)
                 baby2 = self.info.make_from_string(baby2_chrom.string)
-                self.chromosomes += [baby1, baby2]
+                to_add += [baby1, baby2]
+        self.chromosomes += to_add
 
     def rand_points(self, low, high):
         start = random.randrange(low, high)
@@ -96,15 +93,6 @@ class AGAPopulation(object):
         start, end = self.rand_points(0, self.info.dimension - 2)
         cs = chromosome.string
         new_string = cs[0:start] + cs[start:end][::-1] + cs[end:self.info.dimension - 1]
-        if len(new_string) != len(cs):
-            print(start)
-            print(end)
-            print(len(new_string))
-            print(len(cs))
-            print(cs)
-            print(new_string)
-            print([x - y for x, y in zip(cs, new_string)])
-            #raw_input()
         chromosome.string = new_string
 
     def swap_sequence(self, chromosome):
@@ -113,21 +101,11 @@ class AGAPopulation(object):
         cs = chromosome.string
         new_str = cs[0:fs] + cs[ss:se] + cs[fe:ss] + cs[fs:fe]
         new_str += cs[len(new_str):self.info.dimension - 1]
-        if len(cs) != len(new_str):
-            print [item for item, count in collections.Counter(new_str).items() if count > 1]
-            print(fs)
-            print(fe)
-            print(ss)
-            print(se)
-            print(len(new_str))
-            print(len(cs))
-            print(cs)
-            print(new_str)
         chromosome.string = new_str
 
 
     def mutate(self, chromosome):
-        if random.uniform(0, 1) < 0.9999:
+        if random.uniform(0, 1) < 0.5:
             self.inversion(chromosome)
         else:
             self.swap_sequence(chromosome)

@@ -17,14 +17,20 @@ class SGAPopulation(object):
         self.iters = 0
         self.change_diffs = []
         self.injected_chroms = []
-        self.pop = 4
+        self.pop = 5
         random.seed()
 
     def step(self):
         self.iters += 1
         self.chromo_q = []
+        hashes = set()
         for x in self.chromosomes:
-            heappush(self.chromo_q, (x.cost, x))
+            chromo = x
+            if chromo.chromosome.hash in hashes:
+                chromo = self.info.make_random_solution()
+            else:
+                hashes.add(chromo.chromosome.hash)
+            heappush(self.chromo_q, (chromo.cost, chromo))
         best = self.chromo_q[0][1]
         self.pmx()
         if best.cost < self.best_solution.cost:
@@ -38,22 +44,11 @@ class SGAPopulation(object):
 
     def pmx(self):
         best = [heappop(self.chromo_q)[1] for _ in range(self.pop)] + self.injected_chroms
-        if self.zeroDelta and self.zeroDelta % 10 == 0:
-            add = 0
-            if self.zeroDelta % 50 == 0:
-                add = 8
-                self.pop = min(self.pop + 1, 40)
-                self.zeroDelta = 0
-            if self.zeroDelta % 100 == 0:
-                add = 14
-            for i in range(2 + add):
-                best += [self.info.make_random_solution()]
-
             #best = [self.info.optimise_path_order(x) for x in best]
         self.chromosomes = [best[0]]
         random.seed()
         for i in range(len(best)):
-            for j in range(i, len(best)):
+            for j in range(i + 1, len(best)):
                 start = random.randrange(0, self.info.dimension - 2)
                 end = random.randrange(0, self.info.dimension - 2)
                 while start == end:
@@ -77,8 +72,9 @@ class SGAPopulation(object):
     def mutate(self, chromosome):
         for i in range(len(chromosome.string)):
             if random.uniform(0, 1) <= self.mutate_prob:
-                rint = random.randrange(0, self.info.dimension - 2)
-                chromosome.swap(chromosome.string[i], chromosome.string[rint])
+                self.swap_node(chromosome, i, random.randrange(0, self.info.dimension - 2))
+    def swap_node(self, chromosome, i, j):
+        chromosome.swap(chromosome.string[i], chromosome.string[j])
 
 
 class CVRPSimpleGA(CVRPAlgorithm):

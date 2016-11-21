@@ -10,6 +10,7 @@ class Chromosome(object):
         for i, x in enumerate(string):
             self.index_map[x] = i
         self.string = string
+        self.hash = hash(",".join(str(x) for x in self.string))
 
     def swap(self, a, b):
         a_index, b_index = self.index_map[a], self.index_map[b]
