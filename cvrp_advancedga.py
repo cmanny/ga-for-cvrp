@@ -5,7 +5,7 @@ import threading
 
 from heapq import *
 
-class SGAPopulation(object):
+class AGAPopulation(object):
     def __init__(self, info):
         self.info = info
         self.mutate_prob = 0.003
@@ -79,11 +79,11 @@ class SGAPopulation(object):
                 chromosome.swap(chromosome.string[i], chromosome.string[rint])
 
 
-class CVRPSimpleGA(CVRPAlgorithm):
+class CVRPAdvancedGA(CVRPAlgorithm):
     def __init__(self, info, num_populations):
         super(CVRPSimpleGA, self).__init__(info)
 
-        self.populations = [SGAPopulation(self.info) for _ in range(num_populations)]
+        self.populations = [AGAPopulation(self.info) for _ in range(num_populations)]
         self.pop_bests = [0 for _ in range(num_populations)]
     def step(self):
         if self.populations[0].iters % 10 == 0:

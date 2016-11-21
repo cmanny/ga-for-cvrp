@@ -41,6 +41,6 @@ class CVRPRunner(object):
 
 
 if __name__ == "__main__":
-    cvrp = CVRPRunner(CVRPSimpleGA(CVRPInfo("fruitybun250.vrp", debug=True), 1), 50000)
+    cvrp = CVRPRunner(CVRPSimpleGA(CVRPInfo("fruitybun250.vrp", debug=True), 1), 500000)
     cvrp.run()
     cvrp.write_to_file("best-solution.txt")
