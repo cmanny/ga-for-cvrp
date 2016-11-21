@@ -81,7 +81,7 @@ class AGAPopulation(object):
 
 class CVRPAdvancedGA(CVRPAlgorithm):
     def __init__(self, info, num_populations):
-        super(CVRPSimpleGA, self).__init__(info)
+        super(CVRPAdvancedGA, self).__init__(info)
 
         self.populations = [AGAPopulation(self.info) for _ in range(num_populations)]
         self.pop_bests = [0 for _ in range(num_populations)]
