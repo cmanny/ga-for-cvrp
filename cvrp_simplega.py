@@ -8,7 +8,7 @@ from heapq import *
 class CVRPSimplePopulation(object):
     def __init__(self, info):
         self.info = info
-        self.mutate_prob = 0.009
+        self.mutate_prob = 0.003
         self.chromosomes = [self.info.make_random_solution() for _ in range(2000)]
         self.best_solution = self.chromosomes[0]
         self.chromo_q = []
@@ -38,7 +38,6 @@ class CVRPSimplePopulation(object):
     def pmx(self):
         best = [heappop(self.chromo_q)[1] for _ in range(4)] + self.injected_chroms
         if self.zeroDelta and self.zeroDelta % 10 == 0:
-            self.mutate_prob = 0.003
             add = 0
             if self.zeroDelta % 50 == 0:
                 add = 8
