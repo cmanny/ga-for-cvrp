@@ -9,7 +9,7 @@ class SGAPopulation(object):
     def __init__(self, info):
         self.info = info
         self.mutate_prob = 0.003
-        self.chromosomes = [self.info.steep_improve_solution(self.info.make_random_solution()) for _ in range(100)]
+        self.chromosomes = [self.info.steep_improve_solution(self.info.make_random_solution()) for _ in range(200)]
         self.best_solution = self.chromosomes[0]
         self.chromo_q = []
         self.zeroDelta = 0
@@ -17,7 +17,7 @@ class SGAPopulation(object):
         self.iters = 0
         self.change_diffs = []
         self.injected_chroms = []
-        self.pop = 4
+        self.pop = 10
         random.seed()
 
     def step(self):
@@ -47,7 +47,7 @@ class SGAPopulation(object):
             #best = [self.info.optimise_path_order(x) for x in best]
         self.chromosomes = [best[0]]
         random.seed()
-        for i in range(len(best)):
+        for i in range(1):
             for j in range(i + 1, len(best)):
                 start = random.randrange(0, self.info.dimension - 2)
                 end = random.randrange(0, self.info.dimension - 2)

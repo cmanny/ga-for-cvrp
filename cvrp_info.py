@@ -69,7 +69,7 @@ class CVRPInfo(object):
         self.compute_dists()
         self.start_node = 1
         self.debug = debug
-        self.max_route_len = 10
+        self.max_route_len = 15
         random.seed()
 
     #the vrp file is such an awful format

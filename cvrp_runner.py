@@ -17,28 +17,22 @@ class CVRPRunner(object):
         signal.signal(signal.SIGINT, self.signal_handler)
 
     def signal_handler(self, signal, frame):
-        while True:
-            print("Iter:{}\nPath:{}\nWhat do? C to continue, S to save, X to exit".format(self.iter, self.best))
+        handling = True
+        while handling:
+            print("Iter:{}\nPath:{}\nWhat do? E for exec(), C to continue, S to save, X to exit".format(self.iter, self.best))
             c = raw_input()
+            if c == "E":
+                print("exec:")
+                exec(raw_input())
             if c == "S":
                 self.write_to_file("validate/best-solution-{}.part".format(self.iter))
             if c == "C":
-                self.run()
+                handling = False
             elif c == "X":
                 exit(0)
 
     def run(self):
-        if self.iter == 0:
-            self.start_time = time.time()
-
-        self.resume()
-            # if i % 100:
-            #     self.im = self.algorithm.info.visualise(self.algorithm.best_solution)
-            #     self.im.save("images/"+str(self.algorithm.best_solution.cost) + ".png")
-        print("Best solution: " + str(best))
-        print("Cost: " + str(best.cost))
-
-    def resume(self):
+        self.start_time = time.time()
         while self.iter < self.num_iter:
             best = self.algorithm.step()
             self.best = best
@@ -46,6 +40,11 @@ class CVRPRunner(object):
                 self.timings_file.write("{} at {}s\n".format(best.cost, time.time() - self.start_time))
                 print best.cost
             self.iter += 1
+            # if i % 100:
+            #     self.im = self.algorithm.info.visualise(self.algorithm.best_solution)
+            #     self.im.save("images/"+str(self.algorithm.best_solution.cost) + ".png")
+        print("Best solution: " + str(best))
+        print("Cost: " + str(best.cost))
 
 
     def write_to_file(self, file_name):
