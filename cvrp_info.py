@@ -69,6 +69,7 @@ class CVRPInfo(object):
         self.compute_dists()
         self.start_node = 1
         self.debug = debug
+        self.max_route_len = 10
         random.seed()
 
     #the vrp file is such an awful format
@@ -151,7 +152,7 @@ class CVRPInfo(object):
                 i = min([i for i in range(len(unserviced))], \
                         key=lambda x: self.dist[1][unserviced[i]])
             node = unserviced[i]
-            if route_length <= 10 and route_demand + self.demand[node] <= self.capacity:
+            if route_length <= self.max_route_len and route_demand + self.demand[node] <= self.capacity:
                 cur_route += [node]
                 route_length += 1
                 route_demand += self.demand[node]
@@ -173,7 +174,7 @@ class CVRPInfo(object):
         route_length = 0
         routes = []
         for x in chromosome:
-            if route_length <= 10 and route_demand + self.demand[x] <= self.capacity:
+            if route_length <= self.max_route_len and route_demand + self.demand[x] <= self.capacity:
                 route += [x]
                 route_length += 1
                 route_demand += self.demand[x]

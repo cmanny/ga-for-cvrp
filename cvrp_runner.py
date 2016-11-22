@@ -3,6 +3,8 @@ from cvrp_simplega import CVRPSimpleGA
 from cvrp_advancedga import CVRPAdvancedGA
 import os
 import time
+import signal
+import sys
 
 class CVRPRunner(object):
 
@@ -11,23 +13,39 @@ class CVRPRunner(object):
         self.print_cycle = 10
         self.num_iter = iterations
         self.timings_file = open("timings/timings_{}.txt".format(time.time()), "w")
+        self.iter = 0
+        signal.signal(signal.SIGINT, self.signal_handler)
+
+    def signal_handler(self, signal, frame):
+        while True:
+            print("Iter:{}\nPath:{}\nWhat do? C to continue, S to save, X to exit".format(self.iter, self.best))
+            c = raw_input()
+            if c == "S":
+                self.write_to_file("validate/best-solution-{}.part".format(self.iter))
+            if c == "C":
+                self.run()
+            elif c == "X":
+                exit(0)
 
     def run(self):
-        self.start_time = time.time()
-        self.im = None
-        for i in range(self.num_iter):
-            best = self.algorithm.step()
-            if i % self.print_cycle == 0:
-                self.timings_file.write("{} at {}s\n".format(best.cost, time.time() - self.start_time))
-                print best.cost
+        if self.iter == 0:
+            self.start_time = time.time()
 
-
-
+        self.resume()
             # if i % 100:
             #     self.im = self.algorithm.info.visualise(self.algorithm.best_solution)
             #     self.im.save("images/"+str(self.algorithm.best_solution.cost) + ".png")
         print("Best solution: " + str(best))
-        print("Cost: " + str(best))
+        print("Cost: " + str(best.cost))
+
+    def resume(self):
+        while self.iter < self.num_iter:
+            best = self.algorithm.step()
+            self.best = best
+            if self.iter % self.print_cycle == 0:
+                self.timings_file.write("{} at {}s\n".format(best.cost, time.time() - self.start_time))
+                print best.cost
+            self.iter += 1
 
 
     def write_to_file(self, file_name):
