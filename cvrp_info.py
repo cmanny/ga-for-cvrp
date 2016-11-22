@@ -196,8 +196,11 @@ class CVRPInfo(object):
 
     def steep_improve_route(self, route):
         savings = 1
+        iters = 0
         while savings > 0:
             savings = 0
+            if iters > 1000:
+                return route
             for t1_i in range(len(route) - 2):
                 for t4_i in range(len(route) - 2):
                     if t4_i != t1_i and t4_i != t1_i + 1 and t4_i + 1 != t1_i:
@@ -212,6 +215,7 @@ class CVRPInfo(object):
                             t4best = t4_i
             if savings > 0:
                 route[t1best+1], route[t4best] = route[t4best], route[t1best+1]
+            iters += 1
         return route
 
     def steep_improve_solution(self, solution):
