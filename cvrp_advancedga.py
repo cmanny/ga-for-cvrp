@@ -19,6 +19,8 @@ class AGAPopulation(object):
         self.change_diffs = []
         self.injected_chroms = []
         self.pop = 5
+
+        self.alpha = 5
         random.seed()
 
     def step(self):
@@ -43,13 +45,46 @@ class AGAPopulation(object):
             self.zeroDelta += 1
         return (self.best_solution, self.change_diffs[-1] / sum(self.change_diffs))
 
-    def selection(self):
-        return 0, 0
+    #calc fitness
+    def fitness(self, chromosome):
+        penalty = self.penalty(chromosome)
+        return chromosome.cost + penalty
+
+    #calculates our penalty
+    def penalty(self, chromosome):
+        penalty_sum = 0
+        for route in chromosome.routes:
+            penalty_sum += max(0, route.demand - self.info.capacity)**2
+        return self.alpha * penalty_sum
+
+    # returns true when a repair was needed, false otherwise
+    def repair(self, chromosome):
+        routes = chromosome.routes
+        r_max_i = max((i for i in range(len(routes))), key = lambda i: routes[i].demand)
+        r_min_i = min((i for i in range(len(routes))), key = lambda i: routes[i].demand)
+        if routes[r_max_i].demand > self.info.capacity:
+            rint = random.randrange(0, len(routes[r_max_i]))
+            routes[r_max_i] += [routes[r_max_i][rint]]
+            del routes[r_max_i][rint]
+            return True
+        return False
+
+    def selection(self, chromosomes):
+        return chromosomes[0], chromosomes[1]
 
     def simple_random_crossover(self, chrom1, chrom2):
-        return 0
+        child = copy.deepcopy(chrom1)
+        sub_route = chrom2.routes[random.randrange(0, len(chrom2.routes))]
+        for x in sub_route:
+            child.remove(x)
+
+    def best_insertion(self):
+        pass
+
+
     def simple_random_mutation(self, chromosome):
         return 0
+
     def repair_operator(self, chromosome):
         return 0
 
