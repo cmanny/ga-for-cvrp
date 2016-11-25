@@ -69,7 +69,7 @@ class CVRPInfo(object):
         self.compute_dists()
         self.start_node = 1
         self.debug = debug
-        self.max_route_len = 15
+        self.max_route_len = 10
         random.seed()
 
     #the vrp file is such an awful format
@@ -253,16 +253,16 @@ class CVRPInfo(object):
 
     def visualise(self, solution):
 
-        im = Image.new( 'RGB', (500,500), "black") # create a new black image
+        im = Image.new( 'RGB', (500,500), "white") # create a new black image
         draw = ImageDraw.Draw(im)
         color = (0, 0, 0)
         for i, route in enumerate(solution.routes):
-            r_c = 255 % (i + 1)
-            g_c = 255 % (r_c + 1)
-            b_c = 255 % (g_c + 1)
+            r_c = (i*i)%255
+            g_c = (i*r_c)%255
+            b_c = (i*g_c)%255
             nodes = route.route
             norm = lambda x, y: (2*x + 250, 2*y + 250)
-            draw.line([norm(*self.coords[n]) for n in nodes], fill=(r_c*i, g_c*i, b_c*i), width=2)
+            draw.line([norm(*self.coords[n]) for n in nodes], fill=(r_c, g_c, b_c), width=2)
         return im
 
 

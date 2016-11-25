@@ -19,7 +19,7 @@ class CVRPRunner(object):
     def signal_handler(self, signal, frame):
         handling = True
         while handling:
-            print("Iter:{}\nPath:{}\nWhat do? E for exec(), C to continue, S to save, X to exit".format(self.iter, self.best))
+            print("Iter:{}\nPath:{}\nWhat do? E for exec(), V for visualise, C to continue, S to save, X to exit".format(self.iter, self.best))
             c = raw_input()
             if c == "E":
                 print("exec:")
@@ -28,6 +28,8 @@ class CVRPRunner(object):
                 self.write_to_file("validate/best-solution-{}.part".format(self.iter))
             if c == "C":
                 handling = False
+            if c == "V":
+                self.algorithm.info.visualise(self.best).show()
             elif c == "X":
                 exit(0)
 

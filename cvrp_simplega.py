@@ -17,7 +17,7 @@ class SGAPopulation(object):
         self.iters = 0
         self.change_diffs = []
         self.injected_chroms = []
-        self.pop = 9
+        self.pop = 5
         random.seed()
 
     def step(self):
