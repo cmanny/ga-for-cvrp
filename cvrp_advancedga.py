@@ -2,15 +2,15 @@ from cvrp_algorithm import CVRPAlgorithm
 import random
 import copy
 import threading
-import collections
 
 from heapq import *
 
 class AGAPopulation(object):
     def __init__(self, info):
         self.info = info
-        self.mutate_prob = 0.0001
-        self.chromosomes = [self.info.make_random_solution() for _ in range(100)]
+        self.info.max_route_len = 10
+        self.mutate_prob = 0.003
+        self.chromosomes = [self.info.steep_improve_solution(self.info.make_random_solution()) for _ in range(500)]
         self.best_solution = self.chromosomes[0]
         self.chromo_q = []
         self.zeroDelta = 0
@@ -18,6 +18,7 @@ class AGAPopulation(object):
         self.iters = 0
         self.change_diffs = []
         self.injected_chroms = []
+        self.pop = 5
         random.seed()
 
     def step(self):
@@ -43,32 +44,39 @@ class AGAPopulation(object):
         return (self.best_solution, self.change_diffs[-1] / sum(self.change_diffs))
 
     def pmx(self):
-        best = [heappop(self.chromo_q)[1] for _ in range(2)] + self.injected_chroms
-        self.chromosomes = [heappop(self.chromo_q)[1] for _ in range(64)]
+        best = [heappop(self.chromo_q)[1] for _ in range(self.pop)] + self.injected_chroms
+            #best = [self.info.optimise_path_order(x) for x in best]
+        self.chromosomes = [best[0]]
         random.seed()
-        to_add = []
         for i in range(len(best)):
-            for j in range(i, len(best)):
+            for j in range(i + 1, len(best)):
+                start = random.randrange(0, self.info.dimension - 2)
+                end = random.randrange(0, self.info.dimension - 2)
+                while start == end:
+                    end = random.randrange(0, self.info.dimension - 2)
+                if start > end:
+                    start, end = end, start
                 mum, dad = best[i], best[j]
                 baby1_chrom = copy.deepcopy(mum.chromosome)
                 baby2_chrom = copy.deepcopy(dad.chromosome)
-                if random.uniform(0,1) < 0.75:
-                    start, end = self.rand_points(0, self.info.dimension - 2)
-                    for k in range(start, end):
-                        mum_g, dad_g = mum.chromosome.string[k], dad.chromosome.string[k]
-                        baby1_chrom.swap(mum_g, dad_g)
-                        baby2_chrom.swap(mum_g, dad_g)
-                else:
-                    self.swap_node(baby1_chrom)
-                    self.swap_node(baby2_chrom)
-                if random.uniform(0, 1) < self.mutate_prob:
-                    self.mutate(baby1_chrom)
-                    self.mutate(baby2_chrom)
+                for k in range(start, end):
+                    mum_g, dad_g = mum.chromosome.string[k], dad.chromosome.string[k]
+                    baby1_chrom.swap(mum_g, dad_g)
+                    baby2_chrom.swap(mum_g, dad_g)
+                self.mutate(baby1_chrom)
+                self.mutate(baby2_chrom)
                 baby1 = self.info.make_from_string(baby1_chrom.string)
                 baby2 = self.info.make_from_string(baby2_chrom.string)
-                to_add += [baby1, baby2]
-        self.chromosomes += to_add
+                self.chromosomes += [baby1, baby2]
+                self.chromosomes += [self.info.steep_improve_solution(x) for x in [baby1, baby2]]
+        #print("-".join([str(x.cost) for x in self.chromosomes]))
 
+    def mutate(self, chromosome):
+        for i in range(len(chromosome.string)):
+            if random.uniform(0, 1) <= self.mutate_prob:
+                self.swap_node(chromosome, i, random.randrange(0, self.info.dimension - 2))
+    def swap_node(self, chromosome, i, j):
+        chromosome.swap(chromosome.string[i], chromosome.string[j])
     def rand_points(self, low, high):
         start = random.randrange(low, high)
         end = random.randrange(low, high)
@@ -112,9 +120,9 @@ class AGAPopulation(object):
 
 class CVRPAdvancedGA(CVRPAlgorithm):
     def __init__(self, info, num_populations):
-        super(CVRPAdvancedGA, self).__init__(info)
+        super(CVRPSimpleGA, self).__init__(info)
 
-        self.populations = [AGAPopulation(self.info) for _ in range(num_populations)]
+        self.populations = [SGAPopulation(self.info) for _ in range(num_populations)]
         self.pop_bests = [0 for _ in range(num_populations)]
     def step(self):
         if self.populations[0].iters % 10 == 0:
