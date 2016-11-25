@@ -42,6 +42,8 @@ class CVRPRunner(object):
                 self.timings_file.write("{} at {}s\n".format(best.cost, time.time() - self.start_time))
                 print best.cost
             self.iter += 1
+            if time.time() - self.start_time > 3600:
+                self.write_to_file("validate/best-solution-{}.timeout".format(self.iter))
             # if i % 100:
             #     self.im = self.algorithm.info.visualise(self.algorithm.best_solution)
             #     self.im.save("images/"+str(self.algorithm.best_solution.cost) + ".png")
