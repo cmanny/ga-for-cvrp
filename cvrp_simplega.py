@@ -8,6 +8,7 @@ from heapq import *
 class SGAPopulation(object):
     def __init__(self, info):
         self.info = info
+        self.info.max_route_len = 10
         self.mutate_prob = 0.003
         self.chromosomes = [self.info.steep_improve_solution(self.info.make_random_solution()) for _ in range(500)]
         self.best_solution = self.chromosomes[0]
