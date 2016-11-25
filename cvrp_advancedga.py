@@ -43,6 +43,16 @@ class AGAPopulation(object):
             self.zeroDelta += 1
         return (self.best_solution, self.change_diffs[-1] / sum(self.change_diffs))
 
+    def selection(self):
+        return 0, 0
+
+    def simple_random_crossover(self, chrom1, chrom2):
+        return 0
+    def simple_random_mutation(self, chromosome):
+        return 0
+    def repair_operator(self, chromosome):
+        return 0
+
     def pmx(self):
         best = [heappop(self.chromo_q)[1] for _ in range(self.pop)] + self.injected_chroms
             #best = [self.info.optimise_path_order(x) for x in best]
@@ -122,7 +132,7 @@ class CVRPAdvancedGA(CVRPAlgorithm):
     def __init__(self, info, num_populations):
         super(CVRPSimpleGA, self).__init__(info)
 
-        self.populations = [SGAPopulation(self.info) for _ in range(num_populations)]
+        self.populations = [AGAPopulation(self.info) for _ in range(num_populations)]
         self.pop_bests = [0 for _ in range(num_populations)]
     def step(self):
         if self.populations[0].iters % 10 == 0:
