@@ -36,17 +36,8 @@ class AGAPopulation(object):
         self.info.refresh(child)
         self.info.steep_improve_solution(child)
         self.info.refresh(child)
-        #print(child)
+
         heapify(self.chromosomes)
-
-        # hashes = set()
-        # for i, x in enumerate(chromosomes):
-        #     x_hash = x.hash()
-        #     if x_hash in hashes:
-        #         chromosomes[i] = self.info.steep_improve_solution(self.info.make_random_solution(greedy=True))
-        #     else:
-        #         hashes.add(x_hash)
-
         heappush(self.chromosomes, (self.fitness(child), child))
         self.iters += 1
         return self.best_solution
