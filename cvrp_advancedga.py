@@ -10,40 +10,30 @@ class AGAPopulation(object):
         self.info = info
         self.info.max_route_len = 10
         self.mutate_prob = 0.003
-        self.chromosomes = [self.info.steep_improve_solution(self.info.make_random_solution()) for _ in range(500)]
+        self.chromosomes = []
+        for x in [self.info.steep_improve_solution(self.info.make_random_solution()) for _ in range(200)]
+            heappush(self.chromosomes, (x.cost, x))
         self.best_solution = self.chromosomes[0]
-        self.chromo_q = []
         self.zeroDelta = 0
-        self.last_best = None
         self.iters = 0
         self.change_diffs = []
         self.injected_chroms = []
         self.pop = 5
+        self.same_route_prob = 0.25
 
         self.alpha = 5
         random.seed()
 
     def step(self):
-        self.iters += 1
-        self.chromo_q = []
-        hashes = set()
-        for x in self.chromosomes:
-            chromo = x
-            if chromo.chromosome.hash in hashes:
-                chromo = self.info.make_random_solution()
-            else:
-                hashes.add(chromo.chromosome.hash)
-            heappush(self.chromo_q, (chromo.cost, chromo))
-        best = self.chromo_q[0][1]
-        self.pmx()
-        if best.cost < self.best_solution.cost:
-            self.last_best = self.best_solution
-            self.best_solution = best
-            self.change_diffs.append(self.best_solution.cost - self.last_best.cost)
-            self.zeroDelta = 0
-        else:
-            self.zeroDelta += 1
-        return (self.best_solution, self.change_diffs[-1] / sum(self.change_diffs))
+        p1, p2 = self.tournament_selection(self.chromosomes)
+        child = self.simple_random_crossover(p1, p2)
+        self.simple_random_mutation(child)
+        if child.cost < self.best_solution.cost:
+            self.best_solution = child
+        self.chromosomes.remove(nlargest(1, self.chromosomes)[0])
+        heapify(self.chromosomes)
+        heappush(self.chromosomes, child)
+        return self.best_solution
 
     #calc fitness
     def fitness(self, chromosome):
@@ -55,7 +45,9 @@ class AGAPopulation(object):
         penalty_sum = 0
         for route in chromosome.routes:
             penalty_sum += max(0, route.demand - self.info.capacity)**2
-        return self.alpha * penalty_sum
+        penalty = self.alpha * penalty_sum
+        chromosome.penalty = penalty
+        return penalty
 
     # returns true when a repair was needed, false otherwise
     def repair(self, chromosome):
@@ -64,64 +56,40 @@ class AGAPopulation(object):
         r_min_i = min((i for i in range(len(routes))), key = lambda i: routes[i].demand)
         if routes[r_max_i].demand > self.info.capacity:
             rint = random.randrange(0, len(routes[r_max_i]))
-            routes[r_max_i] += [routes[r_max_i][rint]]
-            del routes[r_max_i][rint]
+            routes[r_min_i].append_node(routes[r_max_i][rint])
+            routes[r_max_i].remove_node(routes[r_max_i][rint])
             return True
         return False
 
-    def selection(self, chromosomes):
+    def tournament_selection(self, chromosomes):
         return chromosomes[0], chromosomes[1]
 
     def simple_random_crossover(self, chrom1, chrom2):
         child = copy.deepcopy(chrom1)
-        sub_route = chrom2.routes[random.randrange(0, len(chrom2.routes))]
+        sub_route = chrom2.random_subroute()
         for x in sub_route:
-            child.remove(x)
-
-    def best_insertion(self):
-        pass
-
+            child.remove_node(x)
+        child.insert_route(best_insertion(child, sub_route), sub_route)
 
     def simple_random_mutation(self, chromosome):
-        return 0
+        r_i = random.randrange(0, len(chromosome.routes))
+        c_i = random.randrange(1, len(chromosome.routes[r_i].route) - 1)
+        node = chromosome.routes[r_i].route[c_i]
+        chromosome.remove_node(node)
+        if random.uniform(0, 1) < self.same_route_prob:
+            best_i = (r_i, self.best_insertion([node], chromosome.routes[r_i].route))
+        else:
+            r_r_i = r_i
+            while r_i == r_i:
+                r_r_i = random.randrange(0, len(chromosome.routes))
+            best_i = (r_r_i, self.best_insertion([node], chromosome.routes[r_r_i].route))
+        chromosome.insert_route(*best_i, [node])
 
-    def repair_operator(self, chromosome):
-        return 0
 
-    def pmx(self):
-        best = [heappop(self.chromo_q)[1] for _ in range(self.pop)] + self.injected_chroms
-            #best = [self.info.optimise_path_order(x) for x in best]
-        self.chromosomes = [best[0]]
-        random.seed()
-        for i in range(len(best)):
-            for j in range(i + 1, len(best)):
-                start = random.randrange(0, self.info.dimension - 2)
-                end = random.randrange(0, self.info.dimension - 2)
-                while start == end:
-                    end = random.randrange(0, self.info.dimension - 2)
-                if start > end:
-                    start, end = end, start
-                mum, dad = best[i], best[j]
-                baby1_chrom = copy.deepcopy(mum.chromosome)
-                baby2_chrom = copy.deepcopy(dad.chromosome)
-                for k in range(start, end):
-                    mum_g, dad_g = mum.chromosome.string[k], dad.chromosome.string[k]
-                    baby1_chrom.swap(mum_g, dad_g)
-                    baby2_chrom.swap(mum_g, dad_g)
-                self.mutate(baby1_chrom)
-                self.mutate(baby2_chrom)
-                baby1 = self.info.make_from_string(baby1_chrom.string)
-                baby2 = self.info.make_from_string(baby2_chrom.string)
-                self.chromosomes += [baby1, baby2]
-                self.chromosomes += [self.info.steep_improve_solution(x) for x in [baby1, baby2]]
-        #print("-".join([str(x.cost) for x in self.chromosomes]))
 
-    def mutate(self, chromosome):
-        for i in range(len(chromosome.string)):
-            if random.uniform(0, 1) <= self.mutate_prob:
-                self.swap_node(chromosome, i, random.randrange(0, self.info.dimension - 2))
-    def swap_node(self, chromosome, i, j):
-        chromosome.swap(chromosome.string[i], chromosome.string[j])
+    def best_insertion(self, node, ):
+        pass
+
     def rand_points(self, low, high):
         start = random.randrange(low, high)
         end = random.randrange(low, high)

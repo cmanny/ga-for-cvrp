@@ -20,13 +20,25 @@ class Chromosome(object):
         self.index_map[a] = b_index
         self.index_map[b] = a_index
 
-
 class Route(object):
     def __init__(self, route=[], cost=0, is_valid=False, demand=0):
         self.is_valid = is_valid
         self.route = route
         self.cost = cost
         self.demand = demand
+
+    def insert_route(self, index, route):
+        self.is_valid = False
+        self.route = self.route[:index + 1] + route + self.route[index + 1:]
+
+    def append_node(self, node):
+        self.is_valid = False
+        self.route += [node]
+
+
+    def remove_node(self, x):
+        self.is_valid = False
+        del self.route[self.route.index(x)]
 
     def __repr__(self):
         debug_str = ", cost = " + str(self.cost) + ", demand = " + str(self.demand)
@@ -41,6 +53,7 @@ class Solution(object):
         self.routes = routes
         self.cost = cost
         self.demand = demand
+        self.penalty = 0
         self.chromise()
 
     def shuffle(self):
@@ -57,7 +70,26 @@ class Solution(object):
             print("bad" + str(self))
             Solution.bad_count += 1
             print(Solution.bad_count)
-            #print(p.route)
+
+    def remove_node(self, x):
+        for route in self.routes:
+            if x in route.route:
+                route.remove_node(x)
+        self.is_valid = False
+
+    def insert_route(self, route_id, route_index, route):
+        self.routes[route_id].insert_route(route_index, route)
+        self.is_valid = False
+
+    def random_subroute(self):
+        r_i = random.randrange(0, len(chromosome.routes.routes))
+        c_s = random.randrange(1, len(chromosome.routes.routes[r_i]) - 1)
+        c_e = c_s
+        while c_e == c_s:
+            c_e = random.randrange(1, len(chromosome.routes.routes[r_i]) - 1)
+        if c_s > c_e:
+            c_s, c_e = c_e, c_s
+        return routes[r_i].route[c_s:c_e]
 
     def __repr__(self):
         return "\n".join([str(route) for route in self.routes])
