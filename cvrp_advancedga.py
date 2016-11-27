@@ -11,7 +11,7 @@ class AGAPopulation(object):
         self.info.max_route_len = 10
         self.mutate_prob = 0.003
         self.chromosomes = []
-        for x in [self.info.steep_improve_solution(self.info.make_random_solution(greedy=True)) for _ in range(200)]:
+        for x in [self.info.steep_improve_solution(self.info.make_random_solution(greedy=True)) for _ in range(1000)]:
             heappush(self.chromosomes, (x.cost, x))
         self.best_solution = self.chromosomes[0][1]
         self.zeroDelta = 0
@@ -57,6 +57,7 @@ class AGAPopulation(object):
         mnv = sum(self.info.demand[i] for i in range(250)) / self.info.capacity
         alpha = self.best_solution.cost / ((1 / (self.iters + 1)) * (self.info.capacity * mnv / 2)**2 + 0.001)
         penalty = alpha * penalty_sum * self.iters / self.total_iters
+        penalty = 4 * penalty_sum
         chromosome.penalty = penalty
         return penalty
 
@@ -73,7 +74,7 @@ class AGAPopulation(object):
         return False
 
     def tournament_selection(self, chromosomes):
-        return chromosomes[random.randrange(0, 3)][1], chromosomes[random.randrange(1, len(chromosomes) - 1)][1]
+        return chromosomes[random.randrange(0, 10)][1], chromosomes[random.randrange(1, len(chromosomes) - 1)][1]
 
     def simple_random_crossover(self, chrom1, chrom2):
         child = copy.deepcopy(chrom1)

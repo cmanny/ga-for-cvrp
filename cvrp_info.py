@@ -27,7 +27,7 @@ class Route(object):
     def __repr__(self):
         debug_str = ", cost = " + str(self.cost) + ", demand = " + str(self.demand)
         ret_str = "->".join(str(n) for n in self.route)
-        return ret_str + (debug_str if False else "")
+        return ret_str + (debug_str if True else "")
 
 class Solution(object):
     bad_count = 0
@@ -88,8 +88,8 @@ class CVRPInfo(object):
         self.coords = [(-1, -1) for _ in range(self.dimension + 1)]
 
         for i in range(3, self.dimension + 3):
-            nid, xc, yc = [int(x) for x in content[i].split()]
-            self.coords[nid] = (xc, yc)
+            nid, xc, yc = [float(x) for x in content[i].split()]
+            self.coords[int(nid)] = (xc, yc)
         for i in range(self.dimension + 4, 2 * (self.dimension + 2)):
             nid, dem = [int(x) for x in content[i].split()]
             self.demand[nid] = dem
@@ -102,8 +102,8 @@ class CVRPInfo(object):
     def compute_dists(self):
         self.dist = [list([-1 for _ in range(self.dimension + 1)]) \
                         for _ in range(self.dimension + 1)]
-        for xi in range(self.dimension):
-            for yi in range(self.dimension):
+        for xi in range(self.dimension + 1):
+            for yi in range(self.dimension + 1):
                 self.dist[xi][yi] = self.compute_dist(xi, yi)
 
     def make_solution(self, routes):
