@@ -11,7 +11,7 @@ class AGAPopulation(object):
         self.info.max_route_len = 10
         self.mutate_prob = 0.003
         self.chromosomes = []
-        for x in [self.info.steep_improve_solution(self.info.make_random_solution()) for _ in range(200)]:
+        for x in [self.info.steep_improve_solution(self.info.make_random_solution(greedy=True)) for _ in range(200)]:
             heappush(self.chromosomes, (x.cost, x))
         self.best_solution = self.chromosomes[0][1]
         self.zeroDelta = 0
@@ -28,12 +28,15 @@ class AGAPopulation(object):
     def step(self):
         p1, p2 = self.tournament_selection(self.chromosomes)
         child = self.simple_random_crossover(p1, p2)
+        self.info.refresh(child)
         self.simple_random_mutation(child)
         if self.chromosomes[0][1].cost < self.best_solution.cost:
             self.best_solution = self.chromosomes[0][1]
         self.chromosomes.remove(nlargest(1, self.chromosomes)[0])
         self.info.refresh(child)
         self.repairing(child)
+        self.info.refresh(child)
+        self.info.steep_improve_solution(child)
         self.info.refresh(child)
         #print(child)
         heapify(self.chromosomes)
@@ -51,7 +54,9 @@ class AGAPopulation(object):
         penalty_sum = 0
         for route in chromosome.routes:
             penalty_sum += max(0, route.demand - self.info.capacity)**2
-        penalty = self.alpha * penalty_sum / 100 #* self.iters * 100 / self.total_iters
+        mnv = sum(self.info.demand[i] for i in range(250)) / self.info.capacity
+        alpha = self.best_solution.cost / ((1 / (self.iters + 1)) * (self.info.capacity * mnv / 2)**2 + 0.001)
+        penalty = alpha * penalty_sum * self.iters / self.total_iters
         chromosome.penalty = penalty
         return penalty
 
@@ -68,7 +73,7 @@ class AGAPopulation(object):
         return False
 
     def tournament_selection(self, chromosomes):
-        return chromosomes[0][1], chromosomes[random.randrange(1, 5)][1]
+        return chromosomes[random.randrange(0, 3)][1], chromosomes[random.randrange(1, len(chromosomes) - 1)][1]
 
     def simple_random_crossover(self, chrom1, chrom2):
         child = copy.deepcopy(chrom1)

@@ -152,10 +152,9 @@ class CVRPInfo(object):
         route_length = 0
         while unserviced:
             #print(unserviced)
-            i = 0
             if greedy:
                 i = min([i for i in range(len(unserviced))], \
-                        key=lambda x: self.dist[1][unserviced[i]])
+                        key=lambda x: self.dist[cur_route[-1]][unserviced[x]])
             node = unserviced[i]
             if route_length <= self.max_route_len and route_demand + self.demand[node] <= self.capacity:
                 cur_route += [node]
