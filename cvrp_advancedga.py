@@ -6,7 +6,7 @@ import threading
 from heapq import *
 
 class AGAPopulation(object):
-    def __init__(self, info):
+    def __init__(self, info, total_iters):
         self.info = info
         self.info.max_route_len = 10
         self.mutate_prob = 0.003
@@ -16,6 +16,7 @@ class AGAPopulation(object):
         self.best_solution = self.chromosomes[0][1]
         self.zeroDelta = 0
         self.iters = 0
+        self.total_iters = total_iters
         self.change_diffs = []
         self.injected_chroms = []
         self.pop = 5
@@ -28,12 +29,16 @@ class AGAPopulation(object):
         p1, p2 = self.tournament_selection(self.chromosomes)
         child = self.simple_random_crossover(p1, p2)
         self.simple_random_mutation(child)
-        if child.cost < self.best_solution.cost:
-            self.best_solution = child
+        if self.chromosomes[0][1].cost < self.best_solution.cost:
+            self.best_solution = self.chromosomes[0][1]
         self.chromosomes.remove(nlargest(1, self.chromosomes)[0])
+        self.info.refresh(child)
         self.repairing(child)
+        self.info.refresh(child)
+        #print(child)
         heapify(self.chromosomes)
         heappush(self.chromosomes, (self.fitness(child), child))
+        self.iters += 1
         return self.best_solution
 
     #calc fitness
@@ -46,7 +51,7 @@ class AGAPopulation(object):
         penalty_sum = 0
         for route in chromosome.routes:
             penalty_sum += max(0, route.demand - self.info.capacity)**2
-        penalty = self.alpha * penalty_sum
+        penalty = self.alpha * penalty_sum / 100 #* self.iters * 100 / self.total_iters
         chromosome.penalty = penalty
         return penalty
 
@@ -56,14 +61,14 @@ class AGAPopulation(object):
         r_max_i = max((i for i in range(len(routes))), key = lambda i: routes[i].demand)
         r_min_i = min((i for i in range(len(routes))), key = lambda i: routes[i].demand)
         if routes[r_max_i].demand > self.info.capacity:
-            rint = random.randrange(0, len(routes[r_max_i]))
-            routes[r_min_i].append_node(routes[r_max_i][rint])
-            routes[r_max_i].remove_node(routes[r_max_i][rint])
+            rint = random.randrange(1, len(routes[r_max_i].route) - 1)
+            routes[r_min_i].append_node(routes[r_max_i].route[rint])
+            routes[r_max_i].remove_node(routes[r_max_i].route[rint])
             return True
         return False
 
     def tournament_selection(self, chromosomes):
-        return chromosomes[0][1], chromosomes[1][1]
+        return chromosomes[0][1], chromosomes[random.randrange(1, 5)][1]
 
     def simple_random_crossover(self, chrom1, chrom2):
         child = copy.deepcopy(chrom1)
@@ -71,34 +76,57 @@ class AGAPopulation(object):
         for x in sub_route:
             child.remove_node(x)
         r_id, n_id = self.best_insertion(child, sub_route)
+        #print("{} {}".format(r_id, n_id))
         child.insert_route(r_id, n_id, sub_route)
         return child
 
     def simple_random_mutation(self, chromosome):
         r_i = random.randrange(0, len(chromosome.routes))
+        while(len(chromosome.routes[r_i].route) == 2):
+            r_i = random.randrange(0, len(chromosome.routes))
         c_i = random.randrange(1, len(chromosome.routes[r_i].route) - 1)
         node = chromosome.routes[r_i].route[c_i]
+        if node == 1:
+            print("bad")
+            print(c_i)
+            print(chromosome.routes[r_i])
+            raw_input()
         chromosome.remove_node(node)
         if random.uniform(0, 1) < self.same_route_prob:
-            best_i = (r_i, self.best_route_insertion([node], chromosome.routes[r_i].route))
+            _, best = self.best_route_insertion([node], chromosome.routes[r_i].route)
+            best_i = (r_i, best)
         else:
             r_r_i = r_i
             while r_i == r_r_i:
                 r_r_i = random.randrange(0, len(chromosome.routes))
-            best_i = (r_r_i, self.best_route_insertion([node], chromosome.routes[r_r_i].route))
+            _, best = self.best_route_insertion([node], chromosome.routes[r_r_i].route)
+            best_i = (r_r_i, best)
         chromosome.insert_route(best_i[0], best_i[1], [node])
 
     #finds the index where the route is best inserted
     def best_route_insertion(self, sub_route, route):
         start = sub_route[0]
         end = sub_route[-1]
+        best_payoff, best_i = 0, 0
+        dist = self.info.dist
+        i = 0
         for i in range(0, len(route) - 1):
-            pass
-        return 0
+            init_cost = dist[route[i]][route[i + 1]]
+            payoff = init_cost - dist[route[i]][start] - dist[end][route[i + 1]]
+            if payoff > best_payoff:
+                best_payoff, best_i = payoff, i
+        return best_payoff, i
 
     #finds the best route index, and node index where the route should go
     def best_insertion(self, child, sub_route):
-        return 0, 0
+        best_payoff, best_rid, best_nid = -1, 0, 0
+        for r_id, route in enumerate(child.routes):
+            route = route.route
+            subopt_best, n_id = self.best_route_insertion(sub_route, route)
+            if subopt_best > best_payoff:
+                best_payoff, best_rid, best_nid = subopt_best, r_id, n_id
+        #print(best_payoff)
+        return best_rid, best_nid
 
     def rand_points(self, low, high):
         start = random.randrange(low, high)
@@ -142,10 +170,10 @@ class AGAPopulation(object):
             self.swap_sequence(chromosome)
 
 class CVRPAdvancedGA(CVRPAlgorithm):
-    def __init__(self, info, num_populations):
+    def __init__(self, info, num_populations, total_iters):
         super(CVRPAdvancedGA, self).__init__(info)
 
-        self.populations = [AGAPopulation(self.info) for _ in range(num_populations)]
+        self.populations = [AGAPopulation(self.info, total_iters) for _ in range(num_populations)]
         self.pop_bests = [0 for _ in range(num_populations)]
     def step(self):
         if self.populations[0].iters % 10 == 0:

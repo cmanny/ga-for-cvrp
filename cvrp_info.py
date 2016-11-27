@@ -17,7 +17,7 @@ class Route(object):
 
     def append_node(self, node):
         self.is_valid = False
-        self.route += [node]
+        self.route = self.route[:-1] + [node] + [1]
 
 
     def remove_node(self, x):
@@ -54,10 +54,12 @@ class Solution(object):
 
     def random_subroute(self):
         r_i = random.randrange(0, len(self.routes))
-        c_s = random.randrange(1, len(self.routes[r_i].route) - 1)
+        while len(self.routes[r_i].route) == 2:
+            r_i = random.randrange(0, len(self.routes))
+        c_s = random.randrange(1, len(self.routes[r_i].route))
         c_e = c_s
         while c_e == c_s:
-            c_e = random.randrange(1, len(self.routes[r_i].route) - 1)
+            c_e = random.randrange(1, len(self.routes[r_i].route))
         if c_s > c_e:
             c_s, c_e = c_e, c_s
         return self.routes[r_i].route[c_s:c_e]
@@ -170,6 +172,21 @@ class CVRPInfo(object):
         routes += [self.make_route(cur_route + [1])]
         junk = ""
         return self.make_solution(routes)
+
+    def refresh(self, solution):
+        solution.cost, solution.demand = 0, 0
+        for route_obj in solution.routes:
+            route = route_obj.route
+            route_obj.demand, route_obj.cost = 0, 0
+            for i in range(0, len(route) - 1):
+                route_obj.demand += self.demand[route[i]]
+                route_obj.cost += self.dist[route[i]][route[i + 1]]
+            solution.cost += route_obj.cost
+            solution.demand += route_obj.demand
+            if route_obj.demand > self.capacity:
+                route_obj.is_valid = False
+                solution.is_valid = False
+
 
     def optimise_route_order(self, solution):
         routes = []

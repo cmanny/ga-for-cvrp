@@ -9,7 +9,7 @@ class CVRPRunner(object):
 
     def __init__(self, algorithm,  iterations):
         self.algorithm = algorithm
-        self.print_cycle = 10
+        self.print_cycle = 500
         self.num_iter = iterations
         self.timings_file = open("timings/timings_{}.txt".format(time.time()), "w")
         self.iter = 0
@@ -39,10 +39,11 @@ class CVRPRunner(object):
             self.best = best
             if self.iter % self.print_cycle == 0:
                 self.timings_file.write("{} at {}s\n".format(best.cost, time.time() - self.start_time))
-                print best.cost
+                print("iter: {} best:{}".format(self.iter, self.best.cost))
             self.iter += 1
             if time.time() - self.start_time > 3600:
                 self.write_to_file("validate/best-solution-{}.timeout".format(self.iter))
+                break
             # if i % 100:
             #     self.im = self.algorithm.info.visualise(self.algorithm.best_solution)
             #     self.im.save("images/"+str(self.algorithm.best_solution.cost) + ".png")
@@ -62,6 +63,6 @@ class CVRPRunner(object):
 
 
 if __name__ == "__main__":
-    cvrp = CVRPRunner(CVRPAdvancedGA(CVRPInfo("validate/fruitybun250.vrp", debug=True), 1), 500000)
+    cvrp = CVRPRunner(CVRPAdvancedGA(CVRPInfo("validate/fruitybun250.vrp", debug=True), 1, 500000), 500000)
     cvrp.run()
     cvrp.write_to_file("validate/best-solution.txt")
