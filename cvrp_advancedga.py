@@ -9,9 +9,9 @@ class AGAPopulation(object):
     def __init__(self, info, total_iters):
         self.info = info
         self.info.max_route_len = 10
-        self.mutate_prob = 0.003
+        self.mutate_prob = 0.01
         self.chromosomes = []
-        for x in [self.info.steep_improve_solution(self.info.make_random_solution(greedy=True)) for _ in range(1000)]:
+        for x in [self.info.steep_improve_solution(self.info.make_random_solution(greedy=True)) for _ in range(100)]:
             heappush(self.chromosomes, (x.cost, x))
         self.best_solution = self.chromosomes[0][1]
         self.zeroDelta = 0
@@ -21,8 +21,6 @@ class AGAPopulation(object):
         self.injected_chroms = []
         self.pop = 5
         self.same_route_prob = 0.25
-
-        self.alpha = 5
         random.seed()
 
     def step(self):
@@ -40,6 +38,15 @@ class AGAPopulation(object):
         self.info.refresh(child)
         #print(child)
         heapify(self.chromosomes)
+
+        # hashes = set()
+        # for i, x in enumerate(chromosomes):
+        #     x_hash = x.hash()
+        #     if x_hash in hashes:
+        #         chromosomes[i] = self.info.steep_improve_solution(self.info.make_random_solution(greedy=True))
+        #     else:
+        #         hashes.add(x_hash)
+
         heappush(self.chromosomes, (self.fitness(child), child))
         self.iters += 1
         return self.best_solution
@@ -55,9 +62,8 @@ class AGAPopulation(object):
         for route in chromosome.routes:
             penalty_sum += max(0, route.demand - self.info.capacity)**2
         mnv = sum(self.info.demand[i] for i in range(250)) / self.info.capacity
-        alpha = self.best_solution.cost / ((1 / (self.iters + 1)) * (self.info.capacity * mnv / 2)**2 + 0.001)
+        alpha = self.best_solution.cost / ((1 / (self.iters + 1)) * (self.info.capacity * mnv / 2)**2 + 0.00001)
         penalty = alpha * penalty_sum * self.iters / self.total_iters
-        penalty = 4 * penalty_sum
         chromosome.penalty = penalty
         return penalty
 
@@ -74,7 +80,7 @@ class AGAPopulation(object):
         return False
 
     def tournament_selection(self, chromosomes):
-        return chromosomes[random.randrange(0, 10)][1], chromosomes[random.randrange(1, len(chromosomes) - 1)][1]
+        return chromosomes[random.randrange(0, 10)][1], chromosomes[random.randrange(0, len(chromosomes) - 1)][1]
 
     def simple_random_crossover(self, chrom1, chrom2):
         child = copy.deepcopy(chrom1)
@@ -92,11 +98,6 @@ class AGAPopulation(object):
             r_i = random.randrange(0, len(chromosome.routes))
         c_i = random.randrange(1, len(chromosome.routes[r_i].route) - 1)
         node = chromosome.routes[r_i].route[c_i]
-        if node == 1:
-            print("bad")
-            print(c_i)
-            print(chromosome.routes[r_i])
-            raw_input()
         chromosome.remove_node(node)
         if random.uniform(0, 1) < self.same_route_prob:
             _, best = self.best_route_insertion([node], chromosome.routes[r_i].route)
@@ -134,46 +135,6 @@ class AGAPopulation(object):
         #print(best_payoff)
         return best_rid, best_nid
 
-    def rand_points(self, low, high):
-        start = random.randrange(low, high)
-        end = random.randrange(low, high)
-        while start == end:
-            end = random.randrange(low, high)
-        if start > end:
-            start, end = end, start
-        return start, end
-
-    def swap_many_nodes(self, chromosome):
-        for i in range(len(chromosome.string)):
-            if random.uniform(0, 1) <= self.mutate_prob:
-                self.swap_node(chromosome)
-
-    def swap_node(self, chromosome):
-        rint = random.randrange(0, self.info.dimension - 2)
-        rint2 = random.randrange(0, self.info.dimension - 2)
-        chromosome.swap(chromosome.string[rint2], chromosome.string[rint])
-
-    #mutations
-    def inversion(self, chromosome):
-        start, end = self.rand_points(0, self.info.dimension - 2)
-        cs = chromosome.string
-        new_string = cs[0:start] + cs[start:end][::-1] + cs[end:self.info.dimension - 1]
-        chromosome.string = new_string
-
-    def swap_sequence(self, chromosome):
-        fs, fe = self.rand_points(0, self.info.dimension - 10)
-        ss, se = self.rand_points(fe + 1, self.info.dimension - 5)
-        cs = chromosome.string
-        new_str = cs[0:fs] + cs[ss:se] + cs[fe:ss] + cs[fs:fe]
-        new_str += cs[len(new_str):self.info.dimension - 1]
-        chromosome.string = new_str
-
-
-    def mutate(self, chromosome):
-        if random.uniform(0, 1) < 0.5:
-            self.inversion(chromosome)
-        else:
-            self.swap_sequence(chromosome)
 
 class CVRPAdvancedGA(CVRPAlgorithm):
     def __init__(self, info, num_populations, total_iters):

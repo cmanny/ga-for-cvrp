@@ -64,6 +64,9 @@ class Solution(object):
             c_s, c_e = c_e, c_s
         return self.routes[r_i].route[c_s:c_e]
 
+    def hash(self):
+        return hash(sum(self.routes, key = lambda x: x.route))
+
     def __repr__(self):
         return "\n".join([str(route) for route in self.routes])
 
