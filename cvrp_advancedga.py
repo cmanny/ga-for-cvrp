@@ -11,9 +11,9 @@ class AGAPopulation(object):
         self.info.max_route_len = 10
         self.mutate_prob = 0.003
         self.chromosomes = []
-        for x in [self.info.steep_improve_solution(self.info.make_random_solution()) for _ in range(200)]
+        for x in [self.info.steep_improve_solution(self.info.make_random_solution()) for _ in range(200)]:
             heappush(self.chromosomes, (x.cost, x))
-        self.best_solution = self.chromosomes[0]
+        self.best_solution = self.chromosomes[0][1]
         self.zeroDelta = 0
         self.iters = 0
         self.change_diffs = []
@@ -31,8 +31,9 @@ class AGAPopulation(object):
         if child.cost < self.best_solution.cost:
             self.best_solution = child
         self.chromosomes.remove(nlargest(1, self.chromosomes)[0])
+        self.repairing(child)
         heapify(self.chromosomes)
-        heappush(self.chromosomes, child)
+        heappush(self.chromosomes, (self.fitness(child), child))
         return self.best_solution
 
     #calc fitness
@@ -50,7 +51,7 @@ class AGAPopulation(object):
         return penalty
 
     # returns true when a repair was needed, false otherwise
-    def repair(self, chromosome):
+    def repairing(self, chromosome):
         routes = chromosome.routes
         r_max_i = max((i for i in range(len(routes))), key = lambda i: routes[i].demand)
         r_min_i = min((i for i in range(len(routes))), key = lambda i: routes[i].demand)
@@ -62,14 +63,16 @@ class AGAPopulation(object):
         return False
 
     def tournament_selection(self, chromosomes):
-        return chromosomes[0], chromosomes[1]
+        return chromosomes[0][1], chromosomes[1][1]
 
     def simple_random_crossover(self, chrom1, chrom2):
         child = copy.deepcopy(chrom1)
         sub_route = chrom2.random_subroute()
         for x in sub_route:
             child.remove_node(x)
-        child.insert_route(best_insertion(child, sub_route), sub_route)
+        r_id, n_id = self.best_insertion(child, sub_route)
+        child.insert_route(r_id, n_id, sub_route)
+        return child
 
     def simple_random_mutation(self, chromosome):
         r_i = random.randrange(0, len(chromosome.routes))
@@ -77,18 +80,25 @@ class AGAPopulation(object):
         node = chromosome.routes[r_i].route[c_i]
         chromosome.remove_node(node)
         if random.uniform(0, 1) < self.same_route_prob:
-            best_i = (r_i, self.best_insertion([node], chromosome.routes[r_i].route))
+            best_i = (r_i, self.best_route_insertion([node], chromosome.routes[r_i].route))
         else:
             r_r_i = r_i
-            while r_i == r_i:
+            while r_i == r_r_i:
                 r_r_i = random.randrange(0, len(chromosome.routes))
-            best_i = (r_r_i, self.best_insertion([node], chromosome.routes[r_r_i].route))
-        chromosome.insert_route(*best_i, [node])
+            best_i = (r_r_i, self.best_route_insertion([node], chromosome.routes[r_r_i].route))
+        chromosome.insert_route(best_i[0], best_i[1], [node])
 
+    #finds the index where the route is best inserted
+    def best_route_insertion(self, sub_route, route):
+        start = sub_route[0]
+        end = sub_route[-1]
+        for i in range(0, len(route) - 1):
+            pass
+        return 0
 
-
-    def best_insertion(self, node, ):
-        pass
+    #finds the best route index, and node index where the route should go
+    def best_insertion(self, child, sub_route):
+        return 0, 0
 
     def rand_points(self, low, high):
         start = random.randrange(low, high)
@@ -133,7 +143,7 @@ class AGAPopulation(object):
 
 class CVRPAdvancedGA(CVRPAlgorithm):
     def __init__(self, info, num_populations):
-        super(CVRPSimpleGA, self).__init__(info)
+        super(CVRPAdvancedGA, self).__init__(info)
 
         self.populations = [AGAPopulation(self.info) for _ in range(num_populations)]
         self.pop_bests = [0 for _ in range(num_populations)]
@@ -143,7 +153,7 @@ class CVRPAdvancedGA(CVRPAlgorithm):
                 c = p.chromosomes[0]
                 #print(",".join([str(x) for x in c.chromosome.string]))
         for i, pop in enumerate(self.populations):
-            self.pop_bests[i], ratio = pop.step()
+            self.pop_bests[i] = pop.step()
         self.best_solution = min(self.pop_bests, key = lambda x: x.cost)
         return self.best_solution
 

@@ -1,5 +1,4 @@
 from cvrp_info import CVRPInfo
-from cvrp_simplega import CVRPSimpleGA
 from cvrp_advancedga import CVRPAdvancedGA
 import os
 import time
@@ -54,7 +53,7 @@ class CVRPRunner(object):
     def write_to_file(self, file_name):
         text = os.linesep.join(["login cm13558 65195",
                 "name Callum Mann",
-                "algorithm Simple GA",
+                "algorithm Advanced GA",
                 "cost " + str(self.algorithm.best_solution.cost),
                 str(self.algorithm.best_solution)])
         with open(file_name, "w") as f:
@@ -63,6 +62,6 @@ class CVRPRunner(object):
 
 
 if __name__ == "__main__":
-    cvrp = CVRPRunner(CVRPSimpleGA(CVRPInfo("validate/fruitybun250.vrp", debug=True), 1), 500000)
+    cvrp = CVRPRunner(CVRPAdvancedGA(CVRPInfo("validate/fruitybun250.vrp", debug=True), 1), 500000)
     cvrp.run()
     cvrp.write_to_file("validate/best-solution.txt")

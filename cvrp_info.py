@@ -4,22 +4,6 @@ import random
 import threading
 from PIL import Image, ImageDraw
 
-class Chromosome(object):
-    def __init__(self, string):
-        self.index_map = dict()
-        for i, x in enumerate(string):
-            self.index_map[x] = i
-        self.string = string
-        self.hash = hash(",".join(str(x) for x in self.string))
-
-
-    def swap(self, a, b):
-        a_index, b_index = self.index_map[a], self.index_map[b]
-        self.string[a_index] = b
-        self.string[b_index] = a
-        self.index_map[a] = b_index
-        self.index_map[b] = a_index
-
 class Route(object):
     def __init__(self, route=[], cost=0, is_valid=False, demand=0):
         self.is_valid = is_valid
@@ -54,22 +38,9 @@ class Solution(object):
         self.cost = cost
         self.demand = demand
         self.penalty = 0
-        self.chromise()
 
     def shuffle(self):
         random.shuffle(self.routes)
-        self.chromise()
-
-    def chromise(self):
-        string = []
-        for p in self.routes:
-            string += p.route[1:-1]
-        try:
-            self.chromosome = Chromosome(string)
-        except KeyError:
-            print("bad" + str(self))
-            Solution.bad_count += 1
-            print(Solution.bad_count)
 
     def remove_node(self, x):
         for route in self.routes:
@@ -82,14 +53,14 @@ class Solution(object):
         self.is_valid = False
 
     def random_subroute(self):
-        r_i = random.randrange(0, len(chromosome.routes.routes))
-        c_s = random.randrange(1, len(chromosome.routes.routes[r_i]) - 1)
+        r_i = random.randrange(0, len(self.routes))
+        c_s = random.randrange(1, len(self.routes[r_i].route) - 1)
         c_e = c_s
         while c_e == c_s:
-            c_e = random.randrange(1, len(chromosome.routes.routes[r_i]) - 1)
+            c_e = random.randrange(1, len(self.routes[r_i].route) - 1)
         if c_s > c_e:
             c_s, c_e = c_e, c_s
-        return routes[r_i].route[c_s:c_e]
+        return self.routes[r_i].route[c_s:c_e]
 
     def __repr__(self):
         return "\n".join([str(route) for route in self.routes])
@@ -200,25 +171,6 @@ class CVRPInfo(object):
         junk = ""
         return self.make_solution(routes)
 
-    def make_from_string(self, chromosome):
-        route = [1]
-        route_demand = 0
-        route_length = 0
-        routes = []
-        for x in chromosome:
-            if route_length <= self.max_route_len and route_demand + self.demand[x] <= self.capacity:
-                route += [x]
-                route_length += 1
-                route_demand += self.demand[x]
-                continue
-            route += [1]
-            routes += [self.make_route(route)]
-            route = [1, x]
-            route_length = 1
-            route_demand = self.demand[x]
-        routes += [self.make_route(route + [1])]
-        return self.make_solution(routes)
-
     def optimise_route_order(self, solution):
         routes = []
         for route in solution.routes:
@@ -257,7 +209,6 @@ class CVRPInfo(object):
             new_routes += [self.make_route(route)]
         return self.make_solution(new_routes)
 
-
     def __repr__(self):
         strin = {
             "coords" : self.coords,
@@ -265,23 +216,6 @@ class CVRPInfo(object):
             #"dists"  : self.dist
         }
         return str(strin)
-
-    def write_infos(self):
-        distance_str = "distances = {"
-        for i in range(len(self.dist)):
-            distance_str += str(i) + ": {"
-            for j in range(len(self.dist[i])):
-                distance_str += str(j) + ":" + str(self.dist[i][j]) + ","
-            distance_str += "},"
-        distance_str += "}"
-        capacity_str = "capacities = {"
-        for i, v in enumerate(self.demand):
-            capacity_str += str(i) + ":" + str(v) + ","
-        capacity_str += "}"
-        with open("distances.py", "w") as f:
-            f.write(distance_str)
-        with open("capacities.py", "w") as f:
-            f.write(capacity_str)
 
     def visualise(self, solution):
 
@@ -297,37 +231,6 @@ class CVRPInfo(object):
             draw.line([norm(*self.coords[n]) for n in nodes], fill=(r_c, g_c, b_c), width=2)
         return im
 
-
-
-
-
-
-
-
-
-
-
-def worker(ci, idd, iters, res):
-    best = 1000000000
-    best_sol = None
-    for i in range(iters):
-        sol = ci.make_random_solution(greedy=False)
-        if sol.cost < best:
-            best = sol.cost
-            best_sol = sol
-    res[idd] = (best, sol)
-
 if __name__ == "__main__":
     ci = CVRPInfo("fruitybun250.vrp")
     ci.visualise(ci.make_random_solution())
-    # ci.write_infos()
-    # best = 10000000
-    # threads = []
-    # res = [0 for _ in range(4)]
-    # for i in range(0, 4):
-    #     t = threading.Thread(target=worker, args=(ci, i, 2000, res))
-    #     threads.append(t)
-    #     t.start()
-    # for i in range(4):
-    #     threads[i].join()
-    # print(min(res, key = lambda x: x[0]))
