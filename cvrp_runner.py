@@ -11,7 +11,7 @@ class CVRPRunner(object):
         self.algorithm = algorithm
         self.print_cycle = 500
         self.num_iter = iterations
-        self.timings_file = open("timings/timings_{0}.txt".format(time.time()), "w")
+        #self.timings_file = open("timings/timings_{0}.txt".format(time.time()), "w")
         self.iter = 0
         signal.signal(signal.SIGINT, self.signal_handler)
 
@@ -24,7 +24,7 @@ class CVRPRunner(object):
                 print("exec:")
                 exec(raw_input())
             if c == "S":
-                self.write_to_file("validate/best-solution-{0}.part".format(self.iter))
+                self.write_to_file("best-solution-{0}.part".format(self.iter))
             if c == "C":
                 handling = False
             if c == "V":
@@ -38,11 +38,11 @@ class CVRPRunner(object):
             best = self.algorithm.step()
             self.best = best
             if self.iter % self.print_cycle == 0:
-                self.timings_file.write("{0} at {1}s\n".format(best.cost, time.time() - self.start_time))
+                #self.timings_file.write("{0} at {1}s\n".format(best.cost, time.time() - self.start_time))
                 print("iter: {0} best:{1}".format(self.iter, self.best.cost))
             self.iter += 1
             if time.time() - self.start_time > 1800:
-                self.write_to_file("validate/best-solution.txt")
+                self.write_to_file("best-solution-marking.txt")
                 break
             # if i % 100:
             #     self.im = self.algorithm.info.visualise(self.algorithm.best_solution)
@@ -63,6 +63,6 @@ class CVRPRunner(object):
 
 
 if __name__ == "__main__":
-    cvrp = CVRPRunner(CVRPAdvancedGA(CVRPInfo("validate/fruitybun250.vrp", debug=True), 1, 200000), 200000)
+    cvrp = CVRPRunner(CVRPAdvancedGA(CVRPInfo("fruitybun250.vrp", debug=True), 1, 200000), 200000)
     cvrp.run()
-    cvrp.write_to_file("validate/best-solution.txt")
+    cvrp.write_to_file("best-solution-marking.txt")

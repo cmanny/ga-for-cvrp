@@ -1,2 +1,2 @@
-cvrp-runtime-in-minutes 15
-note-for-marker My code crashes about 1/4 of the times it runs.
+cvrp-runtime-in-minutes 30
+note-for-marker You may CTRL-C (Interrupt) the program for options such as visualisation and inspection
