@@ -11,7 +11,7 @@ class AGAPopulation(object):
         self.info.max_route_len = 10
         self.mutate_prob = 0.01
         self.chromosomes = []
-        for x in [self.info.steep_improve_solution(self.info.make_random_solution(greedy=True)) for _ in range(100)]:
+        for x in [self.info.steep_improve_solution(self.info.make_random_solution(greedy=True)) for _ in range(800)]:
             heappush(self.chromosomes, (x.cost, x))
         self.best_solution = self.chromosomes[0][1]
         self.zeroDelta = 0
@@ -27,7 +27,7 @@ class AGAPopulation(object):
         p1, p2 = self.tournament_selection(self.chromosomes)
         child = self.biggest_overlap_crossover(p1, p2)
         self.info.refresh(child)
-        for _ in range(5):
+        for _ in range(3):
             # if random.uniform(0, 1) < 0.5:
             c = self.biggest_overlap_crossover(p1, child)
             # else:
