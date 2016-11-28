@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2016.11.27)  28 NOV 2016 11:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2016.11.28)  28 NOV 2016 19:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**poster
+**poster.tex
 (./poster.tex
 LaTeX2e <2016/03/31> patch level 3
 Babel <3.9r> and hyphenation patterns for 3 language(s) loaded.
@@ -1028,14 +1028,23 @@ File: logo/logo_cs_qr.pdf Graphic file (type pdf)
 <use logo/logo_cs_qr.pdf>
 Package pdftex.def Info: logo/logo_cs_qr.pdf used on input line 13.
 (pdftex.def)             Requested size: 255.91081pt x 233.94986pt.
+
+
+LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <31.65> not available
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 13.
+
+
+LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <26.37> not available
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 115.
+
+
 File: logo/logo_uob_color.pdf Graphic file (type pdf)
- <use logo/logo_uob_color.pdf>
-Package pdftex.def Info: logo/logo_uob_color.pdf used on input line 62.
+<use logo/logo_uob_color.pdf>
+Package pdftex.def Info: logo/logo_uob_color.pdf used on input line 115.
 (pdftex.def)             Requested size: 436.8326pt x 126.87415pt.
 File: logo/logo_cs_qr.pdf Graphic file (type pdf)
-
-<use logo/logo_cs_qr.pdf>
-Package pdftex.def Info: logo/logo_cs_qr.pdf used on input line 62.
+ <use logo/logo_cs_qr.pdf>
+Package pdftex.def Info: logo/logo_cs_qr.pdf used on input line 115.
 (pdftex.def)             Requested size: 255.91081pt x 233.94986pt.
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
@@ -1049,28 +1058,31 @@ Package pdftex.def Info: logo/logo_cs_qr.pdf used on input line 62.
 \tf@snm=\write8
 \openout8 = `poster.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 66.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 66.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 119.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 119.
  (./poster.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 66.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 66.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 119.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 119.
 Package rerunfilecheck Info: File `poster.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 66.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 119.
  ) 
 Here is how much of TeX's memory you used:
- 17451 strings out of 494945
- 327189 string characters out of 6181031
- 418223 words of memory out of 5000000
- 20302 multiletter control sequences out of 15000+600000
- 11492 words of font info for 42 fonts, out of 8000000 for 9000
+ 17488 strings out of 494945
+ 328184 string characters out of 6181031
+ 441226 words of memory out of 5000000
+ 20337 multiletter control sequences out of 15000+600000
+ 12502 words of font info for 45 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 54i,22n,68p,383b,948s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb>
-Output written on poster.pdf (1 page, 25681 bytes).
+ 54i,22n,68p,387b,948s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi17.pfb>
+Output written on poster.pdf (1 page, 57422 bytes).
 PDF statistics:
- 35 PDF objects out of 1000 (max. 8388607)
- 20 compressed objects within 1 object stream
+ 47 PDF objects out of 1000 (max. 8388607)
+ 29 compressed objects within 1 object stream
  3 named destinations out of 1000 (max. 500000)
  65 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -2,11 +2,11 @@
                     author={Callum Mann},
                 % the degree programme
                 % the dissertation    title (which cannot be blank)
-                     title={Genetic algorithms for the CVRP},
+                     title={Genetic algorithm for the CVRP},
                 % the dissertation subtitle (which can    be blank)
                   subtitle={Capacitated Vehicle Routing Problem},
                 % the dissertation     type
-                      type={Heuristics},
+                      type={Heuristic},
                 % the year of submission
                       year={2016}]{poster}
 
@@ -26,48 +26,87 @@
 
 \begin{columns}[t]
   \begin{column}{0.422\linewidth}
-  \begin{block}{\Large Initial Population}
-  The initial population is designed to contain optimised routes with some randomness. 
-  The purpose of some randomness in the initial solution is so that the population does not
-  converge too quickly resulting in cost stagnation. \\ \\
-  The population is created by choosing a random starting node, and performing nearest neighbour
-  until the capacity of the truck is reached. With some probability, the nearest neighbour will favour
-  routes closer to the depot, so that the population is not identical at the beginning. After these routes have been
-  created, they are passed into the \textbf{Steepest Improvement Algorithm}, to optimise the order of the routes.
-  These routes then have a starting cost of around 6500, depending on the randomness parameter.
-  \end{block}
+    \begin{block}{\Large Representation}
+      The representation of solutions (\textit{chromosomes}) are lists of tours that visit
+      customers. The tour may exceed the trucks capacity making the solution infeasible,
+      however there is a penalty term associated with each solution that affects their fitness.
+      The benefit of this representation is that it allows genetic operators to arrange
+      routes more freely and potentially generate much more optimal offsprings, as
+      the optimal solutions are often very close to being infeasible.
+
+
+    \end{block}
+    \vspace{1cm}
+
+    \begin{block}{\Large Initial Population}
+      The initial population is designed to contain optimised routes with some randomness.
+      The purpose of some randomness in the initial solution is so that the population does not
+      converge too quickly resulting in cost stagnation. \vspace{1cm} \\
+      The population is created by choosing a random starting node, and performing nearest neighbour
+      until the capacity of the truck is reached. With some probability, the nearest neighbour will favour
+      routes closer to the depot, so that the population is not identical at the beginning. After these routes have been
+      created, they are passed into the \textbf{Steepest Improvement Algorithm (SIA)}, to optimise the order of the routes.
+      These routes then have a starting cost of around 6500, depending on the randomness parameter.
+    \end{block}
+    \vspace{1cm}
+
+    \vfill
+
+    \begin{block}{\Large Generation Step}
+      The population is changed every step, by removing an undesirable solution and
+      replacing it with a new child that ideally has a better fitness value. The generation
+      is advanced through the following steps:
+      \begin{enumerate}
+        \item P1, P2 = ParentSelection()
+        \item Child = BiggestOverlapCrossover(P1, P2)
+        \item Child = Iterate crossover(P1, Child) n times
+        \item Mutate(Child)
+        \item SteeplyImprove(Child)
+        \item Repair(Child)
+        \item Introduce(Child)
+      \end{enumerate}
+      \vspace{1cm}
+
+      P1 is typically a solution with a high fitness value, and P2 is randomly chosen.
+      This is done to maximise the chance of creating new optimal solutions. The child
+      is created from a crossover in P1 and P2 that may be repeated several times between
+      P1 and itself. This increases the chance of an improved child per iteration.
+      \vspace{1cm} \\
+      The child is also passed through the \textbf{SIA} after the operators as
+      they often leave some room for local optimisation after routes have been
+      moved around. The child is partially repaired at the end of the generation
+      so that routes cannot become unsightly,
+      although typically only feasible solutions are optimal in later generations
+      due to the penalty term outweighing reduced cost.
+
+    \end{block}
+    \vspace{1cm}
+
   \end{column}
 
   \begin{column}{0.422\linewidth}
-  \begin{block}{\Large Local Search: Steepest Improvement Algorithm}
-    The order in which a truck will visit customers may be very unoptimised, so the \textbf{SIA} is used
-    to search locally \textit{within} the solution for lower costs. 
-  \end{block}
-  \end{column}
-\end{columns}
+    \begin{block}{\Large Local Search: Steepest Improvement Algorithm}
+      The order in which a truck will visit customers may be very unoptimised, so the \textbf{SIA} is used
+      to search locally \textit{within} the solution for lower costs.
+    \end{block}
+    \vspace{1cm}
 
-\vfill
+    \vfill
 
-\begin{columns}[t]
-  \begin{column}{0.422\linewidth}
-  \begin{block}{\Large Generation Step}
-  The population is changed every step, by removing an undesirable solution and 
-  replacing it with a new child that hopefully has a better fitness value. The generation
-  is advanced through the following steps:
-  \begin{enumerate}
-    \item P1, P2 = ParentSelection()
-    \item Child = BiggestOverlapCrossover(P1, P2)
-    \item Child = Iterate crossover(P1, Child) n times
-    \item Mutate(Child)
-    \item Repair(Child)
-    \item Introduce(Child)
-  \end{enumerate}
-  \end{block}
-  \end{column}
-  \begin{column}{0.422\linewidth}
-  \begin{block}{\Large Biggest Overlap Crossover}
-    \vspace{10cm}
-  \end{block}
+    \begin{block}{\Large Crossover: Biggest Route Overlap}
+      \vspace{10cm}
+    \end{block}
+    \vspace{1cm}
+
+    \begin{block}{\Large Mutation: Minimal cost insertion}
+      \vspace{10cm}
+    \end{block}
+    \vspace{1cm}
+
+    \begin{block}{\Large Evaluation}
+      It's just great
+    \end{block}
+    \vspace{1cm}
   \end{column}
 \end{columns}
 

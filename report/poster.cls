@@ -80,8 +80,10 @@
   \vspace{4ex}
   \raggedright
   {\huge  {\poster@title@major}}                                                                     \\ [4ex]
-  {\large Student: {\poster@author}, Algorithm type: {\poster@type}} \\ [4ex]
+  {\large {\textit\poster@title@minor}, Algorithm type: {\poster@type}} \\ [4ex]
+  {\large {\poster@author}} \\ [4ex]
   {\large University of Bristol, Department of Computer Science}
+  {{\poster@year}}
   \vspace{4ex}
   \end{center}
   \end{column}
