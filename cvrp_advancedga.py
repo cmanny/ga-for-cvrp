@@ -25,7 +25,10 @@ class AGAPopulation(object):
 
     def step(self):
         p1, p2 = self.tournament_selection(self.chromosomes)
-        child = self.simple_random_crossover(p1, p2)
+        if random.uniform(0, 1) < 0.5:
+            child = self.biggest_overlap_crossover(p1, p2)
+        else:
+            child = self.simple_random_crossover(p1, p2)
         self.info.refresh(child)
         self.simple_random_mutation(child)
         if self.chromosomes[0][1].cost < self.best_solution.cost:
@@ -82,6 +85,36 @@ class AGAPopulation(object):
         #print("{} {}".format(r_id, n_id))
         child.insert_route(r_id, n_id, sub_route)
         return child
+
+    def biggest_overlap_crossover(self, c1, c2):
+        child = copy.deepcopy(c1)
+        sub_route = c2.random_subroute()
+        routes = []
+        for x in sub_route:
+            child.remove_node(x)
+        for i, route in enumerate(child.routes):
+            x_min, x_max, y_min, y_max = self.info.bounding_box(route.route)
+            sx_min, sx_max, sy_min, sy_max = self.info.bounding_box(sub_route)
+            x_overlap = max(0, min(x_max, sx_max) - max(x_min, sx_min))
+            y_overlap = max(0, min(y_max, sy_max) - max(y_min, sy_min))
+            heappush(routes, (x_overlap * y_overlap, i))
+        top3 = nlargest(3, routes)
+        min_i = min((i[1] for i in top3), key = lambda x: child.routes[x].demand)
+        _, best = self.best_route_insertion(sub_route, child.routes[min_i].route)
+        child.insert_route(min_i, best, sub_route)
+        return child
+
+
+
+
+    # def compute_biggest_overlaps(self, subroute):
+    #     overlaps = dict()
+    #     for route in self.routes:
+    #         route.compute_bounding_box()
+    #         x_overlap = max(0, min(subroute.x_max,route.x_max) - max(subroute.x_min,route.x_min))
+    #         y_overlap = max(0, min(subroute.y_max,route.y_max) - max(subroute.x_min,route.x_min))
+    #         overlaps[route] = x_overlap * y_overlap
+    #     return heapq.nlargest(3, overlaps)
 
     def simple_random_mutation(self, chromosome):
         r_i = random.randrange(0, len(chromosome.routes))

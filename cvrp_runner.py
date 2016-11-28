@@ -9,7 +9,7 @@ class CVRPRunner(object):
 
     def __init__(self, algorithm,  iterations):
         self.algorithm = algorithm
-        self.print_cycle = 200
+        self.print_cycle = 500
         self.num_iter = iterations
         self.timings_file = open("timings/timings_{}.txt".format(time.time()), "w")
         self.iter = 0

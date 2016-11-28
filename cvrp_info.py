@@ -21,8 +21,12 @@ class Route(object):
 
 
     def remove_node(self, x):
+        if x == 1:
+            print("BAD")
+            raw_input()
         self.is_valid = False
         del self.route[self.route.index(x)]
+
 
     def __repr__(self):
         debug_str = ", cost = " + str(self.cost) + ", demand = " + str(self.demand)
@@ -109,6 +113,13 @@ class CVRPInfo(object):
             for yi in range(self.dimension + 1):
                 self.dist[xi][yi] = self.compute_dist(xi, yi)
 
+    def bounding_box(self, route):
+        x_min = min(self.coords[node][0] for node in route)
+        x_max = max(self.coords[node][0] for node in route)
+        y_min = min(self.coords[node][1] for node in route)
+        y_max = max(self.coords[node][1] for node in route)
+        return x_min, x_max, y_min, y_max
+
     def make_solution(self, routes):
         cost = 0
         demand = 0
@@ -155,9 +166,10 @@ class CVRPInfo(object):
         route_length = 0
         while unserviced:
             #print(unserviced)
+            i = 0
             if greedy:
                 i = min([i for i in range(len(unserviced))], \
-                        key=lambda x: self.dist[cur_route[-1]][unserviced[x]])
+                        key=lambda x: self.dist[cur_route[-1] if random.uniform(0, 1) < 0.7 else 1][unserviced[x]])
             node = unserviced[i]
             if route_length <= self.max_route_len and route_demand + self.demand[node] <= self.capacity:
                 cur_route += [node]
