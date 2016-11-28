@@ -110,18 +110,6 @@ class AGAPopulation(object):
         child.insert_route(min_i, best, sub_route)
         return child
 
-
-
-
-    # def compute_biggest_overlaps(self, subroute):
-    #     overlaps = dict()
-    #     for route in self.routes:
-    #         route.compute_bounding_box()
-    #         x_overlap = max(0, min(subroute.x_max,route.x_max) - max(subroute.x_min,route.x_min))
-    #         y_overlap = max(0, min(subroute.y_max,route.y_max) - max(subroute.x_min,route.x_min))
-    #         overlaps[route] = x_overlap * y_overlap
-    #     return heapq.nlargest(3, overlaps)
-
     def simple_random_mutation(self, chromosome):
         r_i = random.randrange(0, len(chromosome.routes))
         while(len(chromosome.routes[r_i].route) == 2):
