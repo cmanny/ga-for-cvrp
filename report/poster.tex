@@ -16,12 +16,32 @@
 
 \begin{frame}{}
 
-\vfill
+% \begin{columns}[t]
+%   \begin{column}{0.900\linewidth}
+%   \begin{block}{\Large Capacitated Vehicle Routing Problem}
+%     \vspace{10cm}
+%   \end{block}
+%   \end{column}
+% \end{columns}
 
 \begin{columns}[t]
-  \begin{column}{0.900\linewidth}
-  \begin{block}{\Large Capacitated Vehicle Routing Problem}
-    \vspace{10cm}
+  \begin{column}{0.422\linewidth}
+  \begin{block}{\Large Initial Population}
+  The initial population is designed to contain optimised routes with some randomness. 
+  The purpose of some randomness in the initial solution is so that the population does not
+  converge too quickly resulting in cost stagnation. \\ \\
+  The population is created by choosing a random starting node, and performing nearest neighbour
+  until the capacity of the truck is reached. With some probability, the nearest neighbour will favour
+  routes closer to the depot, so that the population is not identical at the beginning. After these routes have been
+  created, they are passed into the \textbf{Steepest Improvement Algorithm}, to optimise the order of the routes.
+  These routes then have a starting cost of around 6500, depending on the randomness parameter.
+  \end{block}
+  \end{column}
+
+  \begin{column}{0.422\linewidth}
+  \begin{block}{\Large Local Search: Steepest Improvement Algorithm}
+    The order in which a truck will visit customers may be very unoptimised, so the \textbf{SIA} is used
+    to search locally \textit{within} the solution for lower costs. 
   \end{block}
   \end{column}
 \end{columns}
@@ -30,28 +50,22 @@
 
 \begin{columns}[t]
   \begin{column}{0.422\linewidth}
-  \begin{block}{\Large Simple Genetic Algorithm}
-\vspace{10cm}
-  \end{block}
-  \end{column}
-
-  \begin{column}{0.422\linewidth}
-  \begin{block}{\Large Advanced GA with intelligent crossover}
-\vspace{10cm}
-  \end{block}
-  \end{column}
-\end{columns}
-
-\vfill
-
-\begin{columns}[t]
-  \begin{column}{0.422\linewidth}
-  \begin{block}{\Large Experiments}
-  \vspace{10cm}
+  \begin{block}{\Large Generation Step}
+  The population is changed every step, by removing an undesirable solution and 
+  replacing it with a new child that hopefully has a better fitness value. The generation
+  is advanced through the following steps:
+  \begin{enumerate}
+    \item P1, P2 = ParentSelection()
+    \item Child = BiggestOverlapCrossover(P1, P2)
+    \item Child = Iterate crossover(P1, Child) n times
+    \item Mutate(Child)
+    \item Repair(Child)
+    \item Introduce(Child)
+  \end{enumerate}
   \end{block}
   \end{column}
   \begin{column}{0.422\linewidth}
-  \begin{block}{\Large Best costs}
+  \begin{block}{\Large Biggest Overlap Crossover}
     \vspace{10cm}
   \end{block}
   \end{column}
