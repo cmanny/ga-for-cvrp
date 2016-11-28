@@ -75,18 +75,22 @@
   \leavevmode
   \begin{beamercolorbox}[wd=\paperwidth]{headline}
   \begin{columns}[c]
-  \begin{column}{.90\paperwidth}
-  \begin{center}
-  \vspace{4ex}
-  \raggedright
-  {\huge  {\poster@title@major}}                                                                     \\ [4ex]
-  {\large {\textit\poster@title@minor}, Algorithm type: {\poster@type}} \\ [4ex]
-  {\large {\poster@author}} \\ [4ex]
-  {\large University of Bristol, Department of Computer Science}
-  {{\poster@year}}
-  \vspace{4ex}
-  \end{center}
-  \end{column}
+    \begin{column}{.50\linewidth}
+      \begin{center}
+        \vspace{4ex}
+        \raggedright
+        {\huge  {\poster@title@major}}                                                                     \\ [4ex]
+        {\large {\textit\poster@title@minor}, Algorithm type: {\poster@type}} \\ [4ex]
+        {\large {\poster@author}} \\ [4ex]
+        {\large University of Bristol, Department of Computer Science}
+        {{\poster@year}}
+        \vspace{4ex}
+      \end{center}
+    \end{column}
+    \begin{column}{.40\linewidth}
+    \hfill
+      \includegraphics[scale=0.48]{logo/route.jpeg}
+    \end{column}
   \end{columns}
   \end{beamercolorbox}
 }
