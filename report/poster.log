@@ -1,11 +1,26 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2016.11.27)  27 NOV 2016 23:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2016.11.27)  28 NOV 2016 11:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**report.tex
-(./report.tex
+**poster
+(./poster.tex
 LaTeX2e <2016/03/31> patch level 3
 Babel <3.9r> and hyphenation patterns for 3 language(s) loaded.
+(./poster.cls
+Document Class: poster 2012/05/04, Daniel Page <Daniel.Page@bristol.ac.uk>
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks14
+\pgfkeys@temptoks=\toks15
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeysfiltered.code.t
+ex
+\pgfkeys@tmptoks=\toks16
+))) (/usr/share/texlive/texmf-dist/tex/latex/pgfopts/pgfopts.sty
+Package: pgfopts 2014/07/10 v2.1a LaTeX package options with pgfkeys
+\pgfopts@list@add@a@toks=\toks17
+\pgfopts@list@add@b@toks=\toks18
+)
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamer.cls
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasercs.sty
 Package: beamerbasercs 2015/03/08 (rcs-revision 368aa9ba9d38)
@@ -77,7 +92,7 @@ Package: beamerbaseoptions 2013/03/10 (rcs-revision 47431932db0d)
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
-\KV@toks@=\toks14
+\KV@toks@=\toks19
 ))
 \beamer@paperwidth=\skip42
 \beamer@paperheight=\skip43
@@ -103,7 +118,7 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layoutheight=\dimen124
 \Gm@layouthoffset=\dimen125
 \Gm@layoutvoffset=\dimen126
-\Gm@dimlist=\toks15
+\Gm@dimlist=\toks20
 )
 (/usr/share/texlive/texmf-dist/tex/latex/base/size11.clo
 File: size11.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
@@ -140,7 +155,7 @@ Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
-\pgfutil@everybye=\toks16
+\pgfutil@everybye=\toks21
 \pgfutil@tempdima=\dimen129
 \pgfutil@tempdimb=\dimen130
 
@@ -156,14 +171,7 @@ Package: pgfrcs 2015/08/07 v3.0.1a (rcs-revision 1.31)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
 Package: pgfsys 2014/07/09 v3.0.1a (rcs-revision 1.48)
 
-(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
-\pgfkeys@pathtoks=\toks17
-\pgfkeys@temptoks=\toks18
-
-(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeysfiltered.code.t
-ex
-\pgfkeys@tmptoks=\toks19
-))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex)
 \pgf@x=\dimen131
 \pgf@y=\dimen132
 \pgf@xa=\dimen133
@@ -178,10 +186,11 @@ ex
 \c@pgf@countb=\count107
 \c@pgf@countc=\count108
 \c@pgf@countd=\count109
-\t@pgf@toka=\toks20
-\t@pgf@tokb=\toks21
-\t@pgf@tokc=\toks22
- (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
+\t@pgf@toka=\toks22
+\t@pgf@tokb=\toks23
+\t@pgf@tokc=\toks24
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
 File: pgf.cfg 2008/05/14  (rcs-revision 1.7)
 )
 Driver file for pgf: pgfsys-pdftex.def
@@ -229,9 +238,9 @@ Package: pgfcore 2010/04/11 v3.0.1a (rcs-revision 1.7)
 \pgfmath@dimen=\dimen139
 \pgfmath@count=\count112
 \pgfmath@box=\box35
-\pgfmath@toks=\toks23
-\pgfmath@stack@operand=\toks24
-\pgfmath@stack@operation=\toks25
+\pgfmath@toks=\toks25
+\pgfmath@stack@operand=\toks26
+\pgfmath@stack@operation=\toks27
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code
@@ -415,10 +424,8 @@ File: pd1enc.def 2016/06/24 v6.83q Hyperref: PDFDocEncoding definition (HO)
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
 )
-Package hyperref Info: Option `final' set `true' on input line 4362.
 Package hyperref Info: Option `bookmarks' set `true' on input line 4362.
 Package hyperref Info: Option `bookmarksopen' set `true' on input line 4362.
-Package hyperref Info: Option `pdfpagelabels' set `false' on input line 4362.
 Package hyperref Info: Option `implicit' set `false' on input line 4362.
 Package hyperref Info: Hyper figures OFF on input line 4486.
 Package hyperref Info: Link nesting OFF on input line 4491.
@@ -447,6 +454,7 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6367.
 Package hyperref Info: PDF/A mode OFF on input line 6372.
 LaTeX Info: Redefining \ref on input line 6412.
 LaTeX Info: Redefining \pageref on input line 6416.
+\Hy@abspage=\count123
 
 
 Package hyperref Message: Stopped early.
@@ -457,8 +465,8 @@ Package hyperref Message: Driver (autodetected): hpdftex.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2016/06/24 v6.83q Hyperref driver for pdfTeX
-\Fld@listcount=\count123
-\c@bookmark@seq@number=\count124
+\Fld@listcount=\count124
+\c@bookmark@seq@number=\count125
 
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
@@ -479,7 +487,7 @@ Package: amssymb 2013/01/14 v3.01 AMS font symbols
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
-\@emptytoks=\toks26
+\@emptytoks=\toks28
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
@@ -501,37 +509,37 @@ Package: beamerbasetwoscreens 2010/05/01  (rcs-revision efa082c6111d)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbaseoverlay.sty
 Package: beamerbaseoverlay 2013/12/25  (rcs-revision f6bd5e3805da)
-\beamer@argscount=\count125
+\beamer@argscount=\count126
 \beamer@lastskipcover=\skip44
-\beamer@trivlistdepth=\count126
+\beamer@trivlistdepth=\count127
 )
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasetitle.sty
 Package: beamerbasetitle 2010/09/21  (rcs-revision f0446ed0b6ae)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasesection.sty
 Package: beamerbasesection 2013/06/07  (rcs-revision 60b9fe0f342f)
-\c@lecture=\count127
-\c@part=\count128
-\c@section=\count129
-\c@subsection=\count130
-\c@subsubsection=\count131
+\c@lecture=\count128
+\c@part=\count129
+\c@section=\count130
+\c@subsection=\count131
+\c@subsubsection=\count132
 )
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbaseframe.sty
 Package: beamerbaseframe 2014/02/20  (rcs-revision 4b8ceeeff434)
 \beamer@framebox=\box40
 \beamer@frametitlebox=\box41
 \beamer@zoombox=\box42
-\beamer@zoomcount=\count132
-\beamer@zoomframecount=\count133
+\beamer@zoomcount=\count133
+\beamer@zoomframecount=\count134
 \beamer@frametextheight=\dimen168
-\c@subsectionslide=\count134
+\c@subsectionslide=\count135
 \beamer@frametopskip=\skip45
 \beamer@framebottomskip=\skip46
 \beamer@frametopskipautobreak=\skip47
 \beamer@framebottomskipautobreak=\skip48
-\beamer@envbody=\toks27
+\beamer@envbody=\toks29
 \framewidth=\dimen169
-\c@framenumber=\count135
+\c@framenumber=\count136
 )
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbaseverbatim.sty
 Package: beamerbaseverbatim 2015/01/05  (rcs-revision 431510bb5890)
@@ -540,10 +548,10 @@ Package: beamerbaseverbatim 2015/01/05  (rcs-revision 431510bb5890)
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbaseframesize.sty
 Package: beamerbaseframesize 2011/09/12  (rcs-revision 70f9d8411e54)
 \beamer@splitbox=\box43
-\beamer@autobreakcount=\count136
+\beamer@autobreakcount=\count137
 \beamer@autobreaklastheight=\dimen170
-\beamer@frametitletoks=\toks28
-\beamer@framesubtitletoks=\toks29
+\beamer@frametitletoks=\toks30
+\beamer@framesubtitletoks=\toks31
 )
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbaseframecomponents.sty
 Package: beamerbaseframecomponents 2013/10/18  (rcs-revision 5cf6c5555a45)
@@ -561,7 +569,7 @@ Package: beamerbasetoc 2015/03/08  (rcs-revision 7270298bbaae)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasetemplates.sty
 Package: beamerbasetemplates 2010/05/01  (rcs-revision efa082c6111d)
-\beamer@sbttoks=\toks30
+\beamer@sbttoks=\toks32
 
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbaseauxtemplates.sty
 Package: beamerbaseauxtemplates 2014/06/30  (rcs-revision 580088513a67)
@@ -585,10 +593,10 @@ Package: beamerbaselocalstructure 2014/09/10  (rcs-revision 393f6dcff371)
 
 (/usr/share/texlive/texmf-dist/tex/latex/tools/enumerate.sty
 Package: enumerate 2015/07/23 v3.00 enumerate extensions (DPC)
-\@enLab=\toks31
+\@enLab=\toks33
 )
-\c@figure=\count137
-\c@table=\count138
+\c@figure=\count138
+\c@table=\count139
 \abovecaptionskip=\skip49
 \belowcaptionskip=\skip50
 )
@@ -609,7 +617,7 @@ Package: amstext 2000/06/29 v2.01 AMS text
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks32
+\@emptytoks=\toks34
 \ex@=\dimen177
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
@@ -619,13 +627,13 @@ Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2016/03/08 v2.02 operator names
 )
-\inf@bad=\count139
+\inf@bad=\count140
 LaTeX Info: Redefining \frac on input line 199.
-\uproot@=\count140
-\leftroot@=\count141
+\uproot@=\count141
+\leftroot@=\count142
 LaTeX Info: Redefining \overline on input line 297.
-\classnum@=\count142
-\DOTSCASE@=\count143
+\classnum@=\count143
+\DOTSCASE@=\count144
 LaTeX Info: Redefining \ldots on input line 394.
 LaTeX Info: Redefining \dots on input line 397.
 LaTeX Info: Redefining \cdots on input line 518.
@@ -634,42 +642,42 @@ LaTeX Info: Redefining \cdots on input line 518.
 \big@size=\dimen179
 LaTeX Font Info:    Redeclaring font encoding OML on input line 634.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 635.
-\macc@depth=\count144
-\c@MaxMatrixCols=\count145
+\macc@depth=\count145
+\c@MaxMatrixCols=\count146
 \dotsspace@=\muskip11
-\c@parentequation=\count146
-\dspbrk@lvl=\count147
-\tag@help=\toks33
-\row@=\count148
-\column@=\count149
-\maxfields@=\count150
-\andhelp@=\toks34
+\c@parentequation=\count147
+\dspbrk@lvl=\count148
+\tag@help=\toks35
+\row@=\count149
+\column@=\count150
+\maxfields@=\count151
+\andhelp@=\toks36
 \eqnshift@=\dimen180
 \alignsep@=\dimen181
 \tagshift@=\dimen182
 \tagwidth@=\dimen183
 \totwidth@=\dimen184
 \lineht@=\dimen185
-\@envbody=\toks35
+\@envbody=\toks37
 \multlinegap=\skip52
 \multlinetaggap=\skip53
-\mathdisplay@stack=\toks36
+\mathdisplay@stack=\toks38
 LaTeX Info: Redefining \[ on input line 2739.
 LaTeX Info: Redefining \] on input line 2740.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2015/03/04 v2.20.2
-\thm@style=\toks37
-\thm@bodyfont=\toks38
-\thm@headfont=\toks39
-\thm@notefont=\toks40
-\thm@headpunct=\toks41
+\thm@style=\toks39
+\thm@bodyfont=\toks40
+\thm@headfont=\toks41
+\thm@notefont=\toks42
+\thm@headpunct=\toks43
 \thm@preskip=\skip54
 \thm@postskip=\skip55
 \thm@headsep=\skip56
-\dth@everypar=\toks42
+\dth@everypar=\toks44
 )
-\c@theorem=\count151
+\c@theorem=\count152
 )
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamerbasethemes.sty
 Package: beamerbasethemes 2010/05/01  (rcs-revision efa082c6111d)
@@ -695,47 +703,9 @@ Package: beamerinnerthemedefault 2014/06/30  (rcs-revision 580088513a67)
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/themes/outer/beamerouterthemede
 fault.sty
 Package: beamerouterthemedefault 2012/12/19  (rcs-revision 1686da3db3c9)
-))) (./beamerthemeAachen.sty
-Package: beamerthemeAachen 
- (./tangocolors.sty))
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty
-Package: times 2005/04/12 PSNFSS-v9.2a (SPQR) 
-)
-(/usr/share/texlive/texmf-dist/tex/latex/base/latexsym.sty
-Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
-\symlasy=\mathgroup6
-LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
-(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 52.
-)
-(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2016/04/23 3.9r The Babel package
+))) (./beamerposter.sty
+Package: beamerposter 2015/04/21 v.1.12 latex-beamer poster extension
 
-(/usr/share/texlive/texmf-dist/tex/generic/babel-english/english.ldf
-Language: english 2012/08/20 v3.3p English support from the babel system
-
-(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
-File: babel.def 2016/04/23 3.9r Babel common definitions
-\babel@savecnt=\count152
-\U@D=\dimen188
-LaTeX Info: Redefining \textlatin on input line 1448.
-)
-\l@british = a dialect from \language\l@english 
-\l@UKenglish = a dialect from \language\l@english 
-\l@canadian = a dialect from \language\l@american 
-\l@australian = a dialect from \language\l@british 
-\l@newzealand = a dialect from \language\l@british 
-))
-(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
-Package: inputenc 2015/03/17 v1.2c Input encoding file
-\inpenc@prehook=\toks43
-\inpenc@posthook=\toks44
-
-(/usr/share/texlive/texmf-dist/tex/latex/base/latin1.def
-File: latin1.def 2015/03/17 v1.2c Input encoding file
-)) (./beamerposter.sty
-Package: 2008/03/11. v.1.07. beamerposter: latex-beamer poster extension
-Package: beamerposter 2008/03/11. v.1.07. beamerposter: latex-beamer poster ext
-ension
 (/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
 Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
 
@@ -749,20 +719,7 @@ File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 ))
 (./type1cm.sty
 Package: type1cm 2002/04/01 v0.03 BlueSky/Y&Y Type1 CM font definitions (DPC)
-)
-beamerposter: checking size input, please wait.
-beamerposter: the input a0\ 1\ was correct, we proceed.
-beamerposter: finished size input check.
-beamerposter: myfontscale=1.0
-beamerposter: checking orientation input, please wait.
-beamerposter: the input portrait\ 0\ was correct, we proceed.
-beamerposter: finished orientation check.
-beamerposter: checking size input, please wait.
-beamerposter: the input a0\ 1\ was correct, we proceed.
-beamerposter: finished size input check.
-beamerposter: myfontscale=1.4
-beamerposter: enabled debug mode
-(/usr/share/texlive/texmf-dist/tex/latex/fp/fp.sty
+) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp.sty
 Package: fp 1995/04/02
 
 `Fixed Point Package', Version 0.8, April 2, 1995 (C) Michael Mehlich
@@ -810,421 +767,88 @@ Package: fp-upn 1996/10/21
 (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-eval.sty
 Package: fp-eval 1995/04/03
 ))
-\tmp=\dimen189
+Package beamerposter Info: checking size input, please wait. on input line 128.
 
-beamerposter: paperwidth=2388.89357pt, paperheight=3380.75665pt
-beamerposter: textwidth=2360.44081pt, textwidth=3352.3039pt
-( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeX * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeX"
-FP debug: upn: result      "12"
-FP debug: upn: calculating "12 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "16.800000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(16.800000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "16.80"
-FP debug: upn: +++ result of upn-expression is "(16.80)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeY * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeY"
-FP debug: upn: result      "14"
-FP debug: upn: calculating "14 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "19.600000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(19.600000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "19.60"
-FP debug: upn: +++ result of upn-expression is "(19.60)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeX * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeX"
-FP debug: upn: result      "14.4"
-FP debug: upn: calculating "14.4 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "20.160000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(20.160000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "20.16"
-FP debug: upn: +++ result of upn-expression is "(20.16)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeY * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeY"
-FP debug: upn: result      "18"
-FP debug: upn: calculating "18 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "25.200000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(25.200000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "25.20"
-FP debug: upn: +++ result of upn-expression is "(25.20)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeX * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeX"
-FP debug: upn: result      "17.28"
-FP debug: upn: calculating "17.28 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "24.192000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(24.192000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "24.19"
-FP debug: upn: +++ result of upn-expression is "(24.19)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeY * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeY"
-FP debug: upn: result      "22"
-FP debug: upn: calculating "22 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "30.800000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(30.800000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "30.80"
-FP debug: upn: +++ result of upn-expression is "(30.80)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeX * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeX"
-FP debug: upn: result      "20.74"
-FP debug: upn: calculating "20.74 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "29.036000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(29.036000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "29.04"
-FP debug: upn: +++ result of upn-expression is "(29.04)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeY * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeY"
-FP debug: upn: result      "25"
-FP debug: upn: calculating "25 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "35.000000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(35.000000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "35.00"
-FP debug: upn: +++ result of upn-expression is "(35.00)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeX * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeX"
-FP debug: upn: result      "24.88"
-FP debug: upn: calculating "24.88 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "34.832000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(34.832000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "34.83"
-FP debug: upn: +++ result of upn-expression is "(34.83)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeY * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeY"
-FP debug: upn: result      "30"
-FP debug: upn: calculating "30 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "42.000000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(42.000000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "42.00"
-FP debug: upn: +++ result of upn-expression is "(42.00)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeX * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeX"
-FP debug: upn: result      "29.86"
-FP debug: upn: calculating "29.86 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "41.804000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(41.804000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "41.80"
-FP debug: upn: +++ result of upn-expression is "(41.80)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeY * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeY"
-FP debug: upn: result      "37"
-FP debug: upn: calculating "37 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "51.800000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(51.800000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "51.80"
-FP debug: upn: +++ result of upn-expression is "(51.80)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeX * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeX"
-FP debug: upn: result      "35.83"
-FP debug: upn: calculating "35.83 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "50.162000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(50.162000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "50.16"
-FP debug: upn: +++ result of upn-expression is "(50.16)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeY * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeY"
-FP debug: upn: result      "45"
-FP debug: upn: calculating "45 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "63.000000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(63.000000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "63.00"
-FP debug: upn: +++ result of upn-expression is "(63.00)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeX * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeX"
-FP debug: upn: result      "43"
-FP debug: upn: calculating "43 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "60.200000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(60.200000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "60.20"
-FP debug: upn: +++ result of upn-expression is "(60.20)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeY * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeY"
-FP debug: upn: result      "54"
-FP debug: upn: calculating "54 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "75.600000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(75.600000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "75.60"
-FP debug: upn: +++ result of upn-expression is "(75.60)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeX * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeX"
-FP debug: upn: result      "51.6"
-FP debug: upn: calculating "51.6 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "72.240000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(72.240000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "72.24"
-FP debug: upn: +++ result of upn-expression is "(72.24)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeY * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeY"
-FP debug: upn: result      "64"
-FP debug: upn: calculating "64 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "89.600000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(89.600000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "89.60"
-FP debug: upn: +++ result of upn-expression is "(89.60)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeX * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeX"
-FP debug: upn: result      "61.92"
-FP debug: upn: calculating "61.92 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "86.688000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(86.688000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "86.69"
-FP debug: upn: +++ result of upn-expression is "(86.69)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeY * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeY"
-FP debug: upn: result      "77"
-FP debug: upn: calculating "77 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "107.800000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(107.800000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "107.80"
-FP debug: upn: +++ result of upn-expression is "(107.80)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeX * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeX"
-FP debug: upn: result      "74.3"
-FP debug: upn: calculating "74.3 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "104.020000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(104.020000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "104.02"
-FP debug: upn: +++ result of upn-expression is "(104.02)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeY * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeY"
-FP debug: upn: result      "93"
-FP debug: upn: calculating "93 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "130.200000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(130.200000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "130.20"
-FP debug: upn: +++ result of upn-expression is "(130.20)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeX * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeX"
-FP debug: upn: result      "89.16"
-FP debug: upn: calculating "89.16 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "124.824000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(124.824000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "124.82"
-FP debug: upn: +++ result of upn-expression is "(124.82)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeY * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeY"
-FP debug: upn: result      "112"
-FP debug: upn: calculating "112 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "156.800000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(156.800000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "156.80"
-FP debug: upn: +++ result of upn-expression is "(156.80)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeX * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeX"
-FP debug: upn: result      "107"
-FP debug: upn: calculating "107 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "149.800000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(149.800000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "149.80"
-FP debug: upn: +++ result of upn-expression is "(149.80)"
-) ( FP-UPN
-FP debug: upn: +++ computing upn-expression "myfontscale fontSizeY * 2 round"
-FP debug: upn: calculating "myfontscale"
-FP debug: upn: result      "1.4"
-FP debug: upn: calculating "fontSizeY"
-FP debug: upn: result      "134"
-FP debug: upn: calculating "134 mul 1.4"
-( FP-MUL )
-FP debug: upn: result      "187.600000000000000000"
-FP debug: upn: calculating "2"
-FP debug: upn: result      "2"
-FP debug: upn: calculating "round(187.600000000000000000:2)"
-( FP-ROUND )
-FP debug: upn: result      "187.60"
-FP debug: upn: +++ result of upn-expression is "(187.60)"
-)) (./report.aux)
-\openout1 = `report.aux'.
+Package beamerposter Info: the input a0\ 1\ was correct, we proceed. on input l
+ine 128.
+Package beamerposter Info: finished size input check. on input line 128.
+Package beamerposter Info: myfontscale=1.0 on input line 128.
+Package beamerposter Info: checking orientation input, please wait. on input li
+ne 129.
+Package beamerposter Info: the input portrait\ 0\ was correct, we proceed. on i
+nput line 129.
+Package beamerposter Info: finished orientation check. on input line 129.
+Package beamerposter Info: checking size input, please wait. on input line 129.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 20.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
-File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
+Package beamerposter Info: the input a1\ 2\ was correct, we proceed. on input l
+ine 129.
+Package beamerposter Info: finished size input check. on input line 129.
+Package beamerposter Info: myfontscale=1.5 on input line 129.
+ ( FP-UPN ( FP-MUL )
+( FP-ROUND ) )
+\tmp=\dimen188
+Package beamerposter Info: paperwidth=1690.09352pt, paperheight=2388.89357pt on
+ input line 172.
+Package beamerposter Info: textwidth=1661.64076pt, textwidth=2360.44081pt on in
+put line 173.
+Package beamerposter Info: fontscale=0.70710678, myfontscale=1.06 on input line
+ 174.
+ ( FP-UPN ( FP-MUL ) ( FP-ROUND ) ) ( FP-UPN ( FP-MUL )
+( FP-ROUND ) ) ( FP-UPN ( FP-MUL ) ( FP-ROUND ) ) ( FP-UPN ( FP-MUL )
+( FP-ROUND ) ) ( FP-UPN ( FP-MUL ) ( FP-ROUND ) ) ( FP-UPN ( FP-MUL )
+( FP-ROUND ) ) ( FP-UPN ( FP-MUL ) ( FP-ROUND ) ) ( FP-UPN ( FP-MUL )
+( FP-ROUND ) ) ( FP-UPN ( FP-MUL ) ( FP-ROUND ) ) ( FP-UPN ( FP-MUL )
+( FP-ROUND ) ) ( FP-UPN ( FP-MUL ) ( FP-ROUND ) ) ( FP-UPN ( FP-MUL )
+( FP-ROUND ) ) ( FP-UPN ( FP-MUL ) ( FP-ROUND ) ) ( FP-UPN ( FP-MUL )
+( FP-ROUND ) ) ( FP-UPN ( FP-MUL ) ( FP-ROUND ) ) ( FP-UPN ( FP-MUL )
+( FP-ROUND ) ) ( FP-UPN ( FP-MUL ) ( FP-ROUND ) ) ( FP-UPN ( FP-MUL )
+( FP-ROUND ) ) ( FP-UPN ( FP-MUL ) ( FP-ROUND ) ) ( FP-UPN ( FP-MUL )
+( FP-ROUND ) ) ( FP-UPN ( FP-MUL ) ( FP-ROUND ) ) ( FP-UPN ( FP-MUL )
+( FP-ROUND ) ) ( FP-UPN ( FP-MUL ) ( FP-ROUND ) ) ( FP-UPN ( FP-MUL )
+( FP-ROUND ) ) ( FP-UPN ( FP-MUL ) ( FP-ROUND ) ) ( FP-UPN ( FP-MUL )
+( FP-ROUND ) ) ( FP-UPN ( FP-MUL ) ( FP-ROUND ) ) ( FP-UPN ( FP-MUL )
+( FP-ROUND ) ) ( FP-UPN ( FP-MUL ) ( FP-ROUND ) ) ( FP-UPN ( FP-MUL )
+( FP-ROUND ) ) ( FP-UPN ( FP-MUL ) ( FP-ROUND ) ) ( FP-UPN ( FP-MUL )
+( FP-ROUND ) ))
+Package hyperref Info: Option `colorlinks' set `true' on input line 59.
+
+
+Package hyperref Warning: Option `bookmarks' has already been used,
+(hyperref)                setting the option has no effect on input line 59.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/beamer/themes/theme/beamerthemeboxes.s
+ty
+Package: beamerthemeboxes 2010/06/17  (rcs-revision d02a7cf4d8ae)
+\beamer@boxheadheight=\dimen189
+\beamer@boxfootheight=\dimen190
+\beamer@headboxes=\count165
+\beamer@headboxsizes=\dimen191
+\beamer@currentbox=\count166
+\beamer@footboxes=\count167
+\beamer@footboxsizes=\dimen192
 )
+(/usr/share/texlive/texmf-dist/tex/latex/beamer/themes/color/beamercolorthemero
+se.sty
+Package: beamercolorthemerose 2010/06/17  (rcs-revision d02a7cf4d8ae)
+)) (./poster.aux)
+\openout1 = `poster.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -1233,14 +857,14 @@ File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: includehead includefoot 
-* h-part:(L,W,R)=(28.45274pt, 2331.98808pt, 28.45274pt)
-* v-part:(T,H,B)=(0.0pt, 3380.75665pt, 0.0pt)
-* \paperwidth=2388.89357pt
-* \paperheight=3380.75665pt
-* \textwidth=2331.98808pt
-* \textheight=3352.30392pt
-* \oddsidemargin=-43.81725pt
-* \evensidemargin=-43.81725pt
+* h-part:(L,W,R)=(0.0pt, 1690.09352pt, 0.0pt)
+* v-part:(T,H,B)=(0.0pt, 2388.89357pt, 0.0pt)
+* \paperwidth=1690.09352pt
+* \paperheight=2388.89357pt
+* \textwidth=1690.09352pt
+* \textheight=2360.44084pt
+* \oddsidemargin=-72.26999pt
+* \evensidemargin=-72.26999pt
 * \topmargin=-72.26999pt
 * \headheight=14.22636pt
 * \headsep=0.0pt
@@ -1261,16 +885,16 @@ File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count165
-\scratchdimen=\dimen190
+\scratchcounter=\count168
+\scratchdimen=\dimen193
 \scratchbox=\box53
-\nofMPsegments=\count166
-\nofMParguments=\count167
+\nofMPsegments=\count169
+\nofMParguments=\count170
 \everyMPshowfont=\toks47
-\MPscratchCnt=\count168
-\MPscratchDim=\dimen191
-\MPnumerator=\count169
-\makeMPintoPDFobject=\count170
+\MPscratchCnt=\count171
+\MPscratchDim=\dimen194
+\MPnumerator=\count172
+\makeMPintoPDFobject=\count173
 \everyMPtoPDFconversion=\toks48
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
@@ -1291,7 +915,7 @@ e
 ))
 ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box54
-Package hyperref Info: Link coloring OFF on input line 20.
+Package hyperref Info: Link coloring ON on input line 13.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -1299,58 +923,58 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count171
+\c@section@level=\count174
 )
-LaTeX Info: Redefining \ref on input line 20.
-LaTeX Info: Redefining \pageref on input line 20.
-LaTeX Info: Redefining \nameref on input line 20.
+LaTeX Info: Redefining \ref on input line 13.
+LaTeX Info: Redefining \pageref on input line 13.
+LaTeX Info: Redefining \nameref on input line 13.
 
-(./report.out) (./report.out)
+(./poster.out) (./poster.out)
 \@outlinefile=\write5
-\openout5 = `report.out'.
+\openout5 = `poster.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 20.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 13.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 20.
-\symnumbers=\mathgroup7
-\sympureletters=\mathgroup8
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 13.
+\symnumbers=\mathgroup6
+\sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/ptm/m/n on input line 20.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 20.
+(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 13.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/phv/bx/n on input line 20.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/phv/bx/n on input line 20.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 20.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 13.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/phv/m/n on input line 20.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/phv/m/n on input line 20.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 20.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 13.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/phv/m/it on input line 20.
+(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/phv/m/it on input line 20.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 20.
+(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 13.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/pcr/m/n on input line 20.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/pcr/m/n on input line 20.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 13.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  OT1/phv/m/n --> OT1/phv/bx/n on input line 20.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 13.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/phv/m/it --> OT1/phv/bx/it on input line 20.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/ptm/bx/n on input line 20.
+(Font)                  OT1/cmss/bx/n --> OT1/cmr/bx/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/phv/bx/n --> OT1/phv/bx/n on input line 20.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/bx/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/phv/m/n --> OT1/phv/bx/n on input line 20.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/phv/m/it --> OT1/phv/bx/it on input line 20.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/pcr/m/n --> OT1/pcr/bx/n on input line 20.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/bx/n on input line 13.
 
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/translator/dicts/translator-bas
 ic-dictionary/translator-basic-dictionary-English.dict
@@ -1376,133 +1000,77 @@ Dictionary: translator-numbers-dictionary, Language: English
 orem-dictionary/translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-LaTeX Info: Redefining \includegraphics on input line 20.
- (./report.nav)
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 20.
+LaTeX Info: Redefining \includegraphics on input line 13.
+ (./poster.nav)
+<logo/logo_uob_color.pdf, id=13, 546.04pt x 158.5925pt>
+File: logo/logo_uob_color.pdf Graphic file (type pdf)
 
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <16.8> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 20.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <60.2> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 20.
+<use logo/logo_uob_color.pdf>
+Package pdftex.def Info: logo/logo_uob_color.pdf used on input line 13.
+(pdftex.def)             Requested size: 436.8326pt x 126.87415pt.
+LaTeX Font Info:    Calculating math sizes for size <12.72> on input line 13.
 
 
-! LaTeX Error: File `deselaers/logos/rwthaachenuniversity-whitegray' not found.
+LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <12.72> not available
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 13.
 
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.20   \begin{document}
-                       
-? 
-
-Overfull \hbox (50.62675pt too wide) detected at line 20
-[][][] [][][][][][][][][] [][][][][][][][][] [][][][][][][][][] [][][][][][][][
-][] [][][][][][][] 
- []
-
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <34.83> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 121.
-LaTeX Font Info:    Calculating math sizes for size <20.16> on input line 121.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <20.16> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 121.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.11194> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 121.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10.08> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 121.
-LaTeX Font Info:    Font shape `OT1/phv/bx/it' in size <20.16> not available
-(Font)              Font shape `OT1/phv/b/it' tried instead on input line 121.
-LaTeX Font Info:    Font shape `OT1/phv/b/it' in size <20.16> not available
-(Font)              Font shape `OT1/phv/b/sl' tried instead on input line 121.
-LaTeX Font Info:    Font shape `OT1/phv/bx/it' in size <14.11194> not available
-
-(Font)              Font shape `OT1/phv/b/it' tried instead on input line 121.
-LaTeX Font Info:    Font shape `OT1/phv/b/it' in size <14.11194> not available
-(Font)              Font shape `OT1/phv/b/sl' tried instead on input line 121.
-LaTeX Font Info:    Font shape `OT1/phv/bx/it' in size <10.08> not available
-(Font)              Font shape `OT1/phv/b/it' tried instead on input line 121.
-LaTeX Font Info:    Font shape `OT1/phv/b/it' in size <10.08> not available
-(Font)              Font shape `OT1/phv/b/sl' tried instead on input line 121.
-LaTeX Font Info:    Calculating math sizes for size <34.83> on input line 121.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <24.38089> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 121.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <17.415> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 121.
-LaTeX Font Info:    Font shape `OT1/phv/bx/it' in size <34.83> not available
-(Font)              Font shape `OT1/phv/b/it' tried instead on input line 121.
-LaTeX Font Info:    Font shape `OT1/phv/b/it' in size <34.83> not available
-(Font)              Font shape `OT1/phv/b/sl' tried instead on input line 121.
-LaTeX Font Info:    Font shape `OT1/phv/bx/it' in size <24.38089> not available
-
-(Font)              Font shape `OT1/phv/b/it' tried instead on input line 121.
-LaTeX Font Info:    Font shape `OT1/phv/b/it' in size <24.38089> not available
-(Font)              Font shape `OT1/phv/b/sl' tried instead on input line 121.
-LaTeX Font Info:    Font shape `OT1/phv/bx/it' in size <17.415> not available
-(Font)              Font shape `OT1/phv/b/it' tried instead on input line 121.
-LaTeX Font Info:    Font shape `OT1/phv/b/it' in size <17.415> not available
-(Font)              Font shape `OT1/phv/b/sl' tried instead on input line 121.
-
-! LaTeX Error: File `deselaers/logos/rwthaachenuniversity-whitegray' not found.
+LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <8.90396> not available
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 13.
 
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.121   \end{frame}
-                   
-? 
+LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <6.36> not available
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 13.
 
-Overfull \hbox (50.62675pt too wide) has occurred while \output is active
-[][][] [][][][][][][][][] [][][][][][][][][] [][][][][][][][][] [][][][][][][][
-][] [][][][][][][] 
- []
+<logo/logo_cs_qr.pdf, id=14, 597.23125pt x 845.1575pt>
+File: logo/logo_cs_qr.pdf Graphic file (type pdf)
 
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+<use logo/logo_cs_qr.pdf>
+Package pdftex.def Info: logo/logo_cs_qr.pdf used on input line 13.
+(pdftex.def)             Requested size: 255.91081pt x 233.94986pt.
+File: logo/logo_uob_color.pdf Graphic file (type pdf)
+ <use logo/logo_uob_color.pdf>
+Package pdftex.def Info: logo/logo_uob_color.pdf used on input line 62.
+(pdftex.def)             Requested size: 436.8326pt x 126.87415pt.
+File: logo/logo_cs_qr.pdf Graphic file (type pdf)
 
-]
+<use logo/logo_cs_qr.pdf>
+Package pdftex.def Info: logo/logo_cs_qr.pdf used on input line 62.
+(pdftex.def)             Requested size: 255.91081pt x 233.94986pt.
+ [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+ <./logo/logo_cs_qr.pdf> <./logo/logo_uob_color.pdf>]
 \tf@nav=\write6
-\openout6 = `report.nav'.
+\openout6 = `poster.nav'.
 
 \tf@toc=\write7
-\openout7 = `report.toc'.
+\openout7 = `poster.toc'.
 
 \tf@snm=\write8
-\openout8 = `report.snm'.
+\openout8 = `poster.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 122.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 122.
- (./report.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 122.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 122.
-Package rerunfilecheck Info: File `report.out' has not changed.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 66.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 66.
+ (./poster.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 66.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 66.
+Package rerunfilecheck Info: File `poster.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 122.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 66.
  ) 
 Here is how much of TeX's memory you used:
- 18040 strings out of 494945
- 336395 string characters out of 6181031
- 530640 words of memory out of 5000000
- 20860 multiletter control sequences out of 15000+600000
- 31204 words of font info for 84 fonts, out of 8000000 for 9000
+ 17451 strings out of 494945
+ 327189 string characters out of 6181031
+ 418223 words of memory out of 5000000
+ 20302 multiletter control sequences out of 15000+600000
+ 11492 words of font info for 42 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 48i,17n,66p,405b,966s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/
-helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhv
-bo8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on report.pdf (1 page, 60433 bytes).
+ 54i,22n,68p,383b,948s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb>
+Output written on poster.pdf (1 page, 25681 bytes).
 PDF statistics:
- 62 PDF objects out of 1000 (max. 8388607)
- 41 compressed objects within 1 object stream
+ 35 PDF objects out of 1000 (max. 8388607)
+ 20 compressed objects within 1 object stream
  3 named destinations out of 1000 (max. 500000)
- 61 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 65 words of extra memory for PDF output out of 10000 (max. 10000000)
 
