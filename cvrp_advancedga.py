@@ -27,12 +27,14 @@ class AGAPopulation(object):
         p1, p2 = self.tournament_selection(self.chromosomes)
         child = self.biggest_overlap_crossover(p1, p2)
         self.info.refresh(child)
-        for _ in range(2):
+        for _ in range(5):
             # if random.uniform(0, 1) < 0.5:
-            child = self.biggest_overlap_crossover(p1, child)
+            c = self.biggest_overlap_crossover(p1, child)
             # else:
             #     child = self.simple_random_crossover(p1, child)
-            self.info.refresh(child)
+            self.info.refresh(c)
+            if c.cost < child.cost:
+                child = c
         self.info.refresh(child)
         self.simple_random_mutation(child)
         if self.chromosomes[0][1].cost < self.best_solution.cost:
