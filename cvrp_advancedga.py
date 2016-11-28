@@ -61,7 +61,7 @@ class AGAPopulation(object):
         penalty_sum = 0
         for route in chromosome.routes:
             penalty_sum += max(0, route.demand - self.info.capacity)**2
-        mnv = sum(self.info.demand[i] for i in range(250)) / self.info.capacity
+        mnv = sum(self.info.demand[i] for i in range(self.info.dimension)) / self.info.capacity
         alpha = self.best_solution.cost / ((1 / (self.iters + 1)) * (self.info.capacity * mnv / 2)**2 + 0.00001)
         penalty = alpha * penalty_sum * self.iters / self.total_iters
         chromosome.penalty = penalty
