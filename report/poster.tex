@@ -87,29 +87,43 @@
   \begin{column}{0.450\linewidth}
     \begin{block}{\Large Local Search: Steepest Improvement Algorithm $^{[0]}$}
       The order in which a truck will visit customers may be very unoptimised, so the \textbf{SIA} is used
-      to search locally \textit{within} the solution for lower costs.
+      to search locally \textit{within} the solution for lower costs. The algorithm iterates over two indices,
+      and compares the distance between themselves and the next customers. The customers are then swapped
+      if the comparisons show a lesser cost between the indices. This process is repeated upon a route until there
+      is no more cost to reduce.
     \end{block}
     \vspace{1cm}
 
     \vfill
 
     \begin{block}{\Large Crossover: Biggest Route Overlap $^{[0]}$}
-      \vspace{10cm}
+      In this crossover a random subroute of one solution is placed into another
+      solution. First, the bounding boxes for all routes are calculated, then
+      the bounding boxes of the routes in the destination solutions are compared
+      with the random subroute. Out of the routes with maximal bounding box overlap,
+      the route with minimal demand is chosen for the subroute to be placed into optimally.
     \end{block}
     \vspace{1cm}
 
     \begin{block}{\Large Mutation: Minimal cost insertion}
-      \vspace{10cm}
+      This mutation selects a random customer from the solution and places it into
+      another route. The selected customer is inserted between the two customers
+      that minimise distance travelled. This typically helps later in the
+      algorithm when moving whole routes causes too much cost increase.
     \end{block}
     \vspace{1cm}
 
     \begin{block}{\Large Evaluation}
-      It's just great
+      The lowest cost every achieved by the algorithm was $5967$ for the \textit{fruitybun250}
+      dataset, which represents a solution within $7\%$ of the best known value ($5583$). As with many GAs,
+      the downfall is population convergence and stagnation, and other heuristics such as TABUROUTE$^{[1]}$
+      can achieve $1\%$ within the optimal.
     \end{block}
 
     \begin{block}{\Large References}
       [0] - \textit{Solving the Vehicle Routing Problem with Genetic Algorithms}, \\ A. S. Bjarnadottir \\
-      http://etd.dtu.dk/thesis/154736/imm3183.pdf
+      http://etd.dtu.dk/thesis/154736/imm3183.pdf \vspace{0.5cm} \\
+      $[1]$ - \textit{A Tabu Search Heuristic For The Vehicle Routing Problem}, \\ M. Gendreau et. al
     \end{block}
     \vspace{1cm}
   \end{column}

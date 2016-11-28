@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2016.11.28)  28 NOV 2016 19:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2016.11.28)  28 NOV 2016 20:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1041,38 +1041,50 @@ Package pdftex.def Info: logo/route.jpeg used on input line 13.
 
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <26.37> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 120.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 134.
 
 
-LaTeX Font Info:    Calculating math sizes for size <37.98> on input line 120.
+LaTeX Font Info:    Calculating math sizes for size <37.98> on input line 134.
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <37.98> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 120.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 134.
 
 
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <26.58588> not available
 
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 120.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 134.
 
 
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <18.98999> not available
 
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 120.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 134.
+
+
+LaTeX Font Info:    Calculating math sizes for size <26.37> on input line 134.
+
+LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <18.45891> not available
+
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 134.
+
+
+
+LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <13.185> not available
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 134.
 
 
 File: logo/route.jpeg Graphic file (type jpg)
 <use logo/route.jpeg>
-Package pdftex.def Info: logo/route.jpeg used on input line 120.
+Package pdftex.def Info: logo/route.jpeg used on input line 134.
 (pdftex.def)             Requested size: 240.89725pt x 240.89725pt.
 File: logo/logo_uob_color.pdf Graphic file (type pdf)
  <use logo/logo_uob_color.pdf>
-Package pdftex.def Info: logo/logo_uob_color.pdf used on input line 120.
+Package pdftex.def Info: logo/logo_uob_color.pdf used on input line 134.
 (pdftex.def)             Requested size: 436.8326pt x 126.87415pt.
 File: logo/logo_cs_qr.pdf Graphic file (type pdf)
  <use logo/logo_cs_qr.pdf>
-Package pdftex.def Info: logo/logo_cs_qr.pdf used on input line 120.
+Package pdftex.def Info: logo/logo_cs_qr.pdf used on input line 134.
 (pdftex.def)             Requested size: 255.91081pt x 233.94986pt.
 
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
@@ -1087,28 +1099,28 @@ Package pdftex.def Info: logo/logo_cs_qr.pdf used on input line 120.
 \tf@snm=\write8
 \openout8 = `poster.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 124.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 124.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 138.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 138.
  (./poster.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 124.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 124.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 138.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 138.
 Package rerunfilecheck Info: File `poster.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 124.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 138.
  ) 
 Here is how much of TeX's memory you used:
- 17527 strings out of 494945
- 328974 string characters out of 6181031
- 444783 words of memory out of 5000000
- 20374 multiletter control sequences out of 15000+600000
- 17929 words of font info for 65 fonts, out of 8000000 for 9000
+ 17549 strings out of 494945
+ 329377 string characters out of 6181031
+ 459411 words of memory out of 5000000
+ 20396 multiletter control sequences out of 15000+600000
+ 23000 words of font info for 84 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  54i,22n,68p,387b,948s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/te
 xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi17.pfb>
-Output written on poster.pdf (1 page, 103332 bytes).
+Output written on poster.pdf (1 page, 105528 bytes).
 PDF statistics:
  48 PDF objects out of 1000 (max. 8388607)
  29 compressed objects within 1 object stream
