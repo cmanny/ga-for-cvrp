@@ -33,19 +33,13 @@ class AGAPopulation(object):
                 child = self.biggest_overlap_crossover(ic, jc)
                 if random.uniform(0, 1) < 0.95:
                     for _ in range(3):
-                        # if random.uniform(0, 1) < 0.5:
                         c = self.biggest_overlap_crossover(ic, child)
-                        # else:
-                        #     child = self.simple_random_crossover(p1, child)
                         self.info.refresh(c)
                         if c.cost < child.cost:
                             child = c
                 else:
                     for _ in range(3):
-                        # if random.uniform(0, 1) < 0.5:
                         c = self.simple_random_crossover(ic, child)
-                        # else:
-                        #     child = self.simple_random_crossover(p1, child)
                         self.info.refresh(c)
                         if c.cost < child.cost:
                             child = c
@@ -94,6 +88,17 @@ class AGAPopulation(object):
 
     def tournament_selection(self, chromosomes):
         return chromosomes[random.randrange(0, 10)][1], chromosomes[random.randrange(0, len(chromosomes) - 1)][1]
+
+    def iterate_crossover(self, p1, child, num):
+        for _ in range(num):
+            # if random.uniform(0, 1) < 0.5:
+            c = self.biggest_overlap_crossover(p1, child)
+            # else:
+            #     child = self.simple_random_crossover(p1, child)
+            self.info.refresh(c)
+            if c.cost < child.cost:
+                child = c
+        return child
 
     def simple_random_crossover(self, chrom1, chrom2):
         child = copy.deepcopy(chrom1)
