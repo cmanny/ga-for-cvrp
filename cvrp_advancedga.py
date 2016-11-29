@@ -24,31 +24,38 @@ class AGAPopulation(object):
         random.seed()
 
     def step(self):
-        p1, p2 = self.tournament_selection(self.chromosomes)
-        child = self.biggest_overlap_crossover(p1, p2)
-        self.info.refresh(child)
-        for _ in range(3):
-            # if random.uniform(0, 1) < 0.5:
-            c = self.biggest_overlap_crossover(p1, child)
-            # else:
-            #     child = self.simple_random_crossover(p1, child)
-            self.info.refresh(c)
-            if c.cost < child.cost:
-                child = c
-        self.info.refresh(child)
-        self.simple_random_mutation(child)
+        replace = 1
+        for i in range(12):
+            for j in range(i + 1, 12):
+                ic, jc = self.chromosomes[i][1], self.chromosomes[j][1]
+                if random.uniform(0, 1) < 0.2:
+                    jc = self.chromosomes[random.randrange(10, len(self.chromosomes) - 1)][1]
+                child = self.biggest_overlap_crossover(ic, jc)
+                if random.uniform(0, 1) < 0.95:
+                    for _ in range(3):
+                        c = self.biggest_overlap_crossover(ic, child)
+                        self.info.refresh(c)
+                        if c.cost < child.cost:
+                            child = c
+                else:
+                    for _ in range(3):
+                        c = self.simple_random_crossover(ic, child)
+                        self.info.refresh(c)
+                        if c.cost < child.cost:
+                            child = c
+                self.info.refresh(child)
+                self.simple_random_mutation(child)
+                self.info.refresh(child)
+                self.repairing(child)
+                self.info.refresh(child)
+                self.info.steep_improve_solution(child)
+                self.info.refresh(child)
+                self.chromosomes[-replace] = (self.fitness(child), child)
+                replace += 1
+        heapify(self.chromosomes)
+        self.iters += 1
         if self.chromosomes[0][1].cost < self.best_solution.cost:
             self.best_solution = self.chromosomes[0][1]
-        self.chromosomes.remove(nlargest(1, self.chromosomes)[0])
-        self.info.refresh(child)
-        self.repairing(child)
-        self.info.refresh(child)
-        self.info.steep_improve_solution(child)
-        self.info.refresh(child)
-
-        heapify(self.chromosomes)
-        heappush(self.chromosomes, (self.fitness(child), child))
-        self.iters += 1
         return self.best_solution
 
     #calc fitness
@@ -81,6 +88,17 @@ class AGAPopulation(object):
 
     def tournament_selection(self, chromosomes):
         return chromosomes[random.randrange(0, 10)][1], chromosomes[random.randrange(0, len(chromosomes) - 1)][1]
+
+    def iterate_crossover(self, p1, child, num):
+        for _ in range(num):
+            # if random.uniform(0, 1) < 0.5:
+            c = self.biggest_overlap_crossover(p1, child)
+            # else:
+            #     child = self.simple_random_crossover(p1, child)
+            self.info.refresh(c)
+            if c.cost < child.cost:
+                child = c
+        return child
 
     def simple_random_crossover(self, chrom1, chrom2):
         child = copy.deepcopy(chrom1)
