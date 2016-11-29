@@ -25,8 +25,8 @@ class AGAPopulation(object):
 
     def step(self):
         replace = 1
-        for i in range(5):
-            for j in range(i + 1, 5):
+        for i in range(12):
+            for j in range(i + 1, 12):
                 ic, jc = self.chromosomes[i][1], self.chromosomes[j][1]
                 if random.uniform(0, 1) < 0.2:
                     jc = self.chromosomes[random.randrange(10, len(self.chromosomes) - 1)][1]
