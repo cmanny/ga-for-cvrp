@@ -122,7 +122,7 @@ class AGAPopulation(object):
             x_overlap = max(0, min(x_max, sx_max) - max(x_min, sx_min))
             y_overlap = max(0, min(y_max, sy_max) - max(y_min, sy_min))
             heappush(routes, (x_overlap * y_overlap, i))
-        top3 = nlargest(3, routes)
+        top3 = nlargest(6, routes)
         min_i = min((i[1] for i in top3), key = lambda x: child.routes[x].demand)
         _, best = self.best_route_insertion(sub_route, child.routes[min_i].route)
         child.insert_route(min_i, best, sub_route)

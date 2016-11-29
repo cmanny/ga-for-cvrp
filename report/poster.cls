@@ -89,7 +89,7 @@
     \end{column}
     \begin{column}{.40\linewidth}
     \hfill
-      \includegraphics[scale=0.48]{logo/route.jpeg}
+      \includegraphics[scale=0.48]{logo/5937.png}
     \end{column}
   \end{columns}
   \end{beamercolorbox}
