@@ -9,17 +9,12 @@ class AGAPopulation(object):
     def __init__(self, info, total_iters):
         self.info = info
         self.info.max_route_len = 10
-        self.mutate_prob = 0.01
         self.chromosomes = []
         for x in [self.info.steep_improve_solution(self.info.make_random_solution(greedy=True)) for _ in range(800)]:
             heappush(self.chromosomes, (x.cost, x))
         self.best_solution = self.chromosomes[0][1]
-        self.zeroDelta = 0
         self.iters = 0
         self.total_iters = total_iters
-        self.change_diffs = []
-        self.injected_chroms = []
-        self.pop = 5
         self.same_route_prob = 0.25
         random.seed()
 
@@ -86,27 +81,12 @@ class AGAPopulation(object):
             return True
         return False
 
-    def tournament_selection(self, chromosomes):
-        return chromosomes[random.randrange(0, 10)][1], chromosomes[random.randrange(0, len(chromosomes) - 1)][1]
-
-    def iterate_crossover(self, p1, child, num):
-        for _ in range(num):
-            # if random.uniform(0, 1) < 0.5:
-            c = self.biggest_overlap_crossover(p1, child)
-            # else:
-            #     child = self.simple_random_crossover(p1, child)
-            self.info.refresh(c)
-            if c.cost < child.cost:
-                child = c
-        return child
-
     def simple_random_crossover(self, chrom1, chrom2):
         child = copy.deepcopy(chrom1)
         sub_route = chrom2.random_subroute()
         for x in sub_route:
             child.remove_node(x)
         r_id, n_id = self.best_insertion(child, sub_route)
-        #print("{} {}".format(r_id, n_id))
         child.insert_route(r_id, n_id, sub_route)
         return child
 
@@ -168,7 +148,6 @@ class AGAPopulation(object):
             subopt_best, n_id = self.best_route_insertion(sub_route, route)
             if subopt_best > best_payoff:
                 best_payoff, best_rid, best_nid = subopt_best, r_id, n_id
-        #print(best_payoff)
         return best_rid, best_nid
 
 
@@ -179,17 +158,10 @@ class CVRPAdvancedGA(CVRPAlgorithm):
         self.populations = [AGAPopulation(self.info, total_iters) for _ in range(num_populations)]
         self.pop_bests = [0 for _ in range(num_populations)]
     def step(self):
-        if self.populations[0].iters % 10 == 0:
-            for p in self.populations:
-                c = p.chromosomes[0]
-                #print(",".join([str(x) for x in c.chromosome.string]))
         for i, pop in enumerate(self.populations):
             self.pop_bests[i] = pop.step()
         self.best_solution = min(self.pop_bests, key = lambda x: x.cost)
         return self.best_solution
-
-    def inject_population(self, pop_to_inject, chroms):
-        pop_to_inject.injected_chroms = chroms
 
 
 if __name__ == "__main__":

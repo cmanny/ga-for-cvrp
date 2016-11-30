@@ -21,12 +21,8 @@ class Route(object):
 
 
     def remove_node(self, x):
-        if x == 1:
-            print("BAD")
-            raw_input()
         self.is_valid = False
         del self.route[self.route.index(x)]
-
 
     def __repr__(self):
         debug_str = ", cost = " + str(self.cost) + ", demand = " + str(self.demand)
@@ -34,7 +30,6 @@ class Route(object):
         return ret_str + (debug_str if False else "")
 
 class Solution(object):
-    bad_count = 0
 
     def __init__(self, routes=[], cost=0, is_valid=False, demand=0):
         self.is_valid = is_valid
@@ -200,14 +195,6 @@ class CVRPInfo(object):
             if route_obj.demand > self.capacity:
                 route_obj.is_valid = False
                 solution.is_valid = False
-
-
-    def optimise_route_order(self, solution):
-        routes = []
-        for route in solution.routes:
-            ordered = sorted([x for x in route.route[1:-1]], key = lambda x: self.dist[1][x])
-            routes += [self.make_route([1] + ordered  + [1])]
-        return self.make_solution(routes)
 
     def steep_improve_route(self, route):
         savings = 1
