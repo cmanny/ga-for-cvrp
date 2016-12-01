@@ -10,6 +10,8 @@
                 % the year of submission
                       year={2016}]{poster}
 
+\usepackage[]{algorithm2e}
+
 \begin{document}
 
 % -----------------------------------------------------------------------------
@@ -45,7 +47,7 @@
       The population is created by choosing a random starting node, and performing nearest neighbour
       until the capacity of the truck is reached. With some probability, the nearest neighbour will favour
       routes closer to the depot, so that the population is not identical at the beginning. After these routes have been
-      created, they are passed into the \textbf{Steepest Improvement Algorithm (SIA)}, to optimise the order of the routes.
+      created, they are passed into the \textbf{2-Opt}, to optimise the order of the routes.
       These routes then have a starting cost of around 6500, depending on the randomness parameter.
     \end{block}
     \vspace{1cm}
@@ -54,27 +56,44 @@
 
     \begin{block}{\Large Generation Step}
       The population is changed every step, by removing an undesirable solution and
-      replacing it with a new child that ideally has a better fitness value. The generation
-      is advanced through the following steps:
-      \begin{enumerate}
-        \item P1, P2 = ParentSelection()
-        \item Child = BiggestOverlapCrossover(P1, P2)
-        \item Child = Iterate crossover(P1, Child) n times
-        \item Mutate(Child)
-        \item SteeplyImprove(Child)
-        \item Repair(Child)
-        \item Introduce(Child)
-      \end{enumerate}
+      replacing it with a new child that ideally has a better fitness value. The population
+      is stored in a priority queue and is advanced by the following steps:
+
+      \SetKwProg{Fn}{def}{}{end}
+      \SetKwFunction{Fgst}{GenerationStep}
+      \SetKwFunction{FBOC}{BiggestOverlap}
+      \SetKwFunction{FTwoOpt}{2-Opt}
+      \SetKwFunction{FREP}{Repair}
+      \SetKwFunction{FINT}{Introduce}
+
+      \begin{minipage}{20cm}
+        \begin{algorithm}[H]
+          \LinesNumbered
+          \Fn(){\Fgst{}}{
+            \For{p1 in best $n$}{
+              \For{p2 in best $n$}{
+                $child \longleftarrow \FBOC{p1, p2}$ \\
+                \For{some iterations}{
+                  $child \longleftarrow \FBOC{p1, child}$
+                }
+                \FTwoOpt{child} \\
+                \FREP{child} \\
+                \FINT{child}
+              }
+            }
+          }
+        \end{algorithm}
+      \end{minipage}
       \vspace{1cm}
 
-      P1 is typically a solution with a high fitness value, and P2 is randomly chosen.
-      This is done to maximise the chance of creating new optimal solutions. The child
-      is created from a crossover in P1 and P2 that may be repeated several times between
-      P1 and itself. This increases the chance of an improved child per iteration.
+      Both P1 and P2 typically have high fitness.
+      This is done to maximise the chance of creating new optimal solutions. The children
+      are created from a crossover in P1 and P2 that may be repeated several times between
+      P1 and themselves. This increases the chance of improved children per iteration.
       \vspace{1cm} \\
-      The child is also passed through the \textbf{SIA} after the operators as
+      The children also passed through \textbf{2-Opt} after the operators as
       they often leave some room for local optimisation after routes have been
-      moved around. The child is partially repaired at the end of the generation
+      moved around. The children are partially repaired at the end of the generation
       so that routes cannot become unsightly,
       although typically only feasible solutions are optimal in later generations
       due to the penalty term outweighing reduced cost.
@@ -85,12 +104,11 @@
   \end{column}
 
   \begin{column}{0.450\linewidth}
-    \begin{block}{\Large Local Search: Steepest Improvement Algorithm $^{[0]}$}
-      The order in which a truck will visit customers may be very unoptimised, so the \textbf{SIA} is used
-      to search locally \textit{within} the solution for lower costs. The algorithm iterates over two indices,
-      and compares the distance between themselves and the next customers. The customers are then swapped
-      if the comparisons show a lesser cost between the indices. This process is repeated upon a route until there
-      is no more cost to reduce.
+    \begin{block}{\Large Local Search: 2-Opt $^{[2]}$}
+      The order in which a truck will visit customers may be very unoptimised, so the \textbf{2-Opt} is used
+      to search locally \textit{within} the solution for lower costs. The intuition behind the algorithm
+      is simple; it searches for places in the tours where one path crosses over another, and removes this cross.
+      An implementation of this found in other literature$^{[0]}$ called this a method of steepest improvement.
     \end{block}
     \vspace{1cm}
 
@@ -98,10 +116,13 @@
 
     \begin{block}{\Large Crossover: Biggest Route Overlap $^{[0]}$}
       In this crossover a random subroute of one solution is placed into another
-      solution. First, the bounding boxes for all routes are calculated, then
-      the bounding boxes of the routes in the destination solutions are compared
+      solution. First, the bounding boxes for all tours are calculated, then
+      the bounding boxes of the tours in the destination solutions are compared
       with the random subroute. Out of the routes with maximal bounding box overlap,
-      the route with minimal demand is chosen for the subroute to be placed into optimally.
+      the route with minimal demand is chosen for the subroute to be placed into optimally. \\ \vspace{1cm}
+      It was found that this crossover is far superior to crossovers such as \textbf{pmx},
+      which does not tailor the crossover mechanic to the TSP problem. Methods based purely
+      on randomness perform poorly as the solution becomes more optimal.
     \end{block}
     \vspace{1cm}
 
@@ -109,21 +130,27 @@
       This mutation selects a random customer from the solution and places it into
       another route. The selected customer is inserted between the two customers
       that minimise distance travelled. This typically helps later in the
-      algorithm when moving whole routes causes too much cost increase.
+      algorithm when moving whole subroutes causes too much cost increase.
     \end{block}
     \vspace{1cm}
 
     \begin{block}{\Large Evaluation}
-      The lowest cost every achieved by the algorithm was $5937$ for the \textit{fruitybun250}
-      dataset, which represents a solution within $6.4\%$ of the best known value ($5583$). As with many GAs,
+      The lowest cost ever achieved by the algorithm was $5889$ for the \textit{fruitybun250}
+      dataset, which represents a solution within $5.5\%$ of the best known value ($5583$). As with many GAs,
       the downfall is population convergence and stagnation, and other heuristics such as TABUROUTE$^{[1]}$
-      can achieve $1\%$ within the optimal.
+      can achieve $1\%$ within the optimal. \\ \vspace{1cm}
+      An improvement to the algorithm would be found
+      in the crossover operator, more specifically one may be able to track the history
+      of successful operations and use this in future generations. This decreases the reliance
+      on randomness and would target tours that are not optimal based on previous
+      evidence.
     \end{block}
 
     \begin{block}{\Large References}
-      [0] - \textit{Solving the Vehicle Routing Problem with Genetic Algorithms}, \\ A. S. Bjarnadottir \\
-      \vspace{0.5cm} 
-      $[1]$ - \textit{A Tabu Search Heuristic For The Vehicle Routing Problem}, \\ M. Gendreau et. al
+      [0] - A. S. Bjarnadottir (2004), \textit{Solving the Vehicle Routing Problem with Genetic Algorithms},  \\
+      \vspace{0.5cm}
+      $[1]$ - M. Gendreau et. al (1994), \textit{A Tabu Search Heuristic For The Vehicle Routing Problem},\\
+      $[2]$ - G. A. CROES (1958). \textit{A method for solving traveling salesman problems} \\
     \end{block}
     \vspace{1cm}
   \end{column}
